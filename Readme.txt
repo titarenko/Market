@@ -11,4 +11,6 @@ Tags:
 test, benchmark, architecture, technology, 
 sql, nosql, ntier, cqrs, event sourcing
 
-Mail me, if you have any questions or suggestions, to constantin.titarenko@gmail.com (more info at http://about.me/constantin.titarenko).
+Mail me, if you have any questions or suggestions, 
+to constantin.titarenko@gmail.com 
+(http://about.me/constantin.titarenko).
