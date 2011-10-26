@@ -1,0 +1,13 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<!DOCTYPE HTML>
+
+<html>
+<head id="Head1" runat="server">
+    <title><asp:ContentPlaceHolder id="TitlePlaceHolder" runat="server"></asp:ContentPlaceHolder></title>
+    <link rel="stylesheet" type="text/css" href="<%= Url.Content("~/Content/Site.css") %>" />
+</head>
+<body>
+    <asp:ContentPlaceHolder id="ContentPlaceHolder" runat="server"></asp:ContentPlaceHolder>
+</body>
+</html>

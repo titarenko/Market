@@ -1,0 +1,93 @@
+/* Common */
+
+body 
+{
+    background-color: #ffffef;
+    width: 800px;
+    margin: 0 auto;
+    font-family: sans-serif;
+}
+
+h1
+{
+    font-variant: small-caps;
+}
+
+a, a:visited
+{
+    color: #000;
+}
+
+a:hover
+{
+    color: #383
+}
+
+table
+{
+    margin: 10px 0;
+    width: 100%;
+}
+
+th
+{
+    border: 1px solid #bbb;
+}
+
+td:nth-child(1)
+{
+    text-align: left;
+}
+
+td
+{
+    text-align: right;
+}
+
+/* Styles for validation helpers */
+
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.field-validation-valid
+{
+    display: none;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid
+{
+    display: none;
+}
+
+/* Specifications */
+
+pre.success, pre.failure
+{
+    margin: 10px 0;
+    padding: 5px;
+    border: 1px dashed #aaa
+}
+
+pre.success
+{
+    background-color: #efe;
+}
+
+pre.failure
+{
+    background-color: #fee;
+}
