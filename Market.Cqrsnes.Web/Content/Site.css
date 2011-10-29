@@ -3,7 +3,7 @@
 body 
 {
     background-color: #ffffef;
-    width: 800px;
+    width: 1000px;
     margin: 0 auto;
     font-family: sans-serif;
 }
@@ -74,6 +74,11 @@ td
 }
 
 /* Specifications */
+
+pre
+{
+    overflow: auto;
+}
 
 pre.success, pre.failure
 {
