@@ -2,9 +2,10 @@ using System;
 using System.Web.Mvc;
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain;
-using Market.Cqrsnes.Test;
+using Market.Cqrsnes.Domain.Test;
+using Market.Cqrsnes.Projection;
+using Market.Cqrsnes.Projection.Test;
 using Market.Cqrsnes.Web.Models;
-using Market.Cqrsnes.Web.Service;
 
 namespace Market.Cqrsnes.Web.Controllers
 {
@@ -62,9 +63,14 @@ namespace Market.Cqrsnes.Web.Controllers
             return RedirectToAction("List");
         }
 
-        public ActionResult Test()
+        public ActionResult TestDomain()
         {
-            return View(new ArticleSpecifications().ExecuteAll());
+            return View("Test", new ArticleSpecifications().ExecuteAll());
+        }
+
+        public ActionResult TestProjections()
+        {
+            return View("Test", new ArticleViewModelManagerSpecifications().ExecuteAll());
         }
     }
 }

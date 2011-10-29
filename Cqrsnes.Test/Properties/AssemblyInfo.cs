@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Market.Cqrsnes.Web.Test")]
+[assembly: AssemblyTitle("Cqrsnes.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Market.Cqrsnes.Web.Test")]
+[assembly: AssemblyProduct("Cqrsnes.Test")]
 [assembly: AssemblyCopyright("Copyright ©  2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b3ca3893-2177-46a2-ac73-10cd77b9fc05")]
+[assembly: Guid("4200c065-f778-4af5-8e0e-ed4f17975ff3")]
 
 // Version information for an assembly consists of the following four values:
 //

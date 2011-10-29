@@ -1,10 +1,11 @@
-<%@ Page Title="" Language="C#" Inherits="System.Web.Mvc.ViewPage<Market.Cqrsnes.Web.Models.ArticleListViewModel>" MasterPageFile="~/Views/Shared/Site.master" %>
+<%@ Page Title="" Language="C#" Inherits="System.Web.Mvc.ViewPage<Market.Cqrsnes.Projection.ArticleListViewModel>" MasterPageFile="~/Views/Shared/Site.master" %>
 <asp:Content runat="server" ContentPlaceHolderID="TitlePlaceHolder">Article List</asp:Content>
 <asp:Content runat="server" ContentPlaceHolderID="ContentPlaceHolder">
 
     <h1>Market.Cqrsnes.Web</h1>
 
-    <%= Html.ActionLink("Run tests", "Test") %>
+    <%= Html.ActionLink("Run Domain Specifications (Tests)", "TestDomain") %>
+    <%= Html.ActionLink("Run Projection Specifications (Tests)", "TestProjections") %>
 
     <table>
     <thead>

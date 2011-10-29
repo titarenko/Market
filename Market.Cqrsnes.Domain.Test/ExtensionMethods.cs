@@ -1,6 +1,7 @@
+﻿using Cqrsnes.Test;
 using NUnit.Framework;
 
-namespace Market.Cqrsnes.Test
+namespace Market.Cqrsnes.Domain.Test
 {
     public static class ExtensionMethods
     {

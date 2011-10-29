@@ -1,4 +1,4 @@
-﻿namespace Market.Cqrsnes.Test
+﻿namespace Cqrsnes.Test
 {
     public class ExecutionResult
     {
@@ -11,5 +11,10 @@
         public bool IsPassed { get; set; }
 
         public string Details { get; set; }
+
+        public override string ToString()
+        {
+            return Details;
+        }
     }
 }

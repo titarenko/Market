@@ -5,9 +5,9 @@ using System.Text;
 using Cqrsnes.Infrastructure;
 using Cqrsnes.Infrastructure.Impl;
 
-namespace Market.Cqrsnes.Test
+namespace Cqrsnes.Test
 {
-    public class Specification<TCommand, THandlerType> 
+    public class DomainSpecification<TCommand, THandlerType> 
         where TCommand : Command
         where THandlerType : ICommandHandler<TCommand>
     {
@@ -21,7 +21,7 @@ namespace Market.Cqrsnes.Test
 
         public bool IsExceptionExpected { get; set; }
 
-        public Specification()
+        public DomainSpecification()
         {
             Name = "Unnamed Specification";
             Given = new Event[0];
@@ -40,7 +40,7 @@ namespace Market.Cqrsnes.Test
             {
                 var store = new TestEventStore(Given);
                 var handler = (ICommandHandler<TCommand>) Activator.CreateInstance(
-                    typeof(THandlerType), new CommonAggregateRootRepository(store, new TestBus()));
+                    typeof (THandlerType), new object[] {new CommonAggregateRootRepository(store, new TestBus())});
 
                 try
                 {

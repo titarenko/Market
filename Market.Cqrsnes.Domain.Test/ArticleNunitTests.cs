@@ -1,6 +1,6 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace Market.Cqrsnes.Test
+namespace Market.Cqrsnes.Domain.Test
 {
     [TestFixture]
     public class ArticleNunitTests

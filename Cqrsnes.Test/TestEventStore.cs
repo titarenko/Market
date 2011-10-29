@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Cqrsnes.Infrastructure;
 
-namespace Market.Cqrsnes.Test
+namespace Cqrsnes.Test
 {
     public class TestEventStore : IEventStore
     {

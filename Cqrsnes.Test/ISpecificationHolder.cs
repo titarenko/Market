@@ -1,6 +1,6 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Market.Cqrsnes.Test
+namespace Cqrsnes.Test
 {
     public interface ISpecificationHolder
     {

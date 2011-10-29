@@ -1,6 +1,6 @@
-using Cqrsnes.Infrastructure;
+﻿using Cqrsnes.Infrastructure;
 
-namespace Market.Cqrsnes.Test
+namespace Cqrsnes.Test
 {
     public class TestBus : IBus
     {

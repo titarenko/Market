@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cqrsnes.Infrastructure;
 
-namespace Market.Cqrsnes.Web.Test
+namespace Cqrsnes.Test
 {
     public class TestRepository : IRepository
     {
@@ -12,7 +12,14 @@ namespace Market.Cqrsnes.Web.Test
         public void Save<T>(T instance)
         {
             var id = (Guid) typeof (T).GetProperty("Id").GetValue(instance, null);
-            objects.Add(id, instance);
+            if (objects.ContainsKey(id))
+            {
+                objects[id] = instance;
+            }
+            else
+            {
+                objects.Add(id, instance);
+            }
         }
 
         public T GetById<T>(Guid id)

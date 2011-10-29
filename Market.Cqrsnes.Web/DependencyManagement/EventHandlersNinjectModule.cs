@@ -1,6 +1,6 @@
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain;
-using Market.Cqrsnes.Web.Service;
+using Market.Cqrsnes.Projection;
 using Ninject.Modules;
 
 namespace Market.Cqrsnes.Web.DependencyManagement

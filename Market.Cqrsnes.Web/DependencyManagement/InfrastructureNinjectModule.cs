@@ -1,6 +1,6 @@
 using Cqrsnes.Infrastructure;
 using Cqrsnes.Infrastructure.Impl;
-using Market.Cqrsnes.Web.Service;
+using Market.Cqrsnes.Projection;
 using Ninject;
 using Ninject.Modules;
 using Raven.Client.Document;

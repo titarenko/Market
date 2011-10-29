@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 
-namespace Market.Cqrsnes.Web.Models
+namespace Market.Cqrsnes.Projection
 {
     public class ArticleViewModel
     {

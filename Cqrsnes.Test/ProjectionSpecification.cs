@@ -1,20 +1,22 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using Cqrsnes.Infrastructure;
 
-namespace Market.Cqrsnes.Web.Test
+namespace Cqrsnes.Test
 {
-    public class Specification<TProjector>
+    public class ProjectionSpecification<TProjector>
     {
-        public Specification()
+        public ProjectionSpecification()
         {
             Name = "Projection logic of " + Prettify(typeof(TProjector).Name) + " (SUT)";
             Given_ = new Event[0];
+            Expect_ = new List<Expression<Func<TProjector, bool>>>();
         }
 
         public string Name { get; set; }
@@ -27,21 +29,27 @@ namespace Market.Cqrsnes.Web.Test
 
         public bool IsExceptionExpected { get; set; }
 
-        public Specification<TProjector> When(Event @event)
+        public ProjectionSpecification<TProjector> Given(IEnumerable<Event> events)
+        {
+            Given_ = events;
+            return this;
+        }
+
+        public ProjectionSpecification<TProjector> When(Event @event)
         {
             When_ = @event;
             return this;
         }
 
-        public Specification<TProjector> Expect(Expression<Func<TProjector, bool>> expression)
+        public ProjectionSpecification<TProjector> Expect(Expression<Func<TProjector, bool>> expression)
         {
-            if (Expect_ == null)
-            {
-                Expect_ = new List<Expression<Func<TProjector, bool>>>();
-            }
-
             Expect_.Add(expression);
+            return this;
+        }
 
+        public ProjectionSpecification<TProjector> ExpectException()
+        {
+            IsExceptionExpected = true;
             return this;
         }
 
@@ -77,7 +85,9 @@ namespace Market.Cqrsnes.Web.Test
             }
             catch (Exception exception)
             {
-                exceptionMessage = exception.Message;
+                exceptionMessage = exception is TargetInvocationException
+                                       ? exception.InnerException.Message
+                                       : exception.Message;
             }
 
             PrintSpecification(
@@ -114,15 +124,15 @@ namespace Market.Cqrsnes.Web.Test
             s.AppendLine("Expect:");
             foreach (var expectationResult in results)
             {
-                s.AppendFormat("\t{0}\n", expectationResult);
+                s.AppendFormat((string) "\t{0}\n", (object) expectationResult);
             }
             var gotException = !string.IsNullOrEmpty(exceptionMessage);
             s.AppendFormat(
                 "\t{0}: {1}\n",
                 IsExceptionExpected ? "exception" : "no exception",
                 IsExceptionExpected
-                    ? (gotException ? string.Format("passed \"({0})\"", exceptionMessage) : "failed")
-                    : (gotException ? string.Format("failed \"({0})\"", exceptionMessage) : "passed"));
+                    ? (gotException ? string.Format("passed (\"{0}\")", exceptionMessage) : "failed")
+                    : (gotException ? string.Format("failed (\"{0}\")", exceptionMessage) : "passed"));
             s.AppendLine();
 
             result.IsPassed = results.All(x => x.IsPassed) &&
@@ -131,7 +141,7 @@ namespace Market.Cqrsnes.Web.Test
 
             s.AppendFormat("Done ({0}).", result.IsPassed ? "passed" : "failed");
 
-            result.Description = s.ToString();
+            result.Details = s.ToString();
         }
 
         private ExecutionResult ProcessExpectation<T>(T instance, Expression<Func<T, bool>> expression)
@@ -158,7 +168,7 @@ namespace Market.Cqrsnes.Web.Test
             return new ExecutionResult()
                        {
                            IsPassed = result,
-                           Description = string.Format(
+                           Details = string.Format(
                                "{0} {1} {2}: {3}",
                                actualValueDescription,
                                comparison.NodeType == ExpressionType.Equal
@@ -236,18 +246,6 @@ namespace Market.Cqrsnes.Web.Test
                 .TrimStart()
                 .Replace('_', ' ')
                 .ToLower();
-        }
-    }
-
-    public class ExecutionResult
-    {
-        public bool IsPassed { get; set; }
-
-        public string Description { get; set; }
-
-        public override string ToString()
-        {
-            return Description;
         }
     }
 }

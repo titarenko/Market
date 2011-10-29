@@ -91,12 +91,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ArticleListViewModel.cs" />
-    <Compile Include="Models\ArticleViewModel.cs" />
     <Compile Include="Models\ChangeCountViewModel.cs" />
     <Compile Include="Models\CreateArticleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\ArticleViewModelManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -136,13 +133,25 @@
       <Project>{3FD142CF-F7FA-44EB-802B-C5D79828FE42}</Project>
       <Name>Cqrsnes.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Cqrsnes.Test\Cqrsnes.Test.csproj">
+      <Project>{AF6ABA8C-DEF4-4F3A-8534-CFF62B899C34}</Project>
+      <Name>Cqrsnes.Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Market.Cqrsnes.Domain.Test\Market.Cqrsnes.Domain.Test.csproj">
+      <Project>{33345FDA-A6EA-41C4-9F06-A72A41309155}</Project>
+      <Name>Market.Cqrsnes.Domain.Test</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Market.Cqrsnes.Domain\Market.Cqrsnes.Domain.csproj">
       <Project>{EB5D69E1-A2CB-4BA7-8D53-E8202F7D83C3}</Project>
       <Name>Market.Cqrsnes.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Market.Cqrsnes.Test\Market.Cqrsnes.Test.csproj">
-      <Project>{D43F9A4C-3E22-4689-ABDD-229C596EEA51}</Project>
-      <Name>Market.Cqrsnes.Test</Name>
+    <ProjectReference Include="..\Market.Cqrsnes.Projection.Test\Market.Cqrsnes.Projection.Test.csproj">
+      <Project>{BBCFA136-D9AB-4711-89BF-08430DA3353B}</Project>
+      <Name>Market.Cqrsnes.Projection.Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Market.Cqrsnes.Projection\Market.Cqrsnes.Projection.csproj">
+      <Project>{865D0EBC-AEAD-4C38-8FD7-742D0C10590B}</Project>
+      <Name>Market.Cqrsnes.Projection</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

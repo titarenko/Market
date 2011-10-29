@@ -1,10 +1,9 @@
-using System;
+﻿using System;
 using System.Linq;
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain;
-using Market.Cqrsnes.Web.Models;
 
-namespace Market.Cqrsnes.Web.Service
+namespace Market.Cqrsnes.Projection
 {
     public class ArticleViewModelManager :
         IEventHandler<ArticleCreated>,
@@ -32,7 +31,7 @@ namespace Market.Cqrsnes.Web.Service
 
             if (view.Articles.Any(x => x.Id == command.Id))
             {
-                throw new InvalidOperationException("Article duplicate was found.");
+                throw new InvalidOperationException("Possible concurrency problem. Article duplicate was found.");
             }
 
             view.Articles.Add(new ArticleViewModel
@@ -60,7 +59,14 @@ namespace Market.Cqrsnes.Web.Service
             var view = repository.GetById<ArticleListViewModel>(viewId)
                        ?? new ArticleListViewModel();
 
-            view.Articles.First(x => x.Id == command.Id).Count -= command.Count;
+            var articleViewModel = view.Articles.First(x => x.Id == command.Id);
+
+            if (articleViewModel.Count < command.Count)
+            {
+                throw new InvalidOperationException("Possible concurrency problem. Bought more than exist.");
+            }
+
+            articleViewModel.Count -= command.Count;
 
             repository.Save(view);
         }
