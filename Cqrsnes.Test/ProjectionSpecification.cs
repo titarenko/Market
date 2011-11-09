@@ -12,44 +12,44 @@ namespace Cqrsnes.Test
 {
     public class ProjectionSpecification<TProjector>
     {
+        private IEnumerable<Event> given;
+
+        private Event when;
+
+        private IList<Expression<Func<TProjector, bool>>> expect;
+
+        private bool isExceptionExpected;
+
         public ProjectionSpecification()
         {
             Name = "Projection logic of " + Prettify(typeof(TProjector).Name) + " (SUT)";
-            Given_ = new Event[0];
-            Expect_ = new List<Expression<Func<TProjector, bool>>>();
+            given = new Event[0];
+            expect = new List<Expression<Func<TProjector, bool>>>();
         }
 
         public string Name { get; set; }
 
-        public IEnumerable<Event> Given_ { get; set; }
-
-        public Event When_ { get; set; }
-
-        public IList<Expression<Func<TProjector, bool>>> Expect_ { get; set; }
-
-        public bool IsExceptionExpected { get; set; }
-
         public ProjectionSpecification<TProjector> Given(IEnumerable<Event> events)
         {
-            Given_ = events;
+            given = events;
             return this;
         }
 
         public ProjectionSpecification<TProjector> When(Event @event)
         {
-            When_ = @event;
+            when = @event;
             return this;
         }
 
         public ProjectionSpecification<TProjector> Expect(Expression<Func<TProjector, bool>> expression)
         {
-            Expect_.Add(expression);
+            expect.Add(expression);
             return this;
         }
 
         public ProjectionSpecification<TProjector> ExpectException()
         {
-            IsExceptionExpected = true;
+            isExceptionExpected = true;
             return this;
         }
 
@@ -62,7 +62,7 @@ namespace Cqrsnes.Test
 
             var projector = (TProjector) Activator.CreateInstance(projectorType, new TestRepository());
 
-            foreach (var @event in Given_)
+            foreach (var @event in given)
             {
                 var eventType = @event.GetType();
 
@@ -81,7 +81,7 @@ namespace Cqrsnes.Test
             try
             {
                 projectorType.GetMethod("Handle",
-                                        new[] {When_.GetType()}).Invoke(projector, new[] {When_});
+                                        new[] {when.GetType()}).Invoke(projector, new[] {when});
             }
             catch (Exception exception)
             {
@@ -91,7 +91,7 @@ namespace Cqrsnes.Test
             }
 
             PrintSpecification(
-                Expect_.Select(x => ProcessExpectation(projector, x)),
+                expect.Select(x => ProcessExpectation(projector, x)),
                 result, exceptionMessage);
 
             return result;
@@ -104,12 +104,12 @@ namespace Cqrsnes.Test
             s.AppendFormat("Specification: \"{0}\"\n", Name);
             s.AppendLine();
 
-            var hasGiven = Given_.Count() > 0;
+            var hasGiven = given.Count() > 0;
             if (hasGiven)
             {
                 s.AppendLine("Given:");
             }
-            foreach (var @event in Given_)
+            foreach (var @event in given)
             {
                 s.AppendFormat("\t{0}\n", @event);
             }
@@ -119,7 +119,7 @@ namespace Cqrsnes.Test
             }
 
             s.AppendLine("When:");
-            s.AppendFormat("\t{0}\n\n", When_);
+            s.AppendFormat("\t{0}\n\n", when);
 
             s.AppendLine("Expect:");
             foreach (var expectationResult in results)
@@ -129,15 +129,15 @@ namespace Cqrsnes.Test
             var gotException = !string.IsNullOrEmpty(exceptionMessage);
             s.AppendFormat(
                 "\t{0}: {1}\n",
-                IsExceptionExpected ? "exception" : "no exception",
-                IsExceptionExpected
+                isExceptionExpected ? "exception" : "no exception",
+                isExceptionExpected
                     ? (gotException ? string.Format("passed (\"{0}\")", exceptionMessage) : "failed")
                     : (gotException ? string.Format("failed (\"{0}\")", exceptionMessage) : "passed"));
             s.AppendLine();
 
             result.IsPassed = results.All(x => x.IsPassed) &&
-                              (IsExceptionExpected && gotException ||
-                               !IsExceptionExpected && !gotException);
+                              (isExceptionExpected && gotException ||
+                               !isExceptionExpected && !gotException);
 
             s.AppendFormat("Done ({0}).", result.IsPassed ? "passed" : "failed");
 
