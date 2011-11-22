@@ -17,7 +17,7 @@ namespace Market.Cqrsnes.Web.DependencyManagement
                 .InSingletonScope();
 
             Bind<IBus>()
-                .To<Bus>()
+                .To<SimpleBus>()
                 .InSingletonScope();
 
             Bind<IAggregateRootRepository>()

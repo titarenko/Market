@@ -3,15 +3,27 @@ using System.Threading;
 
 namespace Cqrsnes.Infrastructure.Impl
 {
-    public class Bus : IBus
+    /// <summary>
+    /// Simple bus that publishes events asynchronously 
+    /// and sends commands synchronously within one process.
+    /// </summary>
+    public class SimpleBus : IBus
     {
         private readonly IDependencyResolver resolver;
 
-        public Bus(IDependencyResolver resolver)
+        /// <summary>
+        /// Constructs new instance.
+        /// </summary>
+        /// <param name="resolver">Dependency resolver instance.</param>
+        public SimpleBus(IDependencyResolver resolver)
         {
             this.resolver = resolver;
         }
 
+        /// <summary>
+        /// Publishes event to multiple or none subscribers (handlers).
+        /// </summary>
+        /// <param name="event">Event to publish.</param>
         public void Publish(Event @event)
         {
             var type = typeof(IEventHandler<>).MakeGenericType(@event.GetType());
@@ -25,6 +37,10 @@ namespace Cqrsnes.Infrastructure.Impl
             }
         }
 
+        /// <summary>
+        /// Sends command to exactly one receiver (handler).
+        /// </summary>
+        /// <param name="command">Command to send.</param>
         public void Send(Command command)
         {
             var type = typeof(ICommandHandler<>).MakeGenericType(command.GetType());
