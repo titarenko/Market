@@ -10,6 +10,10 @@ using Cqrsnes.Infrastructure;
 
 namespace Cqrsnes.Test
 {
+    /// <summary>
+    /// Projection specification (projector test).
+    /// </summary>
+    /// <typeparam name="TProjector">Projector type.</typeparam>
     public class ProjectionSpecification<TProjector>
     {
         private IEnumerable<Event> given;
@@ -20,6 +24,9 @@ namespace Cqrsnes.Test
 
         private bool isExceptionExpected;
 
+        /// <summary>
+        /// Constructs new instance.
+        /// </summary>
         public ProjectionSpecification()
         {
             Name = "Projection logic of " + Prettify(typeof(TProjector).Name) + " (SUT)";
@@ -27,32 +34,58 @@ namespace Cqrsnes.Test
             expect = new List<Expression<Func<TProjector, bool>>>();
         }
 
+        /// <summary>
+        /// Specification name.
+        /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// Accepts sequence of preceding events.
+        /// </summary>
+        /// <param name="events">Sequence of preceding events.</param>
+        /// <returns>Reference to specification instance to enable chaining.</returns>
         public ProjectionSpecification<TProjector> Given(IEnumerable<Event> events)
         {
             given = events;
             return this;
         }
 
+        /// <summary>
+        /// Accepts incoming event (reaction to which should be tested).
+        /// </summary>
+        /// <param name="event">Incoming event.</param>
+        /// <returns>Reference to specification instance to enable chaining.</returns>
         public ProjectionSpecification<TProjector> When(Event @event)
         {
             when = @event;
             return this;
         }
 
+        /// <summary>
+        /// Accepts statement that expresses expectation (tests result of projection).
+        /// </summary>
+        /// <param name="expression">Statement that expresses expectation (tests result of projection).</param>
+        /// <returns>Reference to specification instance to enable chaining.</returns>
         public ProjectionSpecification<TProjector> Expect(Expression<Func<TProjector, bool>> expression)
         {
             expect.Add(expression);
             return this;
         }
 
+        /// <summary>
+        /// Accepts expectation of exception as a reaction to incoming event.
+        /// </summary>
+        /// <returns>Reference to specification instance to enable chaining.</returns>
         public ProjectionSpecification<TProjector> ExpectException()
         {
             isExceptionExpected = true;
             return this;
         }
 
+        /// <summary>
+        /// Runs specification.
+        /// </summary>
+        /// <returns>Execution result.</returns>
         public ExecutionResult Run()
         {
             var result = new ExecutionResult {IsPassed = true};

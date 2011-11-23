@@ -7,20 +7,43 @@ using Cqrsnes.Infrastructure.Impl;
 
 namespace Cqrsnes.Test
 {
+    /// <summary>
+    /// Domain behavior specification (domain test).
+    /// </summary>
+    /// <typeparam name="TCommand">Command type.</typeparam>
+    /// <typeparam name="THandlerType">Command handler type.</typeparam>
     public class DomainSpecification<TCommand, THandlerType> 
         where TCommand : Command
         where THandlerType : ICommandHandler<TCommand>
     {
+        /// <summary>
+        /// Specification name.
+        /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// Sequence of preceding events.
+        /// </summary>
         public IEnumerable<Event> Given { get; set; }
 
+        /// <summary>
+        /// Command (reaction to which must be verified).
+        /// </summary>
         public TCommand When { get; set; }
 
+        /// <summary>
+        /// Expected events (as a reaction to given command).
+        /// </summary>
         public IEnumerable<Event> Expect { get; set; }
 
+        /// <summary>
+        /// Is exception expected as reaction to command?
+        /// </summary>
         public bool IsExceptionExpected { get; set; }
 
+        /// <summary>
+        /// Constructs new instance.
+        /// </summary>
         public DomainSpecification()
         {
             Name = "Unnamed Specification";
@@ -29,6 +52,10 @@ namespace Cqrsnes.Test
             IsExceptionExpected = false;
         }
 
+        /// <summary>
+        /// Runs specification.
+        /// </summary>
+        /// <returns></returns>
         public ExecutionResult Run()
         {
             var result = new ExecutionResult {IsPassed = true};
