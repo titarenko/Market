@@ -8,15 +8,27 @@ using Raven.Client.Linq;
 
 namespace Cqrsnes.Infrastructure.Impl
 {
+    /// <summary>
+    /// Event store based on Raven document database.
+    /// </summary>
     public class RavenEventStore : IEventStore
     {
         private readonly IDocumentSession session;
-        
+
+        /// <summary>
+        /// Constructs new instance.
+        /// </summary>
+        /// <param name="session">Raven's document session.</param>
         public RavenEventStore(IDocumentSession session)
         {
             this.session = session;
         }
 
+        /// <summary>
+        /// Stores sequence of events for given aggregate root.
+        /// </summary>
+        /// <param name="aggregateId">Aggregate root identifier.</param>
+        /// <param name="events">Sequence of events.</param>
         public void SaveEvents(Guid aggregateId, IEnumerable<Event> events)
         {
             foreach (var @event in events)
@@ -30,6 +42,11 @@ namespace Cqrsnes.Infrastructure.Impl
             session.SaveChanges();
         }
 
+        /// <summary>
+        /// Retrieves all events for given aggregate root.
+        /// </summary>
+        /// <param name="id">Identifier of aggregate root.</param>
+        /// <returns>Sequence of events.</returns>
         public IEnumerable<Event> GetEventsForAggregate(Guid id)
         {
             var objects = session.Query<EventDescriptor>()
@@ -67,10 +84,19 @@ namespace Cqrsnes.Infrastructure.Impl
             }
         }
 
+        /// <summary>
+        /// Data structure for storing event associated with certain aggregate root.
+        /// </summary>
         public class EventDescriptor
         {
+            /// <summary>
+            /// Identifier of aggregate root.
+            /// </summary>
             public Guid AggregateId { get; set; }
 
+            /// <summary>
+            /// Event data (event instance).
+            /// </summary>
             public object EventData { get; set; }
         }
     }

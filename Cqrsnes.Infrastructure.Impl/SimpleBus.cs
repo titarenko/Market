@@ -31,9 +31,20 @@ namespace Cqrsnes.Infrastructure.Impl
             {
                 var instance = handler;
                 ThreadPool.QueueUserWorkItem(
-                    x => instance.GetType()
-                             .GetMethod("Handle", new[] {@event.GetType()})
-                             .Invoke(instance, new object[] {@event}));
+                    x =>
+                        {
+                            var method = instance.GetType().GetMethod(
+                                "Handle", new[] { @event.GetType() });
+
+                            if (method == null)
+                            {
+                                throw new ApplicationException(
+                                    "IEventHandler doesn't contain Handle method. Make sure it was not renamed.");
+                            }
+
+                            method.Invoke(instance, new object[] { @event });
+                        }
+                    );
             }
         }
 
@@ -50,9 +61,16 @@ namespace Cqrsnes.Infrastructure.Impl
                 throw new InvalidOperationException("Can't find handler for given command.");
             }
 
-            handler.GetType()
-                .GetMethod("Handle", new[] {command.GetType()})
-                .Invoke(handler, new object[] {command});
+            var method = handler.GetType()
+                .GetMethod("Handle", new[] {command.GetType()});
+
+            if (method == null)
+            {
+                throw new ApplicationException(
+                    "ICommandHandler doesn't contain Handle method. Make sure it was not renamed.");
+            }
+
+            method.Invoke(handler, new object[] {command});
         }
     }
 }
