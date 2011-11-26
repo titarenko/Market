@@ -134,3 +134,13 @@ body
 {
     border: 0;
 }
+
+form 
+{
+    margin-bottom: 0;
+}
+
+td:first-child
+{
+    width: 64%;
+}

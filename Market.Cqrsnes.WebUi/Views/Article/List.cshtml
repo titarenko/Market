@@ -3,13 +3,14 @@
 @{
     ViewBag.Title = "Articles List";
     ViewBag.Tagline = "(goods, products, whatever you want)";
+    ViewBag.Script = "Article.List.js";
 }
 
 <table>
 <thead>
     <tr>
         <th>Name</th>
-        <th>Qty</th>
+        <th>Quantity</th>
         <th></th>
     </tr>
 </thead>
@@ -19,8 +20,22 @@
     <tr>
         <td>@item.Name</td>
         <td>@item.Count</td>
-        <td></td>
+        <td>
+            @using (Html.BeginForm("ChangeCount", "Article", FormMethod.Post))
+            {
+                @Html.Hidden("Id", item.Id)
+                @Html.TextBox("Count", "", new { @class = "span2" })
+                <input type="submit" value="Deliver" name="Deliver" />
+                <input type="submit" value="Buy" name="Buy" />
+            }
+        </td>
     </tr>
 }
 </tbody>
 </table>
+
+@using (Html.BeginForm("CreateArticle", "Article", FormMethod.Post))
+{
+    @Html.TextBox("Name")
+    <input type="submit" value="Create" />
+}

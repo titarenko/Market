@@ -10,6 +10,7 @@ using IDependencyResolver = Cqrsnes.Infrastructure.IDependencyResolver;
 
 namespace Market.Cqrsnes.WebUi.Controllers
 {
+    [HandleError]
     public class ArticleController : Controller
     {
         private readonly IBus bus;
@@ -64,12 +65,12 @@ namespace Market.Cqrsnes.WebUi.Controllers
             return RedirectToAction("List");
         }
 
-        public ActionResult TestDomain()
+        public ActionResult DomainTest()
         {
             return View("Test", new ArticleSpecifications().ExecuteAll());
         }
 
-        public ActionResult TestProjections()
+        public ActionResult ProjectionTest()
         {
             return View("Test", new ArticleViewModelManagerSpecifications().ExecuteAll());
         }

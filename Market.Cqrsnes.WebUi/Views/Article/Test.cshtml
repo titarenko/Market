@@ -1,0 +1,14 @@
+﻿@model System.Collections.Generic.IEnumerable<Cqrsnes.Test.ExecutionResult>
+
+@{
+    ViewBag.Title = "Specifications";
+    ViewBag.Tagline = "(these are actually the tests)";
+}
+
+@foreach (var item in Model)
+{
+    <p><span class="label @(item.IsPassed ? "success" : "important")">
+        @(item.IsPassed ? "Success" : "Failure")
+    </span></p>
+    <pre>@item.Details</pre>
+}
