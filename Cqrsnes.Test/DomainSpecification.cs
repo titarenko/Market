@@ -88,7 +88,7 @@ namespace Cqrsnes.Test
                 }
 
                 var produced = store.GetProducedEvents();
-                var correct = Expect.SequenceEqual(produced);
+                var correct = Utilities.SequenceEqual(Expect, produced);
                 result.IsPassed = result.IsPassed && correct;
                 s.AppendLine(!correct
                                  ? "Failure: produced events didn't match expected."
@@ -116,7 +116,7 @@ namespace Cqrsnes.Test
             }
             foreach (var @event in Given)
             {
-                s.AppendFormat("\t{0}\n", @event);
+                s.AppendFormat("\t{0}\n", Utilities.Describe(@event));
             }
             if (Given.Count() > 0)
             {
@@ -124,17 +124,17 @@ namespace Cqrsnes.Test
             }
 
             s.AppendLine("When:");
-            s.AppendFormat("\t{0}\n", When);
+            s.AppendFormat("\t{0}\n", Utilities.Describe(When));
             s.AppendLine();
 
             s.AppendLine("Expect:");
             foreach (var @event in Expect)
             {
-                s.AppendFormat("\t{0}\n", @event);
+                s.AppendFormat("\t{0}\n", Utilities.Describe(@event));
             }
             if (IsExceptionExpected)
             {
-                s.AppendLine("\tException is thrown.");
+                s.AppendLine("\texception is thrown");
             }
             s.AppendLine();
         }

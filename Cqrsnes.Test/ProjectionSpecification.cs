@@ -29,7 +29,7 @@ namespace Cqrsnes.Test
         /// </summary>
         public ProjectionSpecification()
         {
-            Name = "Projection logic of " + Prettify(typeof(TProjector).Name) + " (SUT)";
+            Name = "Projection logic of " + Utilities.Prettify(typeof(TProjector).Name) + " (SUT)";
             given = new Event[0];
             expect = new List<Expression<Func<TProjector, bool>>>();
         }
@@ -241,7 +241,7 @@ namespace Cqrsnes.Test
             if (expression is MemberExpression)
             {
                 var memberExpression = expression as MemberExpression;
-                return Prettify(memberExpression.Member.Name) +
+                return Utilities.Prettify(memberExpression.Member.Name) +
                        (memberExpression.Expression == null
                            ? ""
                            : " of " + GetActualValueDescription(memberExpression.Expression));
@@ -250,7 +250,7 @@ namespace Cqrsnes.Test
             if (expression is MethodCallExpression)
             {
                 var methodCallExpression = expression as MethodCallExpression;
-                return Prettify(methodCallExpression.Method.Name) +
+                return Utilities.Prettify(methodCallExpression.Method.Name) +
                        (methodCallExpression.Object == null
                             ? (methodCallExpression.Method.IsDefined(typeof (ExtensionAttribute), true)
                                    ? " of " + GetActualValueDescription(methodCallExpression.Arguments[0])
@@ -261,24 +261,10 @@ namespace Cqrsnes.Test
             if (expression is ParameterExpression)
             {
                 var parameterExpression = expression as ParameterExpression;
-                return parameterExpression.Name.Length < 3 ? "SUT" : Prettify(parameterExpression.Name);
+                return parameterExpression.Name.Length < 3 ? "SUT" : Utilities.Prettify(parameterExpression.Name);
             }
 
             throw new InvalidOperationException("Unexpected expression.");
-        }
-
-        private string Prettify(string name)
-        {
-            if (name.ToLower().StartsWith("get"))
-            {
-                name = name.Substring(3);
-            }
-
-            return Regex
-                .Replace(name, "([A-Z])", " $1", RegexOptions.Compiled)
-                .TrimStart()
-                .Replace('_', ' ')
-                .ToLower();
         }
     }
 }

@@ -3,6 +3,9 @@ using Cqrsnes.Infrastructure;
 
 namespace Market.Cqrsnes.Domain
 {
+    /// <summary>
+    /// Represents article (product, goods, whatever you want).
+    /// </summary>
     public class Article : 
         AggregateRoot,
         IChangeAcceptor<ArticleCreated>,
@@ -11,10 +14,18 @@ namespace Market.Cqrsnes.Domain
     {
         private int count;
 
+        /// <summary>
+        /// Constructs new instance.
+        /// </summary>
         public Article()
         {
         }
 
+        /// <summary>
+        /// Constructs new instance.
+        /// </summary>
+        /// <param name="id">Identifier.</param>
+        /// <param name="name">Name.</param>
         public Article(Guid id, string name)
             : base(id)
         {
@@ -30,6 +41,10 @@ namespace Market.Cqrsnes.Domain
                             });
         }
 
+        /// <summary>
+        /// Delivers (adds to some virtual storage) certain qty of article.
+        /// </summary>
+        /// <param name="count">Number of units.</param>
         public void Deliver(int count)
         {
             if (count <= 0)
@@ -44,6 +59,10 @@ namespace Market.Cqrsnes.Domain
                             });
         }
 
+        /// <summary>
+        /// Buys (removes from some virtual storage) certain qty of article.
+        /// </summary>
+        /// <param name="count">Number of units.</param>
         public void Buy(int count)
         {
             if (count > this.count)
@@ -58,16 +77,28 @@ namespace Market.Cqrsnes.Domain
                             });
         }
 
+        /// <summary>
+        /// Performs changes caused by event.
+        /// </summary>
+        /// <param name="event"></param>
         public void Accept(ArticleCreated @event)
         {
             id = @event.Id;
         }
 
+        /// <summary>
+        /// Performs changes caused by event.
+        /// </summary>
+        /// <param name="event"></param>
         public void Accept(ArticleDelivered @event)
         {
             count += @event.Count;
         }
 
+        /// <summary>
+        /// Performs changes caused by event.
+        /// </summary>
+        /// <param name="event"></param>
         public void Accept(ArticleBought @event)
         {
             count -= @event.Count;
