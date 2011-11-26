@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cqrsnes.Infrastructure", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cqrsnes.Infrastructure.Impl", "Cqrsnes.Infrastructure.Impl\Cqrsnes.Infrastructure.Impl.csproj", "{0C31F901-872B-497D-876C-DCF3973534CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Market.Cqrsnes.Web", "Market.Cqrsnes.Web\Market.Cqrsnes.Web.csproj", "{9011B4C9-AC52-4090-86E4-B6ACF3A8B503}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{00497C48-9B88-4350-9780-BDA20A73C91E}"
 	ProjectSection(SolutionItems) = preProject
 		Readme.txt = Readme.txt
@@ -50,10 +48,6 @@ Global
 		{0C31F901-872B-497D-876C-DCF3973534CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C31F901-872B-497D-876C-DCF3973534CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C31F901-872B-497D-876C-DCF3973534CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9011B4C9-AC52-4090-86E4-B6ACF3A8B503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9011B4C9-AC52-4090-86E4-B6ACF3A8B503}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9011B4C9-AC52-4090-86E4-B6ACF3A8B503}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9011B4C9-AC52-4090-86E4-B6ACF3A8B503}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BBCFA136-D9AB-4711-89BF-08430DA3353B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BBCFA136-D9AB-4711-89BF-08430DA3353B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBCFA136-D9AB-4711-89BF-08430DA3353B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -79,7 +73,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{9011B4C9-AC52-4090-86E4-B6ACF3A8B503} = {ADBE4CF4-56A5-44CA-BD68-23EDFE8C3893}
 		{BBCFA136-D9AB-4711-89BF-08430DA3353B} = {ADBE4CF4-56A5-44CA-BD68-23EDFE8C3893}
 		{EB5D69E1-A2CB-4BA7-8D53-E8202F7D83C3} = {ADBE4CF4-56A5-44CA-BD68-23EDFE8C3893}
 		{33345FDA-A6EA-41C4-9F06-A72A41309155} = {ADBE4CF4-56A5-44CA-BD68-23EDFE8C3893}
