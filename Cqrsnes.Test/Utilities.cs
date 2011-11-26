@@ -48,7 +48,7 @@ namespace Cqrsnes.Test
         /// </summary>
         /// <param name="guid"></param>
         /// <returns></returns>
-        public static string GuidToPrettyString(Guid guid)
+        public static string Prettify(Guid guid)
         {
             var text = guid.ToString();
             return text.Substring(0, 2) + "..." + text.Substring(text.Length - 2);
@@ -107,7 +107,7 @@ namespace Cqrsnes.Test
                     "{0}: {1}",
                     Prettify(property.Name),
                     value.GetType() == typeof (Guid)
-                        ? GuidToPrettyString((Guid) value)
+                        ? Prettify((Guid) value)
                         : value.ToString());
             }
 

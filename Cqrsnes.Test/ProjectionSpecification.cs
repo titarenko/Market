@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Text.RegularExpressions;
 using Cqrsnes.Infrastructure;
 
 namespace Cqrsnes.Test
@@ -20,16 +19,19 @@ namespace Cqrsnes.Test
 
         private Event when;
 
-        private IList<Expression<Func<TProjector, bool>>> expect;
+        private readonly IList<Expression<Func<TProjector, bool>>> expect;
 
         private bool isExceptionExpected;
+
+        private string unwantedPostfix;
 
         /// <summary>
         /// Constructs new instance.
         /// </summary>
         public ProjectionSpecification()
         {
-            Name = "Projection logic of " + Utilities.Prettify(typeof(TProjector).Name) + " (SUT)";
+            Name = "Projection logic of " + Utilities.Prettify(
+                typeof(TProjector).Name) + " (SUT)";
             given = new Event[0];
             expect = new List<Expression<Func<TProjector, bool>>>();
         }
@@ -72,6 +74,13 @@ namespace Cqrsnes.Test
             return this;
         }
 
+        public ProjectionSpecification<TProjector> UnwantedPostfix<TProperty>(
+            Expression<Func<TProjector, TProperty>> expression)
+        {
+            unwantedPostfix = GetActualValueDescription(expression.Body);
+            return this;
+        }
+
         /// <summary>
         /// Accepts expectation of exception as a reaction to incoming event.
         /// </summary>
@@ -103,7 +112,7 @@ namespace Cqrsnes.Test
                 if (!type.IsAssignableFrom(projectorType))
                 {
                     throw new InvalidOperationException(
-                        "Projector can't handle one of the given events.");
+                        "Projector can't handle at least one of the given events.");
                 }
 
                 projectorType.GetMethod("Handle", new[] {eventType})
@@ -130,7 +139,10 @@ namespace Cqrsnes.Test
             return result;
         }
 
-        private void PrintSpecification(IEnumerable<ExecutionResult> results, ExecutionResult result, string exceptionMessage)
+        private void PrintSpecification(
+            IEnumerable<ExecutionResult> results, 
+            ExecutionResult result, 
+            string exceptionMessage)
         {
             var s = new StringBuilder();
 
@@ -144,7 +156,7 @@ namespace Cqrsnes.Test
             }
             foreach (var @event in given)
             {
-                s.AppendFormat("\t{0}\n", @event);
+                s.AppendFormat("\t{0}\n", Utilities.Describe(@event));
             }
             if (hasGiven)
             {
@@ -152,12 +164,12 @@ namespace Cqrsnes.Test
             }
 
             s.AppendLine("When:");
-            s.AppendFormat("\t{0}\n\n", when);
+            s.AppendFormat("\t{0}\n\n", Utilities.Describe(when));
 
             s.AppendLine("Expect:");
             foreach (var expectationResult in results)
             {
-                s.AppendFormat((string) "\t{0}\n", (object) expectationResult);
+                s.AppendFormat("\t{0}\n", expectationResult);
             }
             var gotException = !string.IsNullOrEmpty(exceptionMessage);
             s.AppendFormat(
@@ -198,7 +210,13 @@ namespace Cqrsnes.Test
             var expectedValue = GetExpectedValue(comparison.Right);
             var result = expression.Compile()(instance);
 
-            return new ExecutionResult()
+            if (!string.IsNullOrEmpty(unwantedPostfix))
+            {
+                actualValueDescription = actualValueDescription.Replace(
+                    unwantedPostfix, "SUT");
+            }
+
+            return new ExecutionResult
                        {
                            IsPassed = result,
                            Details = string.Format(
@@ -207,7 +225,9 @@ namespace Cqrsnes.Test
                                comparison.NodeType == ExpressionType.Equal
                                    ? "must be equal to"
                                    : "must not be equal to",
-                               expectedValue,
+                               expectedValue.GetType() == typeof (Guid)
+                                   ? Utilities.Prettify((Guid) expectedValue)
+                                   : expectedValue.ToString(),
                                result
                                    ? "passed"
                                    : "failed")
@@ -216,7 +236,7 @@ namespace Cqrsnes.Test
 
         private object GetExpectedValue(Expression expected)
         {
-            object expectedValue = null;
+            object expectedValue;
             if (expected is ConstantExpression)
             {
                 expectedValue = (expected as ConstantExpression).Value;

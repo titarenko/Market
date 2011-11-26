@@ -11,7 +11,7 @@ namespace Market.Cqrsnes.Projection.Test
     {
         private readonly Guid id = Guid.NewGuid();
 
-        private readonly string name = "New Article";
+        private const string name = "New Article";
 
         public ExecutionResult ArticleCreated()
         {
@@ -20,6 +20,7 @@ namespace Market.Cqrsnes.Projection.Test
                 .Expect(x => x.GetArticleListViewModel().Articles.Count == 1)
                 .Expect(x => x.GetArticleListViewModel().Articles.First().Id == id)
                 .Expect(x => x.GetArticleListViewModel().Articles.First().Name == name)
+                .UnwantedPostfix(x => x.GetArticleListViewModel())
                 .Run();
         }
 
@@ -30,6 +31,7 @@ namespace Market.Cqrsnes.Projection.Test
                 .When(new ArticleDelivered(id, 15))
                 .Expect(x => x.GetArticleListViewModel().Articles.First().Id == id)
                 .Expect(x => x.GetArticleListViewModel().Articles.First().Count == 15)
+                .UnwantedPostfix(x => x.GetArticleListViewModel())
                 .Run();
         }
 
@@ -44,6 +46,7 @@ namespace Market.Cqrsnes.Projection.Test
                 .When(new ArticleBought(id, 15))
                 .Expect(x => x.GetArticleListViewModel().Articles.First().Id == id)
                 .Expect(x => x.GetArticleListViewModel().Articles.First().Count == 5)
+                .UnwantedPostfix(x => x.GetArticleListViewModel())
                 .Run();
         }
 
