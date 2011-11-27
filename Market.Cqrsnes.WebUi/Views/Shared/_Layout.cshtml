@@ -7,6 +7,7 @@
     <link href="@Url.Content("~/Content/custom.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/modernizr-1.7.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap-dropdown.js")" type="text/javascript"></script>
     <meta name="description" content="Market: CQRS and Event Sourcing Sandbox">
     <meta name="author" content="Constantin Titarenko">
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -28,6 +29,13 @@
                     @Html.NavigationLink("List", "List")
                     @Html.NavigationLink("Domain Test", "DomainTest")
                     @Html.NavigationLink("Projection Test", "ProjectionTest")
+                    <li class="active dropdown" data-dropdown="dropdown">
+                        <a href="#" class="dropdown-toggle">Dropdown</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Item 1</a></li>
+                            <li class="active"><a href="#">Item 1</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 @*<form action="" class="pull-right">
                 <input class="input-small" type="text" placeholder="Username">

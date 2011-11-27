@@ -30,21 +30,16 @@ namespace Cqrsnes.Infrastructure.Impl
             foreach (var handler in resolver.ResolveMultiple(type))
             {
                 var instance = handler;
-                ThreadPool.QueueUserWorkItem(
-                    x =>
-                        {
-                            var method = instance.GetType().GetMethod(
+                var method = instance.GetType().GetMethod(
                                 "Handle", new[] { @event.GetType() });
 
-                            if (method == null)
-                            {
-                                throw new ApplicationException(
-                                    "IEventHandler doesn't contain Handle method. Make sure it was not renamed.");
-                            }
+                if (method == null)
+                {
+                    throw new ApplicationException(
+                        "IEventHandler doesn't contain Handle method. Make sure it was not renamed.");
+                }
 
-                            method.Invoke(instance, new object[] { @event });
-                        }
-                    );
+                method.Invoke(instance, new object[] { @event });
             }
         }
 
