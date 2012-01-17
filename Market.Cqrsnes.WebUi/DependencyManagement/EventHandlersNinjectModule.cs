@@ -1,5 +1,6 @@
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain;
+using Market.Cqrsnes.Domain.Events;
 using Market.Cqrsnes.Projection;
 using Ninject.Modules;
 

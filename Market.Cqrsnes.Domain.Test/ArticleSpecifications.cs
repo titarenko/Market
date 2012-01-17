@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using Cqrsnes.Infrastructure;
 using Cqrsnes.Test;
+using Market.Cqrsnes.Domain.Commands;
+using Market.Cqrsnes.Domain.Events;
+using Market.Cqrsnes.Domain.Handlers;
 
 namespace Market.Cqrsnes.Domain.Test
 {
@@ -12,7 +15,7 @@ namespace Market.Cqrsnes.Domain.Test
 
         public ExecutionResult Create()
         {
-            return new DomainSpecification<CreateArticle, ArticleCommandsHandler>
+            return new DomainSpecification<CreateArticle, ArticleCommandHandler>
                        {
                            Name = "Create Article",
                            When = new CreateArticle(id, name),
@@ -22,7 +25,7 @@ namespace Market.Cqrsnes.Domain.Test
 
         public ExecutionResult Deliver()
         {
-            return new DomainSpecification<DeliverArticle, ArticleCommandsHandler>
+            return new DomainSpecification<DeliverArticle, ArticleCommandHandler>
                        {
                            Name = "Deliver Article",
                            Given = new[] {new ArticleCreated(id, name)},
@@ -33,7 +36,7 @@ namespace Market.Cqrsnes.Domain.Test
 
         public ExecutionResult BuyLessThanExist()
         {
-            return new DomainSpecification<BuyArticle, ArticleCommandsHandler>
+            return new DomainSpecification<BuyArticle, ArticleCommandHandler>
                        {
                            Name = "Article: Buy Less Than Exist",
                            Given = new Event[]
@@ -48,7 +51,7 @@ namespace Market.Cqrsnes.Domain.Test
 
         public ExecutionResult BuyMoreThanExist()
         {
-            return new DomainSpecification<BuyArticle, ArticleCommandsHandler>
+            return new DomainSpecification<BuyArticle, ArticleCommandHandler>
                        {
                            Name = "Article: Buy More Than Exist",
                            Given = new Event[]

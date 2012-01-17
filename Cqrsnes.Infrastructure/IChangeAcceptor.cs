@@ -14,7 +14,7 @@
         /// <summary>
         /// Performs changes caused by event.
         /// </summary>
-        /// <param name="event"></param>
+        /// <param name="event">Event.</param>
         void Accept(T @event);
     }
 }

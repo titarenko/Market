@@ -22,5 +22,19 @@ namespace Cqrsnes.Infrastructure
         /// <typeparam name="T">Type of aggregate root.</typeparam>
         /// <returns>Aggregate root instance.</returns>
         T GetById<T>(Guid id) where T : AggregateRoot, new();
+
+        /// <summary>
+        /// Performs action on given aggregate root.
+        /// </summary>
+        /// <param name="id">
+        /// Identifier.
+        /// </param>
+        /// <param name="action">
+        /// Action.
+        /// </param>
+        /// <typeparam name="T">
+        /// Type of aggregate root.
+        /// </typeparam>
+        void PerformAction<T>(Guid id, Action<T> action) where T : AggregateRoot, new();
     }
 }

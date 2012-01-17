@@ -2,6 +2,7 @@
 using System.Linq;
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain;
+using Market.Cqrsnes.Domain.Events;
 
 namespace Market.Cqrsnes.Projection
 {

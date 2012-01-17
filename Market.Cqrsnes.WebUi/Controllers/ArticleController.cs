@@ -2,6 +2,8 @@
 using System.Web.Mvc;
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain;
+using Market.Cqrsnes.Domain.Commands;
+using Market.Cqrsnes.Domain.Events;
 using Market.Cqrsnes.Domain.Test;
 using Market.Cqrsnes.Projection;
 using Market.Cqrsnes.Projection.Test;

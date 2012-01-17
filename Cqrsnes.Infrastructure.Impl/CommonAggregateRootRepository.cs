@@ -58,5 +58,24 @@ namespace Cqrsnes.Infrastructure.Impl
 
             return instance;
         }
+
+        /// <summary>
+        /// Performs action on given aggregate root.
+        /// </summary>
+        /// <param name="id">
+        /// Identifier.
+        /// </param>
+        /// <param name="action">
+        /// Action.
+        /// </param>
+        /// <typeparam name="T">
+        /// Type of aggregate root.
+        /// </typeparam>
+        public void PerformAction<T>(Guid id, Action<T> action) where T : AggregateRoot, new()
+        {
+            var instance = GetById<T>(id);
+            action(instance);
+            Save(instance);
+        }
     }
 }
