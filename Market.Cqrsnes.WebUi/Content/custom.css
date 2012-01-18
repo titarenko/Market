@@ -144,3 +144,11 @@ td:first-child
 {
     width: 64%;
 }
+
+div.input {
+    margin-left: 0;
+}
+
+label, input {
+    margin: 4px;
+}

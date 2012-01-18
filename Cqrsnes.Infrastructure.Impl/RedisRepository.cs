@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ServiceStack.Redis;
 
 namespace Cqrsnes.Infrastructure.Impl
@@ -58,6 +59,24 @@ namespace Cqrsnes.Infrastructure.Impl
             using (var collection = client.GetTypedClient<T>())
             {
                 return collection.GetAll();
+            }
+        }
+
+        /// <summary>
+        /// Returns singleton of given type.
+        /// </summary>
+        /// <typeparam name="T">
+        /// Type of singleton.
+        /// </typeparam>
+        /// <returns>
+        /// Singleton instance.
+        /// </returns>
+        public T GetSingle<T>()
+        {
+            using (var collection = client.GetTypedClient<T>())
+            {
+                // TODO: verify
+                return collection.GetEarliestFromRecentsList(0, 1).FirstOrDefault();
             }
         }
     }

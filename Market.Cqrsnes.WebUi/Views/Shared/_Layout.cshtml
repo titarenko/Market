@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>@ViewBag.Title</title>
+    <title>Market - @ViewBag.Title</title>
     <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/custom.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
@@ -37,12 +37,11 @@
                         </ul>
                     </li>
                 </ul>
-                @*<form action="" class="pull-right">
-                <input class="input-small" type="text" placeholder="Username">
-                <input class="input-small" type="password" placeholder="Password">
-                <button class="btn" type="submit">
-                    Sign in</button>
-                </form>*@
+                <form action="@Url.Action("LogIn", "User")" method="POST" class="pull-right">
+                    <input class="input-small" type="text" name="name" placeholder="Name">
+                    <input class="input-small" type="password" name="password" placeholder="Password">
+                    <button class="btn" type="submit">Log In</button>
+                </form>
             </div>
         </div>
     </div>
@@ -53,7 +52,7 @@
             </div>
             @RenderBody()
         </div>
-        <footer><p>&copy; Constantin Titarenko, 2011</p></footer>
+        <footer><p>&copy; Constantin Titarenko, 2011-2012</p></footer>
     </div>
     <!-- /container -->
     <script type="text/javascript" src="@Url.Content("~/Scripts/" + ViewBag.Script)"></script>

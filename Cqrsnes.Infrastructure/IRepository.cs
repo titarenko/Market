@@ -29,5 +29,16 @@ namespace Cqrsnes.Infrastructure
         /// <typeparam name="T">Instance type.</typeparam>
         /// <returns>Collection of instances.</returns>
         IEnumerable<T> GetAll<T>();
+
+        /// <summary>
+        /// Returns singleton of given type.
+        /// </summary>
+        /// <typeparam name="T">
+        /// Type of singleton.
+        /// </typeparam>
+        /// <returns>
+        /// Singleton instance.
+        /// </returns>
+        T GetSingle<T>();
     }
 }

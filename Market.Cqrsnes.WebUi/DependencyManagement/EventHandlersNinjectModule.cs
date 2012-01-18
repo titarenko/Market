@@ -1,5 +1,4 @@
 using Cqrsnes.Infrastructure;
-using Market.Cqrsnes.Domain;
 using Market.Cqrsnes.Domain.Events;
 using Market.Cqrsnes.Projection;
 using Ninject.Modules;
@@ -13,6 +12,10 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
             Route<ArticleCreated, ArticleViewModelManager>();
             Route<ArticleDelivered, ArticleViewModelManager>();
             Route<ArticleBought, ArticleViewModelManager>();
+
+            Route<UserCreated, UserEventHandler>();
+            Route<UserLoggedIn, UserEventHandler>();
+            Route<UserLoggedOut, UserEventHandler>();
         }
 
         private void Route<TEvent, THandler>() 

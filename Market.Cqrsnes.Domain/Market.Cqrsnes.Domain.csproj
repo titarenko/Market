@@ -52,6 +52,8 @@
     <Compile Include="Events\ArticleDelivered.cs" />
     <Compile Include="Events\StoreCreated.cs" />
     <Compile Include="Events\UserCreated.cs" />
+    <Compile Include="Events\UserLoggedIn.cs" />
+    <Compile Include="Events\UserLoggedOut.cs" />
     <Compile Include="Events\UserPasswordSet.cs" />
     <Compile Include="Handlers\ArticleCommandHandler.cs" />
     <Compile Include="Handlers\StoreCommandHandler.cs" />

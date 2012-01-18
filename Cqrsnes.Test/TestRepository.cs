@@ -19,7 +19,7 @@ namespace Cqrsnes.Test
         /// <typeparam name="T">Type of instance.</typeparam>
         public void Save<T>(T instance)
         {
-            var id = (Guid) typeof (T).GetProperty("Id").GetValue(instance, null);
+            var id = (Guid) typeof(T).GetProperty("Id").GetValue(instance, null);
             if (objects.ContainsKey(id))
             {
                 objects[id] = instance;
@@ -53,6 +53,20 @@ namespace Cqrsnes.Test
         public IEnumerable<T> GetAll<T>()
         {
             return objects.Values.Cast<T>();
+        }
+
+        /// <summary>
+        /// Returns singleton of given type.
+        /// </summary>
+        /// <typeparam name="T">
+        /// Type of singleton.
+        /// </typeparam>
+        /// <returns>
+        /// Singleton instance.
+        /// </returns>
+        public T GetSingle<T>()
+        {
+            throw new NotImplementedException();
         }
     }
 }

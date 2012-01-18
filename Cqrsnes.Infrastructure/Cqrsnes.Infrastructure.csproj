@@ -48,6 +48,7 @@
     <Compile Include="IEventStore.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="PossibleConcurrencyProblemException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VisibleWithinDeclaringAssemblyOnlyAttribute.cs" />
   </ItemGroup>

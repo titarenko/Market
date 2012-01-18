@@ -1,5 +1,6 @@
 using Cqrsnes.Infrastructure;
 using Cqrsnes.Infrastructure.Impl;
+using Market.Cqrsnes.Domain.Utility;
 using Market.Cqrsnes.Projection;
 using Ninject;
 using Ninject.Modules;
@@ -49,6 +50,14 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
 
             Bind<ArticleViewModelManager>()
                 .ToSelf()
+                .InSingletonScope();
+
+            Bind<IPasswordHashGenerator>()
+                .To<PasswordHashGenerator>()
+                .InSingletonScope();
+
+            Bind<ISystemContext>()
+                .To<SystemContext>()
                 .InSingletonScope();
         }
     }

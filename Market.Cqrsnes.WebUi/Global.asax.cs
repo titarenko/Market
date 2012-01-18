@@ -1,8 +1,13 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Web.Routing;
 using Market.Cqrsnes.WebUi.DependencyManagement;
 using Ninject;
 using Ninject.Web.Mvc;
+using log4net;
+using log4net.Config;
+
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
 namespace Market.Cqrsnes.WebUi
 {
@@ -11,6 +16,22 @@ namespace Market.Cqrsnes.WebUi
         public MvcApplication()
         {
             EndRequest += EndRequestHandler;
+            Error += OnError;
+        }
+
+        private void OnError(object sender, EventArgs eventArgs)
+        {
+            var application = sender as NinjectHttpApplication;
+            if (application == null)
+            {
+                return;
+            }
+
+            var error = application.Context.Server.GetLastError();
+            LogManager.GetLogger(typeof(MvcApplication)).Error("Application level error.", error);
+            application.Context.Server.ClearError();
+
+            application.Context.Response.Redirect("/Error");
         }
 
         void EndRequestHandler(object sender, System.EventArgs e)
@@ -28,24 +49,39 @@ namespace Market.Cqrsnes.WebUi
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                "Error",
+                "Error",
+                new
+                    {
+                        controller = "Home",
+                        action = "Error",
+                        id = UrlParameter.Optional
+                    },
+                new
+                    {
+                        controller = @"[^\.]*"
+                    });
+
+            routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
                 new
-                {
-                    controller = "Article",
-                    action = "List",
-                    id = UrlParameter.Optional
-                },
+                    {
+                        controller = "Home",
+                        action = "Index",
+                        id = UrlParameter.Optional
+                    },
                 new
-                {
-                    controller = @"[^\.]*"
-                });
+                    {
+                        controller = @"[^\.]*"
+                    });
         }
 
         protected override void OnApplicationStarted()
         {
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+            XmlConfigurator.Configure();
         }
 
         protected override IKernel CreateKernel()

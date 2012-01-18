@@ -9,6 +9,7 @@ namespace Market.Cqrsnes.Domain.Entities
     /// Represents user of the system.
     /// </summary>
     public class User : AggregateRoot,
+        IChangeAcceptor<UserCreated>,
         IChangeAcceptor<UserPasswordSet>
     {
         private string passwordHash;
@@ -78,7 +79,7 @@ namespace Market.Cqrsnes.Domain.Entities
         }
 
         /// <summary>
-        /// Verifies given password.
+        /// Logs user into the system.
         /// </summary>
         /// <param name="password">
         /// The password.
@@ -86,10 +87,7 @@ namespace Market.Cqrsnes.Domain.Entities
         /// <param name="generator">
         /// The generator.
         /// </param>
-        /// <returns>
-        /// Verification result.
-        /// </returns>
-        public bool LogIn(string password, IPasswordHashGenerator generator)
+        public void LogIn(string password, IPasswordHashGenerator generator)
         {
             if (string.IsNullOrWhiteSpace(passwordHash))
             {
@@ -97,7 +95,13 @@ namespace Market.Cqrsnes.Domain.Entities
                     "Password must be set before verification can be done.");
             }
 
-            return passwordHash == generator.GetPasswordHash(password, passwordSalt);
+            if (passwordHash == generator.GetPasswordHash(password, passwordSalt))
+            {
+                ApplyChange(new UserLoggedIn
+                    {
+                        UserId = id
+                    });
+            }
         }
 
         /// <summary>
@@ -115,15 +119,19 @@ namespace Market.Cqrsnes.Domain.Entities
         /// Performs changes caused by event.
         /// </summary>
         /// <param name="event">Event.</param>
+        public void Accept(UserCreated @event)
+        {
+            id = @event.Id;
+        }
+
+        /// <summary>
+        /// Performs changes caused by event.
+        /// </summary>
+        /// <param name="event">Event.</param>
         public void Accept(UserPasswordSet @event)
         {
             passwordHash = @event.PasswordHash;
             passwordSalt = @event.PasswordSalt;
         }
-    }
-
-    public class UserLoggedOut : Event
-    {
-        public Guid UserId { get; set; }
     }
 }
