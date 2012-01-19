@@ -28,5 +28,12 @@ namespace Market.Cqrsnes.WebUi.Controllers
         {
             return View();
         }
+
+        public ActionResult Log()
+        {
+            var path = Server.MapPath("~/market.log");
+            var log = System.IO.File.ReadAllText(path) as object;
+            return View(log);
+        }
     }
 }
