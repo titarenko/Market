@@ -19,7 +19,7 @@ namespace Market.Cqrsnes.Domain.Test
                        {
                            Name = "Create Article",
                            When = new CreateArticle(id, name),
-                           Expect = new[] {new ArticleCreated(id, name)}
+                           Expect = new[] {new OfferCreated(id, name)}
                        }.Run();
         }
 
@@ -28,7 +28,7 @@ namespace Market.Cqrsnes.Domain.Test
             return new DomainSpecification<DeliverArticle, ArticleCommandHandler>
                        {
                            Name = "Deliver Article",
-                           Given = new[] {new ArticleCreated(id, name)},
+                           Given = new[] {new OfferCreated(id, name)},
                            When = new DeliverArticle(id, 1),
                            Expect = new[] {new ArticleDelivered(id, 1)}
                        }.Run();
@@ -41,7 +41,7 @@ namespace Market.Cqrsnes.Domain.Test
                            Name = "Article: Buy Less Than Exist",
                            Given = new Event[]
                                        {
-                                           new ArticleCreated(id, name),
+                                           new OfferCreated(id, name),
                                            new ArticleDelivered(id, 100)
                                        },
                            When = new BuyArticle(id, 1),
@@ -56,7 +56,7 @@ namespace Market.Cqrsnes.Domain.Test
                            Name = "Article: Buy More Than Exist",
                            Given = new Event[]
                                        {
-                                           new ArticleCreated(id, name),
+                                           new OfferCreated(id, name),
                                            new ArticleDelivered(id, 10)
                                        },
                            When = new BuyArticle(id, 100),

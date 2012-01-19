@@ -3,19 +3,19 @@ using Cqrsnes.Infrastructure;
 
 namespace Market.Cqrsnes.Domain.Events
 {
-    public class ArticleCreated : Event
+    public class OfferCreated : Event
     {
-        public ArticleCreated()
+        public OfferCreated()
         {
         }
 
-        public ArticleCreated(Guid id, string name)
+        public OfferCreated(Guid id, string name)
         {
             Id = id;
             Name = name;
         }
 
-        public bool Equals(ArticleCreated other)
+        public bool Equals(OfferCreated other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -26,8 +26,8 @@ namespace Market.Cqrsnes.Domain.Events
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (ArticleCreated)) return false;
-            return Equals((ArticleCreated) obj);
+            if (obj.GetType() != typeof (OfferCreated)) return false;
+            return Equals((OfferCreated) obj);
         }
 
         public override int GetHashCode()
@@ -45,5 +45,7 @@ namespace Market.Cqrsnes.Domain.Events
 
         public Guid Id { get; set; }
         public string Name { get; set; }
+
+        public Guid StoreId { get; set; }
     }
 }

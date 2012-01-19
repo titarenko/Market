@@ -17,7 +17,7 @@ namespace Market.Cqrsnes.Projection.Test
         public ExecutionResult ArticleCreated()
         {
             return new ProjectionSpecification<ArticleViewModelManager>()
-                .When(new ArticleCreated(id, name))
+                .When(new OfferCreated(id, name))
                 .Expect(x => x.GetArticleListViewModel().Articles.Count == 1)
                 .Expect(x => x.GetArticleListViewModel().Articles.First().Id == id)
                 .Expect(x => x.GetArticleListViewModel().Articles.First().Name == name)
@@ -28,7 +28,7 @@ namespace Market.Cqrsnes.Projection.Test
         public ExecutionResult ArticleDelivered()
         {
             return new ProjectionSpecification<ArticleViewModelManager>()
-                .Given(new[] {new ArticleCreated(id, name)})
+                .Given(new[] {new OfferCreated(id, name)})
                 .When(new ArticleDelivered(id, 15))
                 .Expect(x => x.GetArticleListViewModel().Articles.First().Id == id)
                 .Expect(x => x.GetArticleListViewModel().Articles.First().Count == 15)
@@ -41,7 +41,7 @@ namespace Market.Cqrsnes.Projection.Test
             return new ProjectionSpecification<ArticleViewModelManager>()
                 .Given(new Event[]
                            {
-                               new ArticleCreated(id, name),
+                               new OfferCreated(id, name),
                                new ArticleDelivered(id, 20)
                            })
                 .When(new ArticleBought(id, 15))
@@ -54,8 +54,8 @@ namespace Market.Cqrsnes.Projection.Test
         public ExecutionResult DuplicateArticleCreated()
         {
             return new ProjectionSpecification<ArticleViewModelManager>()
-                .Given(new[] {new ArticleCreated(id, name)})
-                .When(new ArticleCreated(id, name))
+                .Given(new[] {new OfferCreated(id, name)})
+                .When(new OfferCreated(id, name))
                 .ExpectException()
                 .Run();
         }
@@ -65,7 +65,7 @@ namespace Market.Cqrsnes.Projection.Test
             return new ProjectionSpecification<ArticleViewModelManager>()
                 .Given(new Event[]
                            {
-                               new ArticleCreated(id, name),
+                               new OfferCreated(id, name),
                                new ArticleDelivered(id, 10)
                            })
                 .When(new ArticleBought(id, 100))

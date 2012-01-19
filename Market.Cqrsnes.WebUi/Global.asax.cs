@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Web.Mvc;
 using System.Web.Routing;
+using log4net;
+using log4net.Config;
+using Market.Cqrsnes.Projection;
 using Market.Cqrsnes.WebUi.DependencyManagement;
 using Ninject;
 using Ninject.Web.Mvc;
-using log4net;
-using log4net.Config;
 
-[assembly: log4net.Config.XmlConfigurator(Watch = true)]
+[assembly: XmlConfigurator(Watch = true)]
 
 namespace Market.Cqrsnes.WebUi
 {
@@ -15,8 +16,14 @@ namespace Market.Cqrsnes.WebUi
     {
         public MvcApplication()
         {
+            BeginRequest += OnBeginRequest;
             EndRequest += EndRequestHandler;
             Error += OnError;
+        }
+
+        private void OnBeginRequest(object sender, EventArgs eventArgs)
+        {
+            Context.User = Kernel.Get<ISystemContext>().Principal;
         }
 
         private void OnError(object sender, EventArgs eventArgs)

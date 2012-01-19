@@ -33,7 +33,7 @@ namespace Market.Cqrsnes.Domain.Entities
                     "Name should not be empty.", "name");
             }
 
-            ApplyChange(new ArticleCreated
+            ApplyChange(new OfferCreated
                             {
                                 Id = id,
                                 Name = name

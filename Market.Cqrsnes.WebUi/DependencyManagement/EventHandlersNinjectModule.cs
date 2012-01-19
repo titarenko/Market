@@ -9,7 +9,7 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
     {
         public override void Load()
         {
-            Route<ArticleCreated, ArticleViewModelManager>();
+            Route<OfferCreated, ArticleViewModelManager>();
             Route<ArticleDelivered, ArticleViewModelManager>();
             Route<ArticleBought, ArticleViewModelManager>();
 

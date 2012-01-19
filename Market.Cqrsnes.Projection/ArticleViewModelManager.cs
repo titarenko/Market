@@ -7,7 +7,7 @@ using Market.Cqrsnes.Domain.Events;
 namespace Market.Cqrsnes.Projection
 {
     public class ArticleViewModelManager :
-        IEventHandler<ArticleCreated>,
+        IEventHandler<OfferCreated>,
         IEventHandler<ArticleDelivered>,
         IEventHandler<ArticleBought>
     {
@@ -25,7 +25,7 @@ namespace Market.Cqrsnes.Projection
                    ?? new ArticleListViewModel {Id = viewId};
         }
 
-        public void Handle(ArticleCreated command)
+        public void Handle(OfferCreated command)
         {
             var view = repository.GetById<ArticleListViewModel>(viewId)
                        ?? new ArticleListViewModel {Id = viewId};

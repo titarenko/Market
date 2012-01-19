@@ -79,5 +79,22 @@ namespace Cqrsnes.Infrastructure.Impl
                 return collection.GetEarliestFromRecentsList(0, 1).FirstOrDefault();
             }
         }
+
+        /// <summary>
+        /// Loads entity, performs action on it and saves back to storage.
+        /// </summary>
+        /// <param name="id">Identifier of entity.</param>
+        /// <param name="action">
+        /// The action.
+        /// </param>
+        /// <typeparam name="T">
+        /// Type of entity.
+        /// </typeparam>
+        public void Change<T>(Guid id, Action<T> action)
+        {
+            var instance = GetById<T>(id);
+            action(instance);
+            Save(instance);
+        }
     }
 }

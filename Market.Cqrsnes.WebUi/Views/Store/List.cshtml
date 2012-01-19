@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Market.Cqrsnes.Projection.Store>
+
+@{
+    ViewBag.Title = "Stores";
+    ViewBag.Tagline = "here you can choose where to buy something";
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Owner</th>
+            <th>Offers</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var store in Model)
+    {
+        <tr>
+            <td>@Html.ActionLink(store.Name, "Offers", new { id = store.Id })</td>
+            <td>@store.OwnerName</td>
+        </tr>
+    }    
+    </tbody>
+</table>

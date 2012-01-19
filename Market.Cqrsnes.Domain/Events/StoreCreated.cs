@@ -17,5 +17,10 @@ namespace Market.Cqrsnes.Domain.Events
         /// Gets or sets name.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets owner id.
+        /// </summary>
+        public Guid OwnerId { get; set; }
     }
 }

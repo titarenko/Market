@@ -40,5 +40,17 @@ namespace Cqrsnes.Infrastructure
         /// Singleton instance.
         /// </returns>
         T GetSingle<T>();
+
+        /// <summary>
+        /// Loads entity, performs action on it and saves back to storage.
+        /// </summary>
+        /// <param name="id">Identifier of entity.</param>
+        /// <param name="action">
+        /// The action.
+        /// </param>
+        /// <typeparam name="T">
+        /// Type of entity.
+        /// </typeparam>
+        void Change<T>(Guid id, Action<T> action);
     }
 }

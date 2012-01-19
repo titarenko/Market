@@ -1,0 +1,26 @@
+﻿@model Market.Cqrsnes.Projection.StoreOffers
+
+@{
+    ViewBag.Title = "Offers";
+    ViewBag.Tagline = string.Format("what is proposed by \"{0}\"", Model.StoreName);
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>Article</th>
+            <th>Price</th>
+            <th>Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var offer in Model.Offers)
+        {
+            <tr>
+                <td>@offer.ArticleName</td>
+                <td>@offer.Price</td>
+                <td>@offer.Count</td>
+            </tr>
+        }
+    </tbody>
+</table>
