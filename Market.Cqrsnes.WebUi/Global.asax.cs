@@ -12,13 +12,45 @@ using Ninject.Web.Mvc;
 
 namespace Market.Cqrsnes.WebUi
 {
+    /// <summary>
+    /// Represents web application.
+    /// </summary>
     public class MvcApplication : NinjectHttpApplication
     {
+        private const string ERROR_ROUTE = "Error";
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MvcApplication"/> class.
+        /// </summary>
         public MvcApplication()
         {
             BeginRequest += OnBeginRequest;
             EndRequest += EndRequestHandler;
             Error += OnError;
+        }
+
+        /// <summary>
+        /// Called when the application is started.
+        /// </summary>
+        protected override void OnApplicationStarted()
+        {
+            RegisterGlobalFilters(GlobalFilters.Filters);
+            RegisterRoutes(RouteTable.Routes);
+            XmlConfigurator.Configure();
+        }
+
+        /// <summary>
+        /// Creates the kernel that will manage your application.
+        /// </summary>
+        /// <returns>
+        /// The created kernel.
+        /// </returns>
+        protected override IKernel CreateKernel()
+        {
+            return new StandardKernel(
+                new InfrastructureNinjectModule(),
+                new CommandHandlersNinjectModule(),
+                new EventHandlersNinjectModule());
         }
 
         private void OnBeginRequest(object sender, EventArgs eventArgs)
@@ -38,26 +70,26 @@ namespace Market.Cqrsnes.WebUi
             LogManager.GetLogger(typeof(MvcApplication)).Error("Application level error.", error);
             application.Context.Server.ClearError();
 
-            application.Context.Response.Redirect("/Error");
+            application.Context.Response.Redirect("~/" + ERROR_ROUTE);
         }
 
-        void EndRequestHandler(object sender, System.EventArgs e)
+        private void EndRequestHandler(object sender, EventArgs e)
         {
             Kernel.Get<RavenSessionManager>().StopSession();
         }
 
-        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+        private void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
         }
 
-        static void RegisterRoutes(RouteCollection routes)
+        private void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
                 "Error",
-                "Error",
+                ERROR_ROUTE,
                 new
                     {
                         controller = "Home",
@@ -82,21 +114,6 @@ namespace Market.Cqrsnes.WebUi
                     {
                         controller = @"[^\.]*"
                     });
-        }
-
-        protected override void OnApplicationStarted()
-        {
-            RegisterGlobalFilters(GlobalFilters.Filters);
-            RegisterRoutes(RouteTable.Routes);
-            XmlConfigurator.Configure();
-        }
-
-        protected override IKernel CreateKernel()
-        {
-            return new StandardKernel(
-                new InfrastructureNinjectModule(),
-                new CommandHandlersNinjectModule(),
-                new EventHandlersNinjectModule());
         }
     }
 }
