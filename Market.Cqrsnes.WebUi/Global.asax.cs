@@ -102,6 +102,20 @@ namespace Market.Cqrsnes.WebUi
                     });
 
             routes.MapRoute(
+                "Log",
+                "Log",
+                new
+                {
+                    controller = "Home",
+                    action = "Log",
+                    id = UrlParameter.Optional
+                },
+                new
+                {
+                    controller = @"[^\.]*"
+                });
+
+            routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
                 new

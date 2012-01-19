@@ -14,6 +14,7 @@ namespace Market.Cqrsnes.WebUi.Controllers
     {
         private readonly IBus bus;
         private readonly IRepository repository;
+        private readonly ISystemContext context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserController"/> class.
@@ -22,10 +23,12 @@ namespace Market.Cqrsnes.WebUi.Controllers
         /// The bus.
         /// </param>
         /// <param name="repository">The repository.</param>
-        public UserController(IBus bus, IRepository repository)
+        /// <param name="context">The system context.</param>
+        public UserController(IBus bus, IRepository repository, ISystemContext context)
         {
             this.bus = bus;
             this.repository = repository;
+            this.context = context;
         }
 
         /// <summary>
@@ -96,7 +99,13 @@ namespace Market.Cqrsnes.WebUi.Controllers
         [HttpPost]
         public ActionResult LogOut()
         {
-            bus.Send(new LogOut());
+            if (context.Principal.Identity.IsAuthenticated)
+            {
+                bus.Send(new LogOut
+                    {
+                        UserId = context.User.Id
+                    });
+            }
 
             return RedirectToHomePage();
         }

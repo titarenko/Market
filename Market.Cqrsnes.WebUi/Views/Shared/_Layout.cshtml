@@ -37,11 +37,20 @@
                         </ul>
                     </li>
                 </ul>
-                <form action="@Url.Action("LogIn", "User")" method="POST" class="pull-right">
-                    <input class="input-small" type="text" name="name" placeholder="Name">
-                    <input class="input-small" type="password" name="password" placeholder="Password">
-                    <button class="btn" type="submit">Log In</button>
-                </form>
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <form action="@Url.Action("LogIn", "User")" method="POST" class="pull-right">
+                        <input class="input-small" type="text" name="name" placeholder="Name">
+                        <input class="input-small" type="password" name="password" placeholder="Password">
+                        <button class="btn" type="submit">Log In</button>
+                    </form>
+                }
+                else
+                {
+                    <form action="@Url.Action("LogOut", "User")" method="POST" class="pull-right">
+                        <button class="btn" type="submit">Log Out</button>
+                    </form>
+                }
             </div>
         </div>
     </div>
