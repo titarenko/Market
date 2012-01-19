@@ -1,69 +1,67 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Market - @ViewBag.Title</title>
-    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/custom.css")" rel="stylesheet" type="text/css" />
-    <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/modernizr-1.7.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/bootstrap-dropdown.js")" type="text/javascript"></script>
-    <meta name="description" content="Market: CQRS and Event Sourcing Sandbox">
-    <meta name="author" content="Constantin Titarenko">
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="images/favicon.ico">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
-</head>
-<body>
-    <div class="topbar">
-        <div class="fill">
-            <div class="container">
-                <a class="brand" href="/">Market</a>
-                <ul class="nav">
-                    @Html.NavigationLink("List", "List")
-                    @Html.NavigationLink("Domain Test", "DomainTest")
-                    @Html.NavigationLink("Projection Test", "ProjectionTest")
-                    <li class="active dropdown" data-dropdown="dropdown">
-                        <a href="#" class="dropdown-toggle">Dropdown</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Item 1</a></li>
-                            <li class="active"><a href="#">Item 1</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                @if (!User.Identity.IsAuthenticated)
-                {
-                    <form action="@Url.Action("LogIn", "User")" method="POST" class="pull-right">
-                        <input class="input-small" type="text" name="name" placeholder="Name">
-                        <input class="input-small" type="password" name="password" placeholder="Password">
-                        <button class="btn" type="submit">Log In</button>
-                    </form>
-                }
-                else
-                {
-                    <form action="@Url.Action("LogOut", "User")" method="POST" class="pull-right">
-                        <button class="btn" type="submit">Log Out</button>
-                    </form>
-                }
+    <head>
+        <meta charset="utf-8">
+        <title>Market - @ViewBag.Title</title>
+        <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/custom.css")" rel="stylesheet" type="text/css" />
+        <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
+        @*<script src="@Url.Content("~/Scripts/modernizr-1.7.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/bootstrap-dropdown.js")" type="text/javascript"></script>*@
+        <meta name="description" content="Market: CQRS and Event Sourcing Sandbox">
+        <meta name="author" content="Constantin Titarenko">
+        <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!-- Le fav and touch icons -->
+        <link href="@Url.Content("~/Images/favicon.ico")" rel="icon" type="image/x-icon" />
+    </head>
+    <body>
+        <div class="topbar">
+            <div class="fill">
+                <div class="container">
+                    <a class="brand" href="/">Market</a>
+                    <ul class="nav">
+                        @Html.NavigationLink("Users", "List", "User")
+                        @Html.NavigationLink("Stores", "List", "Store")
+                        @Html.NavigationLink("Domain Test", "DomainTest")
+                        @Html.NavigationLink("Projection Test", "ProjectionTest")
+                        <li class="active dropdown" data-dropdown="dropdown">
+                            <a href="#" class="dropdown-toggle">Dropdown</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Item 1</a></li>
+                                <li class="active"><a href="#">Item 1</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <form action="@Url.Action("LogIn", "User")" method="POST" class="pull-right">
+                            <input class="input-small" type="text" name="name" placeholder="Name">
+                            <input class="input-small" type="password" name="password" placeholder="Password">
+                            <button class="btn" type="submit">Log In</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form action="@Url.Action("LogOut", "User")" method="POST" class="pull-right">
+                            <button class="btn" type="submit">Log Out</button>
+                        </form>
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container">
-        <div class="content">
-            <div class="page-header">
-                <h1>@ViewBag.Title <small>@ViewBag.Tagline</small></h1>
+        <div class="container">
+            <div class="content">
+                <div class="page-header">
+                    <h1>@ViewBag.Title <small>@ViewBag.Tagline</small></h1>
+                </div>
+                @RenderBody()
             </div>
-            @RenderBody()
+            <footer><p>&copy; Constantin Titarenko, 2011-2012</p></footer>
         </div>
-        <footer><p>&copy; Constantin Titarenko, 2011-2012</p></footer>
-    </div>
-    <!-- /container -->
-    <script type="text/javascript" src="@Url.Content("~/Scripts/" + ViewBag.Script)"></script>
-</body>
+        <!-- /container -->
+        <script type="text/javascript" src="@Url.Content("~/Scripts/" + ViewBag.Script)"></script>
+    </body>
 </html>

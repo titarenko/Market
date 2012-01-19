@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using log4net;
@@ -25,7 +26,7 @@ namespace Market.Cqrsnes.WebUi
         public MvcApplication()
         {
             BeginRequest += OnBeginRequest;
-            EndRequest += EndRequestHandler;
+            EndRequest += OnEndRequest;
             Error += OnError;
         }
 
@@ -67,13 +68,22 @@ namespace Market.Cqrsnes.WebUi
             }
 
             var error = application.Context.Server.GetLastError();
-            LogManager.GetLogger(typeof(MvcApplication)).Error("Application level error.", error);
+            var logger = LogManager.GetLogger(typeof(MvcApplication));
+            if (error is HttpException)
+            {
+                logger.Warn("Application level error.", error);
+            }
+            else
+            {
+                logger.Error("Application level error.", error);
+            }
+
             application.Context.Server.ClearError();
 
             application.Context.Response.Redirect("~/" + ERROR_ROUTE);
         }
 
-        private void EndRequestHandler(object sender, EventArgs e)
+        private void OnEndRequest(object sender, EventArgs e)
         {
             Kernel.Get<RavenSessionManager>().StopSession();
         }
