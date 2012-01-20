@@ -5,21 +5,36 @@
     ViewBag.Tagline = "here you can choose where to buy something";
 }
 
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Owner</th>
-            <th>Offers</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var store in Model)
-    {
-        <tr>
-            <td>@Html.ActionLink(store.Name, "Offers", new { id = store.Id })</td>
-            <td>@store.OwnerName</td>
-        </tr>
-    }    
-    </tbody>
-</table>
+<form class="pull-right" action="@Url.Action("Create")" method="POST">
+    <div class="input">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"/>
+        <button class="btn" type="submit">Create new</button>
+    </div>
+</form>
+
+@if (Model.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Owner</th>
+                <th>Offers</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var store in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(store.Name, "Offers", new {id = store.Id})</td>
+                    <td>@store.OwnerName</td>
+                </tr>
+            }    
+        </tbody>
+    </table>
+}
+else
+{
+    <p>There are no stores yet.</p>
+}
