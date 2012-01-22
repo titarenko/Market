@@ -1,35 +1,41 @@
 ﻿using System;
 using System.Web.Mvc;
-using Market.Cqrsnes.Projection;
 
 namespace Market.Cqrsnes.WebUi.Controllers
 {
+    /// <summary>
+    /// Represents set of misc. actions without specific category.
+    /// </summary>
     public class HomeController : Controller
     {
-        private readonly ISystemContext context;
-
-        public HomeController(ISystemContext context)
-        {
-            this.context = context;
-        }
-
+        /// <summary>
+        /// Renders index page.
+        /// </summary>
+        /// <returns>
+        /// Index page.
+        /// </returns>
         public ActionResult Index()
         {
-            if (context.Principal.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("List", "User");
-            }
-            else
-            {
-                return View();
-            }
+            return RedirectToAction("List", "Store");
         }
 
+        /// <summary>
+        /// Renders error page.
+        /// </summary>
+        /// <returns>
+        /// Error page.
+        /// </returns>
         public ActionResult Error()
         {
             return View();
         }
 
+        /// <summary>
+        /// Renders log page.
+        /// </summary>
+        /// <returns>
+        /// Log page.
+        /// </returns>
         public ActionResult Log()
         {
             try
