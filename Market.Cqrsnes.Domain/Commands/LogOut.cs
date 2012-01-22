@@ -4,7 +4,7 @@ using Cqrsnes.Infrastructure;
 namespace Market.Cqrsnes.Domain.Commands
 {
     /// <summary>
-    /// Specifies that user should be logged out.
+    /// Specifies to do log out.
     /// </summary>
     public class LogOut : Command
     {
