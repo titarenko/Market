@@ -1,6 +1,7 @@
 using System;
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain.Events;
+using Market.Cqrsnes.Domain.Utility;
 
 namespace Market.Cqrsnes.Domain.Entities
 {
@@ -27,13 +28,9 @@ namespace Market.Cqrsnes.Domain.Entities
         /// </param>
         public Article(Guid id, string name) : base(id)
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ArgumentException(
-                    "Name should not be empty.", "name");
-            }
+            name.ShouldNotBeEmpty("name");
 
-            ApplyChange(new OfferCreated
+            ApplyChange(new ArticleCreated
                             {
                                 Id = id,
                                 Name = name

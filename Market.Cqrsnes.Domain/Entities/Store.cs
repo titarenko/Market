@@ -1,6 +1,7 @@
 ﻿using System;
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain.Events;
+using Market.Cqrsnes.Domain.Utility;
 
 namespace Market.Cqrsnes.Domain.Entities
 {
@@ -25,18 +26,17 @@ namespace Market.Cqrsnes.Domain.Entities
         /// <param name="name">
         /// The name.
         /// </param>
-        public Store(Guid id, string name) : base(id)
+        /// <param name="ownerId">The owner id.</param>
+        public Store(Guid id, string name, Guid ownerId) : base(id)
         {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentException(
-                    "Name should not be empty.", "name");
-            }
+            name.ShouldNotBeEmpty("name");
+            ownerId.ShouldNotBeEmpty("ownerId");
 
             ApplyChange(new StoreCreated
                 {
                     Id = id,
-                    Name = name
+                    Name = name,
+                    OwnerId = ownerId
                 });
         }
     }

@@ -5,7 +5,7 @@ namespace Market.Cqrsnes.Projection
 {
     public class ArticleEventHandler :
         IEventHandler<OfferCreated>,
-        IEventHandler<OfferPriceChanged>
+        IEventHandler<PriceChanged>
     {
         private readonly IRepository repository;
 
@@ -35,10 +35,10 @@ namespace Market.Cqrsnes.Projection
         /// Handles (reacts to) event.
         /// </summary>
         /// <param name="event">Event instance.</param>
-        public void Handle(OfferPriceChanged @event)
+        public void Handle(PriceChanged @event)
         {
             repository.Change<Offer>(
-                @event.Id,
+                @event.OfferId,
                 offer => offer.Price = @event.Price);
         }
     }

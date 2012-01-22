@@ -5,6 +5,8 @@ namespace Market.Cqrsnes.Domain.Events
 {
     public class OfferCreated : Event
     {
+        public Guid ArticleId { get; set; }
+
         public OfferCreated()
         {
         }
@@ -47,5 +49,9 @@ namespace Market.Cqrsnes.Domain.Events
         public string Name { get; set; }
 
         public Guid StoreId { get; set; }
+
+        public double Price { get; set; }
+
+        public int Count { get; set; }
     }
 }

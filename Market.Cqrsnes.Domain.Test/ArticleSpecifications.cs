@@ -25,11 +25,11 @@ namespace Market.Cqrsnes.Domain.Test
 
         public ExecutionResult Deliver()
         {
-            return new DomainSpecification<DeliverArticle, ArticleCommandHandler>
+            return new DomainSpecification<SupplyArticle, ArticleCommandHandler>
                        {
                            Name = "Deliver Article",
                            Given = new[] {new OfferCreated(id, name)},
-                           When = new DeliverArticle(id, 1),
+                           When = new SupplyArticle(id, 1),
                            Expect = new[] {new ArticleDelivered(id, 1)}
                        }.Run();
         }

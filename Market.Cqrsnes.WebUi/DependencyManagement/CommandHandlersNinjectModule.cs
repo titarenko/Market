@@ -1,6 +1,7 @@
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain.Commands;
 using Market.Cqrsnes.Domain.Handlers;
+using Market.Cqrsnes.Projection;
 using Ninject.Modules;
 
 namespace Market.Cqrsnes.WebUi.DependencyManagement
@@ -9,13 +10,11 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
     {
         public override void Load()
         {
-            Route<CreateArticle, ArticleCommandHandler>();
-            Route<DeliverArticle, ArticleCommandHandler>();
-            Route<BuyArticle, ArticleCommandHandler>();
-
             Route<CreateUser, UserCommandHandler>();
             Route<LogIn, UserCommandHandler>();
             Route<LogOut, UserCommandHandler>();
+
+            Route<CreateStore, StoreCommandHandler>();
         }
 
         private void Route<TCommand, THandler>()

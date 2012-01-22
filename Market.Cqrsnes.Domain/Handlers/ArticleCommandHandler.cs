@@ -9,7 +9,7 @@ namespace Market.Cqrsnes.Domain.Handlers
     /// </summary>
     public class ArticleCommandHandler : 
         ICommandHandler<CreateArticle>,
-        ICommandHandler<DeliverArticle>,
+        ICommandHandler<SupplyArticle>,
         ICommandHandler<BuyArticle>
     {
         private readonly IAggregateRootRepository repository;
@@ -39,11 +39,11 @@ namespace Market.Cqrsnes.Domain.Handlers
         /// Handles (reacts to) command.
         /// </summary>
         /// <param name="command">Command instance.</param>
-        public void Handle(DeliverArticle command)
+        public void Handle(SupplyArticle command)
         {
-            var instance = repository.GetById<Article>(command.Id);
-            //instance.Deliver(command.Count);
-            repository.Save(instance);
+            repository.PerformAction<Offer>(
+                command.OfferId, 
+                offer => offer.Supply(command.Count));
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Market.Cqrsnes.Domain.Handlers
         /// <param name="command">Command instance.</param>
         public void Handle(BuyArticle command)
         {
-            var instance = repository.GetById<Article>(command.Id);
+            var instance = repository.GetById<Article>(command.OfferId);
             //instance.Buy(command.Count);
             repository.Save(instance);
         }

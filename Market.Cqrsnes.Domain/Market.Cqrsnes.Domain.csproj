@@ -38,20 +38,25 @@
   <ItemGroup>
     <Compile Include="Commands\BuyArticle.cs" />
     <Compile Include="Commands\CreateArticle.cs" />
+    <Compile Include="Commands\CreateOffer.cs" />
     <Compile Include="Commands\CreateStore.cs" />
     <Compile Include="Commands\CreateUser.cs" />
-    <Compile Include="Commands\DeliverArticle.cs" />
+    <Compile Include="Commands\SupplyArticle.cs" />
     <Compile Include="Commands\LogIn.cs" />
     <Compile Include="Commands\LogOut.cs" />
-    <Compile Include="Commands\SetStoreOwner.cs" />
     <Compile Include="Entities\Article.cs" />
+    <Compile Include="Entities\Offer.cs" />
     <Compile Include="Entities\Store.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Events\ArticleBought.cs" />
+    <Compile Include="Events\ArticleCreated.cs" />
+    <Compile Include="Events\ArticleReservationFailed.cs" />
+    <Compile Include="Events\ArticleReserved.cs" />
     <Compile Include="Events\OfferCreated.cs" />
     <Compile Include="Events\ArticleDelivered.cs" />
-    <Compile Include="Events\OfferPriceChanged.cs" />
+    <Compile Include="Events\PriceChanged.cs" />
     <Compile Include="Events\ArticleSupplied.cs" />
+    <Compile Include="Events\ReservationCanceled.cs" />
     <Compile Include="Events\StoreCreated.cs" />
     <Compile Include="Events\UserCreated.cs" />
     <Compile Include="Events\UserLoggedIn.cs" />
@@ -63,6 +68,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\IPasswordHashGenerator.cs" />
     <Compile Include="Utility\PasswordHashGenerator.cs" />
+    <Compile Include="Utility\ValidationExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cqrsnes.Infrastructure\Cqrsnes.Infrastructure.csproj">

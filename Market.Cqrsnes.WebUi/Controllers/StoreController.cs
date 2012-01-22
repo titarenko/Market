@@ -10,11 +10,13 @@ namespace Market.Cqrsnes.WebUi.Controllers
     {
         private readonly IRepository repository;
         private readonly IBus bus;
+        private readonly ISystemContext context;
 
-        public StoreController(IRepository repository, IBus bus)
+        public StoreController(IRepository repository, IBus bus, ISystemContext context)
         {
             this.repository = repository;
             this.bus = bus;
+            this.context = context;
         }
 
         public ActionResult List()
@@ -24,7 +26,7 @@ namespace Market.Cqrsnes.WebUi.Controllers
 
         public ActionResult Offers(Guid id)
         {
-            return View(repository.GetSingle<StoreOffers>());
+            return View(repository.GetById<StoreOffers>(id));
         }
 
         [HttpPost]
@@ -33,7 +35,8 @@ namespace Market.Cqrsnes.WebUi.Controllers
             bus.Send(new CreateStore
                 {
                     Id = Guid.NewGuid(),
-                    Name = name
+                    Name = name,
+                    OwnerId = context.User.Id
                 });
 
             return RedirectToAction("List");

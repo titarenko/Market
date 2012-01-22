@@ -29,7 +29,7 @@ namespace Market.Cqrsnes.Domain.Handlers
         /// <param name="command">Command instance.</param>
         public void Handle(CreateStore command)
         {
-            repository.Save(new Store(command.Id, command.Name));
+            repository.Save(new Store(command.Id, command.Name, command.OwnerId));
         }
     }
 }

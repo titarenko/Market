@@ -9,13 +9,11 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
     {
         public override void Load()
         {
-            Route<OfferCreated, ArticleViewModelManager>();
-            Route<ArticleDelivered, ArticleViewModelManager>();
-            Route<ArticleBought, ArticleViewModelManager>();
-
             Route<UserCreated, UserEventHandler>();
             Route<UserLoggedIn, UserEventHandler>();
             Route<UserLoggedOut, UserEventHandler>();
+
+            Route<StoreCreated, StoreEventHandler>();
         }
 
         private void Route<TEvent, THandler>() 

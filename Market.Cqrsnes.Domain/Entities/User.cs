@@ -33,10 +33,7 @@ namespace Market.Cqrsnes.Domain.Entities
         /// </param>
         public User(Guid id, string name) : base(id)
         {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentException("Name can not be empty.", "name");
-            }
+            name.ShouldNotBeEmpty("name");
 
             ApplyChange(new UserCreated
                 {
@@ -56,16 +53,12 @@ namespace Market.Cqrsnes.Domain.Entities
         /// </param>
         public void SetPassword(string password, IPasswordHashGenerator generator)
         {
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                throw new ArgumentException(
-                    "Password can not be empty.", "password");
-            }
+            password.ShouldNotBeEmpty("password");
 
             if (password.Length < 8)
             {
                 throw new ArgumentException(
-                    "Password should contain at least 8 charachters.", "password");
+                    "Password should contain at least 8 characters.", "password");
             }
 
             var salt = generator.GetSalt();

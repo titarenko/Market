@@ -11,5 +11,7 @@ namespace Market.Cqrsnes.Projection
         public Guid OwnerId { get; set; }
 
         public string OwnerName { get; set; }
+
+        public int OffersCount { get; set; }
     }
 }

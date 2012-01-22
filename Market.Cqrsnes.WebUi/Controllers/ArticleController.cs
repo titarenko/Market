@@ -36,7 +36,7 @@ namespace Market.Cqrsnes.WebUi.Controllers
             if (ModelState.IsValid)
             {
                 bus.Send(model.IsDelivery
-                             ? (Command)new DeliverArticle
+                             ? (Command)new SupplyArticle
                              {
                                  Id = model.Id,
                                  Count = model.Count
