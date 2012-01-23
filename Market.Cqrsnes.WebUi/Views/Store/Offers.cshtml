@@ -2,25 +2,8 @@
 
 @{
     ViewBag.Title = "Offers";
-    ViewBag.Tagline = string.Format("what is proposed by \"{0}\"", Model.StoreOffers.Name);
+    ViewBag.Tagline = string.Format("what is proposed by {0}", Model.StoreOffers.Name);
 }
-
-<form class="pull-right" action="@Url.Action("Create", "Offer")" method="POST">
-    <input type="hidden" name="StoreId" value="@Model.StoreOffers.Id"/>
-    <div class="input">
-        <label for="articleId">Article:</label>
-        @Html.DropDownList("ArticleId", Model.Articles)
-    </div>
-    <div class="input">
-        <label for="price">Price:</label>
-        <input type="text" id="price" name="price"/>
-    </div>
-    <div class="input">
-        <label for="count">Count:</label>
-        <input type="text" id="count" name="count"/>
-        <button class="btn" type="submit">Create new</button>
-    </div>
-</form>
 
 @if (Model.StoreOffers.Offers.Any())
 {
@@ -48,3 +31,28 @@ else
 {
     <p>There are no offers yet.</p>
 }
+
+<br/>
+
+<form action="@Url.Action("Create", "Offer")" method="POST">
+    <input type="hidden" name="StoreId" value="@Model.StoreOffers.Id"/>
+    <div class="clearfix">
+        <label for="articleId">Article:</label>
+        <div class="input">
+            @Html.DropDownList("articleId", Model.Articles)
+        </div>
+    </div>
+    <div class="clearfix">
+        <label for="price">Price:</label>
+        <div class="input">
+            <input type="text" id="price" class="input-small" name="price"/>
+        </div>
+    </div>
+    <div class="clearfix">
+        <label for="count">Count:</label>
+        <div class="input">
+            <input type="text" id="count" class="input-small" name="count"/>
+            <button class="btn" type="submit">Create new</button>
+        </div>
+    </div>
+</form>

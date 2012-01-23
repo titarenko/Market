@@ -48,5 +48,17 @@ namespace Market.Cqrsnes.WebUi.Controllers
                 return View();
             }
         }
+
+        /// <summary>
+        /// Lists all available system tests.
+        /// </summary>
+        /// <returns>
+        /// List of system tests.
+        /// </returns>
+        public ActionResult Test()
+        {
+            // TODO
+            return View();
+        }
     }
 }

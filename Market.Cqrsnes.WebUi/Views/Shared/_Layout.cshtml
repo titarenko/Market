@@ -27,13 +27,7 @@
                         @Html.NavigationLink("Articles", "List", "Article")
                         @Html.NavigationLink("Stores", "List", "Store")
                         @Html.NavigationLink("Offers", "List", "Offer")
-                        <li class="active dropdown" data-dropdown="dropdown">
-                            <a href="#" class="dropdown-toggle">Tests</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Domain</a></li>
-                                <li class="active"><a href="#">Projection</a></li>
-                            </ul>
-                        </li>
+                        @Html.NavigationLink("Test", "Test", "Home")
                         @Html.NavigationLink("Log", "Log", "Home")
                     </ul>
                     @if (!User.Identity.IsAuthenticated)
