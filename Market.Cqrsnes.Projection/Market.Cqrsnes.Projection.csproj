@@ -41,15 +41,13 @@
     <Compile Include="ArticleListViewModel.cs" />
     <Compile Include="ArticleViewModel.cs" />
     <Compile Include="ArticleViewModelManager.cs" />
-    <Compile Include="Identity.cs" />
+    <Compile Include="ISystemContext.cs" />
     <Compile Include="Offer.cs" />
     <Compile Include="OfferEventHandler.cs" />
-    <Compile Include="Principal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Store.cs" />
     <Compile Include="StoreEventHandler.cs" />
     <Compile Include="StoreOffers.cs" />
-    <Compile Include="SystemContext.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserEventHandler.cs" />
     <Compile Include="UserList.cs" />

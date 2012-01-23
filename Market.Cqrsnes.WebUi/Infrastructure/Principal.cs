@@ -1,6 +1,7 @@
-﻿using System.Security.Principal;
+using System.Security.Principal;
+using Market.Cqrsnes.Projection;
 
-namespace Market.Cqrsnes.Projection
+namespace Market.Cqrsnes.WebUi.Infrastructure
 {
     public class Principal : IPrincipal
     {

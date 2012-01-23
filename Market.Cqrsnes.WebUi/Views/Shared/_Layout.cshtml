@@ -58,6 +58,9 @@
             <footer><p>&copy; Constantin Titarenko, 2011-2012</p></footer>
         </div>
         <!-- /container -->
-        <script type="text/javascript" src="@Url.Content("~/Scripts/" + ViewBag.Script)"></script>
+        @if (ViewBag.Script != null)
+        {
+            <script type="text/javascript" src="@Url.Content("~/Scripts/" + ViewBag.Script)"></script>
+        }
     </body>
 </html>

@@ -2,6 +2,7 @@ using Cqrsnes.Infrastructure;
 using Cqrsnes.Infrastructure.Impl;
 using Market.Cqrsnes.Domain.Utility;
 using Market.Cqrsnes.Projection;
+using Market.Cqrsnes.WebUi.Infrastructure;
 using Ninject;
 using Ninject.Modules;
 using Raven.Client.Document;
@@ -57,8 +58,8 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
                 .InSingletonScope();
 
             Bind<ISystemContext>()
-                .To<SystemContext>()
-                .InSingletonScope();
+                .To<WebSystemContext>()
+                .InRequestScope();
         }
     }
 }
