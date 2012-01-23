@@ -65,7 +65,6 @@
     <Compile Include="DependencyManagement\EventHandlersNinjectModule.cs" />
     <Compile Include="DependencyManagement\InfrastructureNinjectModule.cs" />
     <Compile Include="DependencyManagement\NinjectDependencyResolver.cs" />
-    <Compile Include="DependencyManagement\RavenSessionManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

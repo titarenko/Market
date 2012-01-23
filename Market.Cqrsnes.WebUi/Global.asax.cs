@@ -25,8 +25,8 @@ namespace Market.Cqrsnes.WebUi
         /// </summary>
         public MvcApplication()
         {
-            BeginRequest += OnBeginRequest;
-            EndRequest += OnEndRequest;
+            // force initialization of system context at begin of request
+            BeginRequest += (sender, args) => Kernel.Get<ISystemContext>();
             Error += OnError;
         }
 
@@ -54,11 +54,6 @@ namespace Market.Cqrsnes.WebUi
                 new EventHandlersNinjectModule());
         }
 
-        private void OnBeginRequest(object sender, EventArgs eventArgs)
-        {
-            Context.User = Kernel.Get<ISystemContext>().Principal;
-        }
-
         private void OnError(object sender, EventArgs eventArgs)
         {
             var application = sender as NinjectHttpApplication;
@@ -83,11 +78,6 @@ namespace Market.Cqrsnes.WebUi
             application.Context.Server.ClearError();
 
             application.Context.Response.Redirect("~/" + ERROR_ROUTE);
-        }
-
-        private void OnEndRequest(object sender, EventArgs e)
-        {
-            Kernel.Get<RavenSessionManager>().StopSession();
         }
 
         private void RegisterGlobalFilters(GlobalFilterCollection filters)

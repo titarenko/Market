@@ -5,13 +5,20 @@ using Market.Cqrsnes.Projection;
 using Market.Cqrsnes.WebUi.Infrastructure;
 using Ninject;
 using Ninject.Modules;
+using Raven.Client;
 using Raven.Client.Document;
 using ServiceStack.Redis;
 
 namespace Market.Cqrsnes.WebUi.DependencyManagement
 {
+    /// <summary>
+    /// Binds infrastructure services.
+    /// </summary>
     public class InfrastructureNinjectModule : NinjectModule
     {
+        /// <summary>
+        /// Loads the module into the kernel.
+        /// </summary>
         public override void Load()
         {
             Bind<IDependencyResolver>()
@@ -28,29 +35,28 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
 
             Bind<IEventStore>()
                 .To<RavenEventStore>()
-                .InSingletonScope()
-                .WithConstructorArgument(
-                    "session",
-                    context => context.Kernel.Get<RavenSessionManager>().Session);
+                .InRequestScope();
 
-            Bind<RavenSessionManager>()
-                .ToSelf()
-                .InSingletonScope()
-                .WithConstructorArgument(
-                    "store", context =>
-                                 {
-                                     var store = new DocumentStore {ConnectionStringName = "eventStore"};
-                                     store.Initialize();
-                                     return store;
-                                 });
+            Bind<IDocumentSession>()
+                .ToMethod(x => x.Kernel.Get<IDocumentStore>().OpenSession())
+                .InRequestScope()
+                .OnDeactivation(x => x.Dispose());
+
+            Bind<IDocumentStore>()
+                .ToMethod(context =>
+                              {
+                                  var store = new DocumentStore { ConnectionStringName = "eventStore" };
+                                  store.Initialize();
+                                  return store;
+                              })
+                .InSingletonScope();
 
             Bind<IRepository>()
                 .To<RedisRepository>()
-                .InSingletonScope()
-                .WithConstructorArgument("client", new RedisClient());
+                .InSingletonScope();
 
-            Bind<ArticleViewModelManager>()
-                .ToSelf()
+            Bind<IRedisClient>()
+                .To<RedisClient>()
                 .InSingletonScope();
 
             Bind<IPasswordHashGenerator>()
