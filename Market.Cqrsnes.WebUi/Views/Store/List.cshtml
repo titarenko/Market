@@ -5,14 +5,6 @@
     ViewBag.Tagline = "here you can choose where to buy something";
 }
 
-<form class="pull-right" action="@Url.Action("Create")" method="POST">
-    <div class="input">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name"/>
-        <button class="btn" type="submit">Create new</button>
-    </div>
-</form>
-
 @if (Model.Any())
 {
     <table>
@@ -39,3 +31,13 @@ else
 {
     <p>There are no stores yet.</p>
 }
+
+<form action="@Url.Action("Create")" method="POST">
+    <div class="clearfix">
+        <label for="name">Name:</label>
+        <div class="input">
+            <input type="text" id="name" name="name"/>
+            <button class="btn" type="submit">Create new</button>
+        </div>
+    </div>
+</form>
