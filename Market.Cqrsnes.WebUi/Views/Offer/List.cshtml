@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Market.Cqrsnes.Projection.Offer>
+
+@{
+    ViewBag.Title = "Offers";
+    ViewBag.Tagline = "all available offers from all stores";
+}
+
+@if (Model.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Article</th>
+                <th>Store</th>
+                <th>Price</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var offer in Model)
+            {
+                <tr>
+                    <td>@offer.ArticleName</td>
+                    <td>@offer.StoreName</td>
+                    <td>@offer.Price</td>
+                    <td>@offer.Count</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>There are no offers yet.</p>
+}

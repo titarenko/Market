@@ -4,7 +4,7 @@ using System.Web.Mvc;
 namespace Market.Cqrsnes.WebUi.Controllers
 {
     /// <summary>
-    /// Represents set of misc. actions without specific category.
+    /// Represents set of miscellaneous actions without specific category.
     /// </summary>
     public class HomeController : Controller
     {
@@ -16,7 +16,7 @@ namespace Market.Cqrsnes.WebUi.Controllers
         /// </returns>
         public ActionResult Index()
         {
-            return RedirectToAction("List", "Store");
+            return RedirectToAction("List", "Offer");
         }
 
         /// <summary>

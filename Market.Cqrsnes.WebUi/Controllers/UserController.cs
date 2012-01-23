@@ -31,6 +31,11 @@ namespace Market.Cqrsnes.WebUi.Controllers
             this.context = context;
         }
 
+        public ActionResult Register()
+        {
+            return View();
+        }
+
         /// <summary>
         /// Registers new user and logs him/her into the system.
         /// </summary>
@@ -62,6 +67,11 @@ namespace Market.Cqrsnes.WebUi.Controllers
                 });
 
             return RedirectToHomePage();
+        }
+
+        public ActionResult LogIn()
+        {
+            return View();
         }
 
         /// <summary>

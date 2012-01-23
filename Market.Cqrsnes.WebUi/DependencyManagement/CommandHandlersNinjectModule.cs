@@ -1,7 +1,6 @@
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain.Commands;
 using Market.Cqrsnes.Domain.Handlers;
-using Market.Cqrsnes.Projection;
 using Ninject.Modules;
 
 namespace Market.Cqrsnes.WebUi.DependencyManagement
@@ -15,6 +14,8 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
             Route<LogOut, UserCommandHandler>();
 
             Route<CreateStore, StoreCommandHandler>();
+
+            Route<CreateArticle, ArticleCommandHandler>();
         }
 
         private void Route<TCommand, THandler>()

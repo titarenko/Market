@@ -1,41 +1,28 @@
-﻿@model Market.Cqrsnes.Projection.ArticleListViewModel
+﻿@model IEnumerable<Market.Cqrsnes.Projection.Article>
 
 @{
-    ViewBag.Title = "Articles List";
-    ViewBag.Tagline = "(goods, products, whatever you want)";
-    ViewBag.Script = "Article.List.js";
+    ViewBag.Title = "Articles";
+    ViewBag.Tagline = "goods, products, whatever you want";
 }
 
-<table>
-<thead>
-    <tr>
-        <th>Name</th>
-        <th>Quantity</th>
-        <th></th>
-    </tr>
-</thead>
-<tbody>
-@foreach (var item in Model.Articles)
-{
-    <tr>
-        <td>@item.Name</td>
-        <td>@item.Count</td>
-        <td>
-            @using (Html.BeginForm("ChangeCount", "Article", FormMethod.Post))
-            {
-                @Html.Hidden("Id", item.Id)
-                @Html.TextBox("Count", "", new { @class = "span2" })
-                <input type="submit" value="Deliver" name="Deliver" />
-                <input type="submit" value="Buy" name="Buy" />
-            }
-        </td>
-    </tr>
-}
-</tbody>
-</table>
+<form class="pull-right" action="@Url.Action("Create")" method="POST">
+    <div class="input">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"/>
+        <button class="btn" type="submit">Create new</button>
+    </div>
+</form>
 
-@using (Html.BeginForm("CreateArticle", "Article", FormMethod.Post))
+@if (Model.Any())
 {
-    @Html.TextBox("Name")
-    <input type="submit" value="Create" />
+    <ul>
+        @foreach(var item in Model)
+        {
+            <li>@item.Name</li>
+        }
+    </ul>
+}
+else
+{
+    <p>There are no articles yet.</p>
 }

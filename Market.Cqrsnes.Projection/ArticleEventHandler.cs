@@ -4,6 +4,7 @@ using Market.Cqrsnes.Domain.Events;
 namespace Market.Cqrsnes.Projection
 {
     public class ArticleEventHandler :
+        IEventHandler<ArticleCreated>,
         IEventHandler<OfferCreated>,
         IEventHandler<PriceChanged>
     {
@@ -40,6 +41,19 @@ namespace Market.Cqrsnes.Projection
             repository.Change<Offer>(
                 @event.OfferId,
                 offer => offer.Price = @event.Price);
+        }
+
+        /// <summary>
+        /// Handles (reacts to) event.
+        /// </summary>
+        /// <param name="event">Event instance.</param>
+        public void Handle(ArticleCreated @event)
+        {
+            repository.Save(new Article
+                {
+                    Id = @event.Id,
+                    Name = @event.Name
+                });
         }
     }
 }

@@ -14,6 +14,8 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
             Route<UserLoggedOut, UserEventHandler>();
 
             Route<StoreCreated, StoreEventHandler>();
+
+            Route<ArticleCreated, ArticleEventHandler>();
         }
 
         private void Route<TEvent, THandler>() 

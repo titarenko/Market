@@ -31,8 +31,7 @@ namespace Market.Cqrsnes.Domain.Handlers
         /// <param name="command">Command instance.</param>
         public void Handle(CreateArticle command)
         {
-            var instance = new Article(command.Id, command.Name);
-            repository.Save(instance);
+            repository.Save(new Article(command.Id, command.Name));
         }
 
         /// <summary>

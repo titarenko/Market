@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OfferController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DependencyManagement\CommandHandlersNinjectModule.cs" />
@@ -134,6 +135,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\custom.css" />
     <Content Include="Scripts\Article.List.js" />
+    <Content Include="Scripts\bootstrap-dropdown.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.16.js" />
     <Content Include="Scripts\jquery-ui-1.8.16.min.js" />
@@ -216,6 +218,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Log.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Offer\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\LogIn.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\Register.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

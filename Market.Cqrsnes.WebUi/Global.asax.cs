@@ -68,14 +68,16 @@ namespace Market.Cqrsnes.WebUi
             }
 
             var error = application.Context.Server.GetLastError();
+            var message = "Application level error.";
             var logger = LogManager.GetLogger(typeof(MvcApplication));
+            
             if (error is HttpException)
             {
-                logger.Warn("Application level error.", error);
+                logger.Warn(message, error);
             }
             else
             {
-                logger.Error("Application level error.", error);
+                logger.Error(message, error);
             }
 
             application.Context.Server.ClearError();
@@ -97,34 +99,11 @@ namespace Market.Cqrsnes.WebUi
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                "Error",
-                ERROR_ROUTE,
-                new
-                    {
-                        controller = "Home",
-                        action = "Error",
-                        id = UrlParameter.Optional
-                    },
-                new
-                    {
-                        controller = @"[^\.]*"
-                    });
-
-            routes.MapRoute(
-                "Log",
-                "Log",
-                new
-                {
-                    controller = "Home",
-                    action = "Log",
-                    id = UrlParameter.Optional
-                },
-                new
-                {
-                    controller = @"[^\.]*"
-                });
-
+            RegisterRoute(routes, ERROR_ROUTE, "Home", "Error");
+            RegisterRoute(routes, "Log", "Home", "Log");
+            RegisterRoute(routes, "LogIn", "User", "LogIn");
+            RegisterRoute(routes, "Register", "User", "Register");
+            
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
@@ -138,6 +117,23 @@ namespace Market.Cqrsnes.WebUi
                     {
                         controller = @"[^\.]*"
                     });
+        }
+
+        private void RegisterRoute(RouteCollection routes, string route, string controller, string action)
+        {
+            routes.MapRoute(
+                route,
+                route,
+                new
+                {
+                    controller, 
+                    action,
+                    id = UrlParameter.Optional
+                },
+                new
+                {
+                    controller = @"[^\.]*"
+                });
         }
     }
 }

@@ -8,7 +8,6 @@ using Market.Cqrsnes.Domain.Test;
 using Market.Cqrsnes.Projection;
 using Market.Cqrsnes.Projection.Test;
 using Market.Cqrsnes.WebUi.Models;
-using IDependencyResolver = Cqrsnes.Infrastructure.IDependencyResolver;
 
 namespace Market.Cqrsnes.WebUi.Controllers
 {
@@ -16,18 +15,17 @@ namespace Market.Cqrsnes.WebUi.Controllers
     public class ArticleController : Controller
     {
         private readonly IBus bus;
-        private readonly IDependencyResolver resolver;
+        private readonly IRepository repository;
 
-        public ArticleController(IBus bus, IDependencyResolver resolver)
+        public ArticleController(IBus bus, IRepository repository)
         {
             this.bus = bus;
-            this.resolver = resolver;
+            this.repository = repository;
         }
 
         public ActionResult List()
         {
-            var manager = resolver.Resolve<ArticleViewModelManager>();
-            return View(manager.GetArticleListViewModel());
+            return View(repository.GetAll<Article>());
         }
 
         [HttpPost]
@@ -38,12 +36,12 @@ namespace Market.Cqrsnes.WebUi.Controllers
                 bus.Send(model.IsDelivery
                              ? (Command)new SupplyArticle
                              {
-                                 Id = model.Id,
+                                 OfferId = model.Id,
                                  Count = model.Count
                              }
                              : (Command)new BuyArticle
                              {
-                                 Id = model.Id,
+                                 OfferId = model.Id,
                                  Count = model.Count
                              });
 
@@ -69,12 +67,24 @@ namespace Market.Cqrsnes.WebUi.Controllers
 
         public ActionResult DomainTest()
         {
-            return View("Test", new ArticleSpecifications().ExecuteAll());
+            return View("Test", new /*ArticleSpecifications().ExecuteAll()*/object());
         }
 
         public ActionResult ProjectionTest()
         {
             return View("Test", new ArticleViewModelManagerSpecifications().ExecuteAll());
+        }
+
+        [HttpPost]
+        public ActionResult Create(string name)
+        {
+            bus.Send(new CreateArticle
+                {
+                    Id = Guid.NewGuid(),
+                    Name = name
+                });
+
+            return RedirectToAction("List");
         }
     }
 }
