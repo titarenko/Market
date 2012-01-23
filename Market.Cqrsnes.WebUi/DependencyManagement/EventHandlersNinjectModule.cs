@@ -5,8 +5,14 @@ using Ninject.Modules;
 
 namespace Market.Cqrsnes.WebUi.DependencyManagement
 {
+    /// <summary>
+    /// Binds event handlers.
+    /// </summary>
     public class EventHandlersNinjectModule : NinjectModule
     {
+        /// <summary>
+        /// Loads the module into the kernel.
+        /// </summary>
         public override void Load()
         {
             Route<UserCreated, UserEventHandler>();
@@ -16,6 +22,8 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
             Route<StoreCreated, StoreEventHandler>();
 
             Route<ArticleCreated, ArticleEventHandler>();
+
+            Route<OfferCreated, OfferEventHandler>();
         }
 
         private void Route<TEvent, THandler>() 
@@ -24,7 +32,7 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
         {
             Bind<IEventHandler<TEvent>>()
                 .To<THandler>()
-                .InSingletonScope();
+                .InThreadScope();
         }
     }
 }
