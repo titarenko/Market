@@ -34,10 +34,12 @@
                                 <li class="active"><a href="#">Projection</a></li>
                             </ul>
                         </li>
+                        @Html.NavigationLink("Log", "Log", "Home")
                     </ul>
                     @if (!User.Identity.IsAuthenticated)
                     {
                         <form action="@Url.Action("LogIn", "User")" method="POST" class="pull-right">
+                            <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl"/>
                             <input class="input-small" type="text" name="name" placeholder="Name">
                             <input class="input-small" type="password" name="password" placeholder="Password">
                             <button class="btn" type="submit">Log In</button>

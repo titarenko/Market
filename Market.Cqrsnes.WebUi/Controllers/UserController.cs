@@ -81,9 +81,9 @@ namespace Market.Cqrsnes.WebUi.Controllers
         /// <returns>
         /// Log in page.
         /// </returns>
-        public ActionResult LogIn()
+        public ActionResult LogIn(string returnUrl)
         {
-            return View();
+            return View(returnUrl as object);
         }
 
         /// <summary>

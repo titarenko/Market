@@ -1,4 +1,5 @@
-﻿using Cqrsnes.Infrastructure;
+﻿using System.Collections.Generic;
+using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain.Events;
 
 namespace Market.Cqrsnes.Projection
@@ -21,6 +22,13 @@ namespace Market.Cqrsnes.Projection
                     Name = @event.Name,
                     OwnerId = @event.OwnerId,
                     OwnerName = repository.GetById<User>(@event.OwnerId).Name
+                });
+
+            repository.Save(new StoreOffers
+                {
+                    Id = @event.Id,
+                    Name = @event.Name,
+                    Offers = new List<Offer>()
                 });
         }
     }
