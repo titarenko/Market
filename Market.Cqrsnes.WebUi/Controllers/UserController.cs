@@ -30,7 +30,13 @@ namespace Market.Cqrsnes.WebUi.Controllers
             this.repository = repository;
             this.context = context;
         }
-
+        
+        /// <summary>
+        /// Renders registration page.
+        /// </summary>
+        /// <returns>
+        /// Registration page.
+        /// </returns>
         public ActionResult Register()
         {
             return View();
@@ -69,6 +75,12 @@ namespace Market.Cqrsnes.WebUi.Controllers
             return RedirectToHomePage();
         }
 
+        /// <summary>
+        /// Renders log in page.
+        /// </summary>
+        /// <returns>
+        /// Log in page.
+        /// </returns>
         public ActionResult LogIn()
         {
             return View();
@@ -83,11 +95,12 @@ namespace Market.Cqrsnes.WebUi.Controllers
         /// <param name="password">
         /// The password.
         /// </param>
+        /// <param name="returnUrl">The return URL.</param>
         /// <returns>
         /// Redirect to home page.
         /// </returns>
         [HttpPost]
-        public ActionResult LogIn(string name, string password)
+        public ActionResult LogIn(string name, string password, string returnUrl)
         {
             bus.Send(new LogIn
                 {
@@ -97,7 +110,12 @@ namespace Market.Cqrsnes.WebUi.Controllers
                     Password = password
                 });
 
-            return RedirectToHomePage();
+            if (string.IsNullOrWhiteSpace(returnUrl))
+            {
+                return RedirectToHomePage();
+            }
+            
+            return Redirect(returnUrl);
         }
 
         /// <summary>
