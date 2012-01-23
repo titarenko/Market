@@ -72,6 +72,7 @@
     <Compile Include="HtmlHelpers\NavigationHelper.cs" />
     <Compile Include="Models\ChangeCountViewModel.cs" />
     <Compile Include="Models\CreateArticleViewModel.cs" />
+    <Compile Include="Models\StoreOffersViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -162,7 +163,7 @@
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -203,9 +204,6 @@
       <Project>{865D0EBC-AEAD-4C38-8FD7-742D0C10590B}</Project>
       <Name>Market.Cqrsnes.Projection</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\User\List.cshtml" />

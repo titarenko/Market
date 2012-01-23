@@ -7,7 +7,7 @@ namespace Market.Cqrsnes.Projection
     {
         public Guid Id { get; set; }
 
-        public string StoreName { get; set; }
+        public string Name { get; set; }
 
         public IList<Offer> Offers { get; set; }
     }
