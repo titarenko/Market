@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain.Commands;
 using Market.Cqrsnes.Projection;
+using Market.Cqrsnes.WebUi.Models;
 
 namespace Market.Cqrsnes.WebUi.Controllers
 {
@@ -56,7 +58,15 @@ namespace Market.Cqrsnes.WebUi.Controllers
         /// </returns>
         public ActionResult Offers(Guid id)
         {
-            return View(repository.GetById<StoreOffers>(id));
+            return View(new StoreOffersViewModel
+                {
+                    Articles = repository.GetAll<Article>().Select(x => new SelectListItem
+                        {
+                            Text = x.Name,
+                            Value = x.Id.ToString()
+                        }).ToArray(),
+                    StoreOffers = repository.GetById<StoreOffers>(id)
+                });
         }
 
         /// <summary>
