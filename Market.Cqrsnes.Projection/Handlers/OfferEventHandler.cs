@@ -41,7 +41,10 @@ namespace Market.Cqrsnes.Projection.Handlers
                 };
 
             repository.Save(offer);
+
+            repository.Change<Store>(@event.StoreId, x => x.OffersCount++);
             repository.Change<StoreOffers>(@event.StoreId, x => x.Offers.Add(offer));
+            repository.Change<Article>(@event.ArticleId, x => x.OffersCount++);
         }
     }
 }
