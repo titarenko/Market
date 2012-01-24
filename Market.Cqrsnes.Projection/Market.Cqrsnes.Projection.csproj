@@ -36,21 +36,17 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Article.cs" />
-    <Compile Include="ArticleEventHandler.cs" />
-    <Compile Include="ArticleListViewModel.cs" />
-    <Compile Include="ArticleViewModel.cs" />
-    <Compile Include="ArticleViewModelManager.cs" />
-    <Compile Include="ISystemContext.cs" />
-    <Compile Include="Offer.cs" />
-    <Compile Include="OfferEventHandler.cs" />
+    <Compile Include="Handlers\ArticleEventHandler.cs" />
+    <Compile Include="Handlers\OfferEventHandler.cs" />
+    <Compile Include="Handlers\StoreEventHandler.cs" />
+    <Compile Include="Handlers\UserEventHandler.cs" />
+    <Compile Include="Models\Article.cs" />
+    <Compile Include="Models\ISystemContext.cs" />
+    <Compile Include="Models\Offer.cs" />
+    <Compile Include="Models\Store.cs" />
+    <Compile Include="Models\StoreOffers.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Store.cs" />
-    <Compile Include="StoreEventHandler.cs" />
-    <Compile Include="StoreOffers.cs" />
-    <Compile Include="User.cs" />
-    <Compile Include="UserEventHandler.cs" />
-    <Compile Include="UserList.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cqrsnes.Infrastructure\Cqrsnes.Infrastructure.csproj">

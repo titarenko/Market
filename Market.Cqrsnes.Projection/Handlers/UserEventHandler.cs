@@ -1,9 +1,8 @@
-﻿using System;
 using Cqrsnes.Infrastructure;
-using Market.Cqrsnes.Domain.Entities;
 using Market.Cqrsnes.Domain.Events;
+using Market.Cqrsnes.Projection.Models;
 
-namespace Market.Cqrsnes.Projection
+namespace Market.Cqrsnes.Projection.Handlers
 {
     public class UserEventHandler :
         IEventHandler<UserCreated>,

@@ -72,8 +72,6 @@
     <Compile Include="Infrastructure\Identity.cs" />
     <Compile Include="Infrastructure\Principal.cs" />
     <Compile Include="Infrastructure\WebSystemContext.cs" />
-    <Compile Include="Models\ChangeCountViewModel.cs" />
-    <Compile Include="Models\CreateArticleViewModel.cs" />
     <Compile Include="Models\StoreOffersViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

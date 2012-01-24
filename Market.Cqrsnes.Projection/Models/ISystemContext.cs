@@ -1,6 +1,6 @@
 using System.Security.Principal;
 
-namespace Market.Cqrsnes.Projection
+namespace Market.Cqrsnes.Projection.Models
 {
     /// <summary>
     /// Defines system context.

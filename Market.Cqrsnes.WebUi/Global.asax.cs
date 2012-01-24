@@ -2,6 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Market.Cqrsnes.Projection.Models;
 using log4net;
 using log4net.Config;
 using Market.Cqrsnes.Projection;

@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain.Events;
+using Market.Cqrsnes.Projection.Models;
 
-namespace Market.Cqrsnes.Projection
+namespace Market.Cqrsnes.Projection.Handlers
 {
     public class StoreEventHandler :
         IEventHandler<StoreCreated>

@@ -1,11 +1,11 @@
-﻿using Cqrsnes.Infrastructure;
+using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain.Events;
+using Market.Cqrsnes.Projection.Models;
 
-namespace Market.Cqrsnes.Projection
+namespace Market.Cqrsnes.Projection.Handlers
 {
     public class ArticleEventHandler :
         IEventHandler<ArticleCreated>,
-        IEventHandler<OfferCreated>,
         IEventHandler<PriceChanged>
     {
         private readonly IRepository repository;
@@ -13,23 +13,6 @@ namespace Market.Cqrsnes.Projection
         public ArticleEventHandler(IRepository repository)
         {
             this.repository = repository;
-        }
-
-        /// <summary>
-        /// Handles (reacts to) event.
-        /// </summary>
-        /// <param name="event">Event instance.</param>
-        public void Handle(OfferCreated @event)
-        {
-            repository.Save(new Article
-                {
-                    Id = @event.Id,
-                    Name = @event.Name,
-                    StoreId = @event.StoreId,
-                    StoreName = repository.GetById<Store>(@event.StoreId).Name,
-                    Count = 0,
-                    Price = 0
-                });
         }
 
         /// <summary>

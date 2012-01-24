@@ -1,7 +1,8 @@
-﻿using Cqrsnes.Infrastructure;
+using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain.Events;
+using Market.Cqrsnes.Projection.Models;
 
-namespace Market.Cqrsnes.Projection
+namespace Market.Cqrsnes.Projection.Handlers
 {
     /// <summary>
     /// Handles offer-related events.

@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Market.Cqrsnes.Projection
+namespace Market.Cqrsnes.Projection.Models
 {
     public class Offer
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Market.Cqrsnes.Projection
+namespace Market.Cqrsnes.Projection.Models
 {
     public class StoreOffers
     {

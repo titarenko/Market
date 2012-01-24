@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain.Commands;
 using Market.Cqrsnes.Projection;
+using Market.Cqrsnes.Projection.Models;
 
 namespace Market.Cqrsnes.WebUi.Controllers
 {

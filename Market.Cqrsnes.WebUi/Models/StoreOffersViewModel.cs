@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using Market.Cqrsnes.Projection;
+using Market.Cqrsnes.Projection.Models;
 
 namespace Market.Cqrsnes.WebUi.Models
 {

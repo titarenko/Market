@@ -3,6 +3,7 @@ using System.Security.Principal;
 using System.Web;
 using System.Web.Caching;
 using Market.Cqrsnes.Projection;
+using Market.Cqrsnes.Projection.Models;
 
 namespace Market.Cqrsnes.WebUi.Infrastructure
 {
