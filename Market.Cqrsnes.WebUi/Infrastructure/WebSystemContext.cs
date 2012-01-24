@@ -69,17 +69,28 @@ namespace Market.Cqrsnes.WebUi.Infrastructure
         {
             var context = GetContext();
 
-            var key = Guid.NewGuid().ToString();
+            if (user != null)
+            {
+                var key = Guid.NewGuid().ToString();
 
-            context.Response.Cookies.Add(new HttpCookie(SESSION_KEY, key));
-            context.Cache.Add(
-                key,
-                user,
-                null,
-                Cache.NoAbsoluteExpiration,
-                Cache.NoSlidingExpiration,
-                CacheItemPriority.NotRemovable,
-                null);
+                context.Response.Cookies.Add(new HttpCookie(SESSION_KEY, key));
+                context.Cache.Add(
+                    key,
+                    user,
+                    null,
+                    Cache.NoAbsoluteExpiration,
+                    Cache.NoSlidingExpiration,
+                    CacheItemPriority.NotRemovable,
+                    null);
+            }
+            else
+            {
+                var cookie = context.Request.Cookies[SESSION_KEY];
+                if (cookie != null)
+                {
+                    context.Cache.Remove(cookie.Value);
+                }
+            }
         }
 
         private HttpContextBase GetContext()

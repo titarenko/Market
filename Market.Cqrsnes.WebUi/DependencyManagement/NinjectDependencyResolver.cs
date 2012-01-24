@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cqrsnes.Infrastructure;
 using Ninject;
 
 namespace Market.Cqrsnes.WebUi.DependencyManagement
 {
-    public class NinjectDependencyResolver : IDependencyResolver
+    public class NinjectDependencyResolver :
+        IDependencyResolver,
+        System.Web.Mvc.IDependencyResolver
     {
         private readonly IKernel kernel;
 
@@ -33,6 +36,16 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
         public T Resolve<T>()
         {
             return kernel.Get<T>();
+        }
+
+        public object GetService(Type serviceType)
+        {
+            return Resolve(serviceType);
+        }
+
+        public IEnumerable<object> GetServices(Type serviceType)
+        {
+            return ResolveMultiple(serviceType).Cast<object>();
         }
     }
 }

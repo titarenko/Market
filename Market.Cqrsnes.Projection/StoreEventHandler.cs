@@ -28,7 +28,8 @@ namespace Market.Cqrsnes.Projection
                 {
                     Id = @event.Id,
                     Name = @event.Name,
-                    Offers = new List<Offer>()
+                    Offers = new List<Offer>(),
+                    OwnerId = @event.OwnerId
                 });
         }
     }

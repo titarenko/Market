@@ -25,6 +25,10 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
                 .To<NinjectDependencyResolver>()
                 .InSingletonScope();
 
+            Bind<System.Web.Mvc.IDependencyResolver>()
+                .To<NinjectDependencyResolver>()
+                .InSingletonScope();
+
             Bind<IBus>()
                 .To<SimpleBus>()
                 .InSingletonScope();

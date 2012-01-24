@@ -1,4 +1,6 @@
-﻿@model Market.Cqrsnes.WebUi.Models.StoreOffersViewModel
+﻿@using Market.Cqrsnes.Projection
+@using Market.Cqrsnes.WebUi
+@model Market.Cqrsnes.WebUi.Models.StoreOffersViewModel
 
 @{
     ViewBag.Title = "Offers";
@@ -32,27 +34,30 @@ else
     <p>There are no offers yet.</p>
 }
 
-<br/>
+@if (WebApplication.SystemContext.User.Id == Model.StoreOffers.OwnerId)
+{
+    <br/>
 
-<form action="@Url.Action("Create", "Offer")" method="POST">
-    <input type="hidden" name="StoreId" value="@Model.StoreOffers.Id"/>
-    <div class="clearfix">
-        <label for="articleId">Article:</label>
-        <div class="input">
-            @Html.DropDownList("articleId", Model.Articles)
+    <form action="@Url.Action("Create", "Offer")" method="POST">
+        <input type="hidden" name="StoreId" value="@Model.StoreOffers.Id"/>
+        <div class="clearfix">
+            <label for="articleId">Article:</label>
+            <div class="input">
+                @Html.DropDownList("articleId", Model.Articles)
+            </div>
         </div>
-    </div>
-    <div class="clearfix">
-        <label for="price">Price:</label>
-        <div class="input">
-            <input type="text" id="price" class="input-small" name="price"/>
+        <div class="clearfix">
+            <label for="price">Price:</label>
+            <div class="input">
+                <input type="text" id="price" class="input-small" name="price"/>
+            </div>
         </div>
-    </div>
-    <div class="clearfix">
-        <label for="count">Count:</label>
-        <div class="input">
-            <input type="text" id="count" class="input-small" name="count"/>
-            <button class="btn" type="submit">Create new</button>
+        <div class="clearfix">
+            <label for="count">Count:</label>
+            <div class="input">
+                <input type="text" id="count" class="input-small" name="count"/>
+                <button class="btn" type="submit">Create new</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+}

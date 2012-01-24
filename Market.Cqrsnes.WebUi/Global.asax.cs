@@ -16,18 +16,44 @@ namespace Market.Cqrsnes.WebUi
     /// <summary>
     /// Represents web application.
     /// </summary>
-    public class MvcApplication : NinjectHttpApplication
+    public class WebApplication : NinjectHttpApplication
     {
         private const string ERROR_ROUTE = "Error";
 
+        private static readonly object syncRoot = new object();
+        private static IKernel kernel;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="MvcApplication"/> class.
+        /// Initializes a new instance of the <see cref="WebApplication"/> class.
         /// </summary>
-        public MvcApplication()
+        public WebApplication()
         {
             // force initialization of system context at begin of request
             BeginRequest += (sender, args) => Kernel.Get<ISystemContext>();
             Error += OnError;
+        }
+
+        /// <summary>
+        /// Gets system context instance.
+        /// </summary>
+        /// <remarks>
+        /// Temporal solution. Will be available until view dependency injection is implemented.
+        /// </remarks>
+        public static ISystemContext SystemContext
+        {
+            get
+            {
+                lock (syncRoot)
+                {
+                    if (kernel == null)
+                    {
+                        throw new ApplicationException(
+                            "Context of application was accessed before its instantiation.");
+                    }
+
+                    return kernel.Get<ISystemContext>();
+                }
+            }
         }
 
         /// <summary>
@@ -37,6 +63,7 @@ namespace Market.Cqrsnes.WebUi
         {
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
             XmlConfigurator.Configure();
         }
 
@@ -48,10 +75,13 @@ namespace Market.Cqrsnes.WebUi
         /// </returns>
         protected override IKernel CreateKernel()
         {
-            return new StandardKernel(
-                new InfrastructureNinjectModule(),
-                new CommandHandlersNinjectModule(),
-                new EventHandlersNinjectModule());
+            lock (syncRoot)
+            {
+                return kernel = new StandardKernel(
+                                    new InfrastructureNinjectModule(),
+                                    new CommandHandlersNinjectModule(),
+                                    new EventHandlersNinjectModule());
+            }
         }
 
         private void OnError(object sender, EventArgs eventArgs)
@@ -64,7 +94,7 @@ namespace Market.Cqrsnes.WebUi
 
             var error = application.Context.Server.GetLastError();
             var message = "Application level error.";
-            var logger = LogManager.GetLogger(typeof(MvcApplication));
+            var logger = LogManager.GetLogger(typeof(WebApplication));
             
             if (error is HttpException)
             {

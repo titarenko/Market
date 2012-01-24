@@ -4,13 +4,17 @@
 }
 
 <form action="@Url.Action("Register", "User")" method="POST">
-    <div class="input">
+    <div class="clearfix">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name"/>
+        <div class="input">
+            <input type="text" id="name" name="name"/>
+        </div>
     </div>
-    <div class="input">
+    <div class="clearfix">
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password"/>
-        <button class="btn" type="submit">Register</button>
+        <div class="input">
+            <input type="password" id="password" name="password"/>
+            <button class="btn" type="submit">Register</button>
+        </div>
     </div>
 </form>
