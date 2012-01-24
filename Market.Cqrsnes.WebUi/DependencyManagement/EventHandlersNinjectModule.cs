@@ -1,6 +1,5 @@
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain.Events;
-using Market.Cqrsnes.Projection;
 using Market.Cqrsnes.Projection.Handlers;
 using Ninject.Modules;
 
@@ -19,6 +18,7 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
             Route<UserCreated, UserEventHandler>();
             Route<UserLoggedIn, UserEventHandler>();
             Route<UserLoggedOut, UserEventHandler>();
+            Route<BalanceIncreased, UserEventHandler>();
 
             Route<StoreCreated, StoreEventHandler>();
 

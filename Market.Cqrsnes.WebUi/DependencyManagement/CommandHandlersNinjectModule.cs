@@ -18,6 +18,7 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
             Route<CreateUser, UserCommandHandler>();
             Route<LogIn, UserCommandHandler>();
             Route<LogOut, UserCommandHandler>();
+            Route<GiveMoney, UserCommandHandler>();
 
             Route<CreateStore, StoreCommandHandler>();
 

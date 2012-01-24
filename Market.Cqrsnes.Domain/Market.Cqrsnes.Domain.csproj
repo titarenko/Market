@@ -41,6 +41,7 @@
     <Compile Include="Commands\CreateOffer.cs" />
     <Compile Include="Commands\CreateStore.cs" />
     <Compile Include="Commands\CreateUser.cs" />
+    <Compile Include="Commands\GiveMoney.cs" />
     <Compile Include="Commands\SupplyArticle.cs" />
     <Compile Include="Commands\LogIn.cs" />
     <Compile Include="Commands\LogOut.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="Events\ArticleCreated.cs" />
     <Compile Include="Events\ArticleReservationFailed.cs" />
     <Compile Include="Events\ArticleReserved.cs" />
+    <Compile Include="Events\BalanceIncreased.cs" />
     <Compile Include="Events\OfferCreated.cs" />
     <Compile Include="Events\ArticleDelivered.cs" />
     <Compile Include="Events\PriceChanged.cs" />

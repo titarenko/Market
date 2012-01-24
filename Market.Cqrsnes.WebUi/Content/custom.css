@@ -144,3 +144,7 @@ td:first-child
 {
     width: 64%;
 }
+
+table .input {
+    margin: 0;
+}

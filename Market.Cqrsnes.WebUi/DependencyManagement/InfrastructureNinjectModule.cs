@@ -1,7 +1,6 @@
 using Cqrsnes.Infrastructure;
 using Cqrsnes.Infrastructure.Impl;
 using Market.Cqrsnes.Domain.Utility;
-using Market.Cqrsnes.Projection;
 using Market.Cqrsnes.Projection.Models;
 using Market.Cqrsnes.WebUi.Infrastructure;
 using Ninject;

@@ -7,7 +7,8 @@ namespace Market.Cqrsnes.Projection.Handlers
     public class UserEventHandler :
         IEventHandler<UserCreated>,
         IEventHandler<UserLoggedIn>,
-        IEventHandler<UserLoggedOut>
+        IEventHandler<UserLoggedOut>,
+        IEventHandler<BalanceIncreased>
     {
         private readonly ISystemContext context;
         private readonly IRepository repository;
@@ -43,6 +44,12 @@ namespace Market.Cqrsnes.Projection.Handlers
             {
                 throw new PossibleConcurrencyProblemException();
             }
+        }
+
+        public void Handle(BalanceIncreased @event)
+        {
+            repository.Change<User>(
+                @event.UserId, x => x.Balance += @event.Amount);
         }
     }
 }

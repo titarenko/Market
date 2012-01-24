@@ -109,6 +109,23 @@ namespace Market.Cqrsnes.Domain.Entities
         }
 
         /// <summary>
+        /// Increases balance by given amount.
+        /// </summary>
+        /// <param name="amount">
+        /// The amount.
+        /// </param>
+        public void IncreaseBalance(double amount)
+        {
+            amount.ShouldBePositive("amount");
+
+            ApplyChange(new BalanceIncreased
+            {
+                UserId = id,
+                Amount = amount
+            });
+        }
+
+        /// <summary>
         /// Performs changes caused by event.
         /// </summary>
         /// <param name="event">Event.</param>

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain.Commands;
-using Market.Cqrsnes.Projection;
 using Market.Cqrsnes.Projection.Models;
 
 namespace Market.Cqrsnes.WebUi.Controllers
@@ -79,6 +78,9 @@ namespace Market.Cqrsnes.WebUi.Controllers
         /// <summary>
         /// Renders log in page.
         /// </summary>
+        /// <param name="returnUrl">
+        /// The return URL.
+        /// </param>
         /// <returns>
         /// Log in page.
         /// </returns>
@@ -148,6 +150,24 @@ namespace Market.Cqrsnes.WebUi.Controllers
         public ActionResult List()
         {
             return View(repository.GetAll<User>());
+        }
+
+        /// <summary>
+        /// Increases user's balance.
+        /// </summary>
+        /// <param name="userId">User identifier.</param>
+        /// <param name="amount">Amount.</param>
+        /// <returns>Redirect to list of users.</returns>
+        [HttpPost]
+        public ActionResult GiveMoney(Guid userId, double amount)
+        {
+            bus.Send(new GiveMoney
+                {
+                    UserId = userId,
+                    Amount = amount
+                });
+
+            return RedirectToAction("List");
         }
 
         private RedirectToRouteResult RedirectToHomePage()

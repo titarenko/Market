@@ -11,7 +11,8 @@ namespace Market.Cqrsnes.Domain.Handlers
     public class UserCommandHandler : 
         ICommandHandler<CreateUser>, 
         ICommandHandler<LogIn>,
-        ICommandHandler<LogOut>
+        ICommandHandler<LogOut>,
+        ICommandHandler<GiveMoney>
     {
         private readonly IAggregateRootRepository repository;
         private readonly IPasswordHashGenerator generator;
@@ -58,6 +59,12 @@ namespace Market.Cqrsnes.Domain.Handlers
         {
             repository.PerformAction<User>(
                 command.UserId, x => x.LogOut());
+        }
+
+        public void Handle(GiveMoney command)
+        {
+            repository.PerformAction<User>(
+                command.UserId, x => x.IncreaseBalance(command.Amount));
         }
     }
 }
