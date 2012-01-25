@@ -112,7 +112,12 @@ a:hover {
 }
 
 .step:not(.active) {
-    opacity: 0.25;
+    opacity: 0;
+}
+
+.cancel {
+    text-decoration: line-through;
+    opacity: 0.5;
 }
 
 /* STEP SPECIFIC STYLES */
