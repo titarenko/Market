@@ -97,6 +97,8 @@ a:hover {
     font-family: 'PT Serif', georgia, serif;
 
     font-size: 26px;
+
+    background: url(binary-studio2.png) no-repeat right bottom;
     	
 	border: 1px gray dotted;
 }
@@ -202,21 +204,28 @@ a:hover {
 
 /*************************************/
 
+ul {
+    margin-top: 30px;
+}
+
 ul li {
-    margin: 12px;
+    margin-left: 40px;
     list-style: disc;
-	padding: 20px;
+	padding: 10px;
+    line-height: 1.5;
 }
 
 .step h1 {
     text-align: right;
 	font-size: 75px;
+    text-shadow: 3px 3px 3px #aaa;
 }
 
 .step h2 {
 	font-size: 35px;
 	margin-top: 20px;
 	line-height: 1.25;
+    text-shadow: 1px 1px 4px #888;
 }
 
 .step img {
@@ -224,6 +233,7 @@ ul li {
 	display: block;   
 	margin-left: auto;   
 	margin-right: auto;
+    box-shadow: 6px 6px 12px #888;
 }
 
 /**********************/
