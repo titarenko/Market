@@ -1,3 +1,5 @@
+/* RESETS */
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -43,6 +45,7 @@ table {
     border-spacing: 0;
 }
 
+/* GLOBAL */
 
 body {
     font-family: 'PT Sans', sans-serif;
@@ -82,7 +85,7 @@ a:hover {
     text-shadow: -1px -1px 2px rgba(100,100,100,0.5);
 }
 
-/* COMMON STEP STYLES */
+/* COMMON */
 
 .step {
     width: 800px;
@@ -95,18 +98,11 @@ a:hover {
     box-sizing:         border-box;
 
     font-family: 'PT Serif', georgia, serif;
-
     font-size: 26px;
 
     background: url(binary-studio2.png) no-repeat right bottom;
     	
-	border: 1px gray dotted;
-}
-
-/* fade out inactive slides */
-
-.step {
-    -webkit-transition: opacity 1s;
+	-webkit-transition: opacity 1s;
     -moz-transition:    opacity 1s;
     -ms-transition:     opacity 1s;
     -o-transition:      opacity 1s;
@@ -122,27 +118,60 @@ a:hover {
     opacity: 0.5;
 }
 
-/* STEP SPECIFIC STYLES */
+ul {
+    margin-top: 30px;
+}
 
-/* hint on the first slide */
+ul li {
+    margin-left: 40px;
+    list-style: disc;
+	padding: 10px;
+    line-height: 1.5;
+}
+
+.step h1 {
+    text-align: right;
+	font-size: 75px;
+    text-shadow: 3px 3px 3px #aaa;
+}
+
+.step h2 {
+	font-size: 35px;
+	margin-top: 20px;
+	line-height: 1.25;
+    text-shadow: 1px 1px 4px #888;
+}
+
+.step img {
+	margin-top: 40px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+    box-shadow: 6px 6px 12px #888;
+}
+
+.disclaimer {
+    margin-top: 40px;
+    line-height: 1.1;
+}
 
 .hint {
     position: fixed;
     left: 0;
     right: 0;
     bottom: 200px;
-    
+
     background: rgba(0,0,0,0.5);
     color: #EEE;
     text-align: center;
-    
+
     font-size: 50px;
     padding: 20px;
-    
+
     z-index: 100;
-    
+
     opacity: 0;
-    
+
     -webkit-transform: translateY(400px);
     -moz-transform:    translateY(400px);
     -ms-transform:     translateY(400px);
@@ -158,18 +187,41 @@ a:hover {
 
 .step-title + .hint {
     opacity: 1;
-    
+
     -webkit-transition: opacity 1s 5s, -webkit-transform 0.5s;
     -moz-transition:    opacity 1s 5s,    -moz-transform 0.5s;
     -ms-transition:     opacity 1s 5s,     -ms-transform 0.5s;
     -o-transition:      opacity 1s 5s,      -o-transform 0.5s;
     transition:         opacity 1s 5s,         transform 0.5s;
-    
+
     -webkit-transform: translateY(0px);
     -moz-transform:    translateY(0px);
     -ms-transform:     translateY(0px);
     -o-transform:      translateY(0px);
     transform:         translateY(0px);
+}
+
+/* SPECIFIC */
+
+#title {
+	background: url(binary-studio.png) no-repeat right bottom;
+}
+
+#title h1 {
+    text-align: left;
+}
+
+#title h1, h2 {
+	line-height: 1.3;
+}
+
+#title h2 {
+    margin-bottom: 30px;
+}
+
+#title h3 {
+	line-height: 1.3;
+    font-size: 75%;
 }
 
 /* IMPRESS NOT SUPPORTED STYLES */
@@ -200,52 +252,4 @@ a:hover {
 
 .impress-not-supported .fallback-message {
     display: block;
-}
-
-/*************************************/
-
-ul {
-    margin-top: 30px;
-}
-
-ul li {
-    margin-left: 40px;
-    list-style: disc;
-	padding: 10px;
-    line-height: 1.5;
-}
-
-.step h1 {
-    text-align: right;
-	font-size: 75px;
-    text-shadow: 3px 3px 3px #aaa;
-}
-
-.step h2 {
-	font-size: 35px;
-	margin-top: 20px;
-	line-height: 1.25;
-    text-shadow: 1px 1px 4px #888;
-}
-
-.step img {
-	margin-top: 40px;
-	display: block;   
-	margin-left: auto;   
-	margin-right: auto;
-    box-shadow: 6px 6px 12px #888;
-}
-
-/**********************/
-
-#title {
-	background: url(binary-studio.png) no-repeat right bottom;
-}
-
-#title h1 {
-    text-align: left;
-}
-
-#title h1, h2 {
-	line-height: 1.3;
 }
