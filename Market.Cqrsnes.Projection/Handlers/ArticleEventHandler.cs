@@ -5,25 +5,13 @@ using Market.Cqrsnes.Projection.Models;
 namespace Market.Cqrsnes.Projection.Handlers
 {
     public class ArticleEventHandler :
-        IEventHandler<ArticleCreated>,
-        IEventHandler<PriceChanged>
+        IEventHandler<ArticleCreated>
     {
         private readonly IRepository repository;
 
         public ArticleEventHandler(IRepository repository)
         {
             this.repository = repository;
-        }
-
-        /// <summary>
-        /// Handles (reacts to) event.
-        /// </summary>
-        /// <param name="event">Event instance.</param>
-        public void Handle(PriceChanged @event)
-        {
-            repository.Change<Offer>(
-                @event.OfferId,
-                offer => offer.Price = @event.Price);
         }
 
         /// <summary>

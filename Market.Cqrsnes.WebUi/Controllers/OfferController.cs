@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain.Commands;
-using Market.Cqrsnes.Projection;
 using Market.Cqrsnes.Projection.Models;
 
 namespace Market.Cqrsnes.WebUi.Controllers
@@ -14,6 +13,7 @@ namespace Market.Cqrsnes.WebUi.Controllers
     {
         private readonly IBus bus;
         private readonly IRepository repository;
+        private readonly ISystemContext context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OfferController"/> class.
@@ -24,10 +24,12 @@ namespace Market.Cqrsnes.WebUi.Controllers
         /// <param name="repository">
         /// The repository.
         /// </param>
-        public OfferController(IBus bus, IRepository repository)
+        /// <param name="context">The context.</param>
+        public OfferController(IBus bus, IRepository repository, ISystemContext context)
         {
             this.bus = bus;
             this.repository = repository;
+            this.context = context;
         }
 
         /// <summary>
@@ -62,6 +64,11 @@ namespace Market.Cqrsnes.WebUi.Controllers
         [HttpPost]
         public ActionResult Create(Guid storeId, Guid articleId, int count, double price)
         {
+            if (context.User.Id != repository.GetById<Store>(storeId).OwnerId)
+            {
+                throw new ApplicationException("Only owner can create the offer.");
+            }
+
             bus.Send(new CreateOffer
                 {
                     Id = Guid.NewGuid(),

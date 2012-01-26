@@ -9,7 +9,6 @@ namespace Market.Cqrsnes.Domain.Handlers
     /// </summary>
     public class ArticleCommandHandler : 
         ICommandHandler<CreateArticle>,
-        ICommandHandler<SupplyArticle>,
         ICommandHandler<BuyArticle>
     {
         private readonly IAggregateRootRepository repository;
@@ -32,17 +31,6 @@ namespace Market.Cqrsnes.Domain.Handlers
         public void Handle(CreateArticle command)
         {
             repository.Save(new Article(command.Id, command.Name));
-        }
-
-        /// <summary>
-        /// Handles (reacts to) command.
-        /// </summary>
-        /// <param name="command">Command instance.</param>
-        public void Handle(SupplyArticle command)
-        {
-            repository.PerformAction<Offer>(
-                command.OfferId, 
-                offer => offer.Supply(command.Count));
         }
 
         /// <summary>

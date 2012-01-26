@@ -4,7 +4,7 @@ using Cqrsnes.Infrastructure;
 namespace Market.Cqrsnes.Domain.Commands
 {
     /// <summary>
-    /// Indicates that user's balance should be increased.
+    /// Specifies that user's balance should be increased.
     /// </summary>
     public class GiveMoney : Command
     {

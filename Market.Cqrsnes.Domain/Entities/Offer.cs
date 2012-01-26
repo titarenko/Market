@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain.Events;
 using Market.Cqrsnes.Domain.Utility;
@@ -10,11 +11,11 @@ namespace Market.Cqrsnes.Domain.Entities
     /// </summary>
     public class Offer : AggregateRoot,
         IChangeAcceptor<OfferCreated>,
-        IChangeAcceptor<ArticleSupplied>,
         IChangeAcceptor<ArticleReserved>,
-        IChangeAcceptor<PriceChanged>,
-        IChangeAcceptor<ReservationCanceled>
+        IChangeAcceptor<ReservationCanceled>,
+        IChangeAcceptor<CountDecreased>
     {
+        private readonly IList<Guid> pendingPurchases = new List<Guid>();
         private double price;
         private int count;
 
@@ -61,23 +62,6 @@ namespace Market.Cqrsnes.Domain.Entities
         }
 
         /// <summary>
-        /// Increases count of article units.
-        /// </summary>
-        /// <param name="count">
-        /// The count.
-        /// </param>
-        public void Supply(int count)
-        {
-            count.ShouldBePositive("count");
-
-            ApplyChange(new ArticleSupplied
-                {
-                    OfferId = id,
-                    Count = count
-                });
-        }
-
-        /// <summary>
         /// Reserves certain amount of article for given customer.
         /// </summary>
         /// <param name="count">
@@ -117,36 +101,26 @@ namespace Market.Cqrsnes.Domain.Entities
         /// <param name="count">
         /// The count.
         /// </param>
-        /// <param name="customerId">
+        /// <param name="purchaseId">
         /// The customer id.
         /// </param>
-        public void CancelReservation(int count, Guid customerId)
+        public void CancelReservation(int count, Guid purchaseId)
         {
             count.ShouldBePositive("count");
+            purchaseId.ShouldNotBeEmpty("purchaseId");
 
-            ApplyChange(new ReservationCanceled
+            if (pendingPurchases.Contains(purchaseId))
+            {
+                ApplyChange(new ReservationCanceled
                 {
                     OfferId = id,
-                    CustomerId = customerId,
+                    PurchaseId = purchaseId,
                     Count = count
                 });
-        }
+            }
 
-        /// <summary>
-        /// Changes price.
-        /// </summary>
-        /// <param name="price">
-        /// The price.
-        /// </param>
-        public void ChangePrice(double price)
-        {
-            price.ShouldBePositive("price");
-
-            ApplyChange(new PriceChanged
-                {
-                    OfferId = id,
-                    Price = price
-                });
+            throw new ApplicationException(
+                "Can't cancel reservation for unknown purchase.");
         }
 
         /// <summary>
@@ -164,27 +138,10 @@ namespace Market.Cqrsnes.Domain.Entities
         /// Performs changes caused by event.
         /// </summary>
         /// <param name="event">Event.</param>
-        public void Accept(ArticleSupplied @event)
-        {
-            count += @event.Count;
-        }
-
-        /// <summary>
-        /// Performs changes caused by event.
-        /// </summary>
-        /// <param name="event">Event.</param>
         public void Accept(ArticleReserved @event)
         {
             count -= @event.Count;
-        }
-
-        /// <summary>
-        /// Performs changes caused by event.
-        /// </summary>
-        /// <param name="event">Event.</param>
-        public void Accept(PriceChanged @event)
-        {
-            price = @event.Price;
+            pendingPurchases.Add(@event.PurchaseId);
         }
 
         /// <summary>
@@ -194,6 +151,36 @@ namespace Market.Cqrsnes.Domain.Entities
         public void Accept(ReservationCanceled @event)
         {
             count += @event.Count;
+            pendingPurchases.Remove(@event.PurchaseId);
         }
+
+        public double CalculatePrice(int count)
+        {
+            return price * count;
+        }
+
+        public void DecreaseCount(int count, Guid purchaseId)
+        {
+            if (pendingPurchases.Contains(purchaseId))
+            {
+                ApplyChange(new CountDecreased
+                    {
+                        OfferId = id,
+                        PurchaseId = purchaseId
+                    });
+            }
+        }
+
+        public void Accept(CountDecreased @event)
+        {
+            pendingPurchases.Remove(@event.PurchaseId);
+        }
+    }
+
+    public class CountDecreased : Event
+    {
+        public Guid OfferId { get; set; }
+
+        public Guid PurchaseId { get; set; }
     }
 }

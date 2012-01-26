@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain.Events;
 using Market.Cqrsnes.Domain.Utility;
@@ -10,11 +11,18 @@ namespace Market.Cqrsnes.Domain.Entities
     /// </summary>
     public class User : AggregateRoot,
         IChangeAcceptor<UserCreated>,
-        IChangeAcceptor<UserPasswordSet>
+        IChangeAcceptor<UserPasswordSet>,
+        IChangeAcceptor<BalanceIncreased>,
+        IChangeAcceptor<MoneyReserved>,
+        IChangeAcceptor<BalanceDecreased>,
+        IChangeAcceptor<BalanceDecreaseFailed>
     {
+        private readonly IList<Guid> pendingPurchases = new List<Guid>();
+
         private string passwordHash;
         private string passwordSalt;
-
+        private double balance;
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.
         /// </summary>
@@ -142,6 +150,87 @@ namespace Market.Cqrsnes.Domain.Entities
         {
             passwordHash = @event.PasswordHash;
             passwordSalt = @event.PasswordSalt;
+        }
+
+        public void ReserveMoney(double amount, Guid purchaseId)
+        {
+            if (balance >= amount)
+            {
+                ApplyChange(new MoneyReserved
+                    {
+                        UserId = id,
+                        Amount = amount,
+                        PurchaseId = purchaseId
+                    });
+            }
+            else
+            {
+                ApplyChange(new MoneyReservationFailed
+                    {
+                        UserId = id,
+                        Amount = amount,
+                        PurchaseId = purchaseId
+                    });
+            }
+        }
+
+        /// <summary>
+        /// Performs changes caused by event.
+        /// </summary>
+        /// <param name="event">Event.</param>
+        public void Accept(BalanceIncreased @event)
+        {
+            balance += @event.Amount;
+        }
+
+        /// <summary>
+        /// Performs changes caused by event.
+        /// </summary>
+        /// <param name="event">Event.</param>
+        public void Accept(MoneyReserved @event)
+        {
+            balance -= @event.Amount;
+            pendingPurchases.Add(@event.PurchaseId);
+        }
+
+        public void DecreaseBalance(double amount, Guid purchaseId)
+        {
+            if (pendingPurchases.Contains(purchaseId))
+            {
+                ApplyChange(new BalanceDecreased
+                    {
+                        UserId = id,
+                        Amount = amount,
+                        PurchaseId = purchaseId
+                    });
+            }
+            else
+            {
+                ApplyChange(new BalanceDecreaseFailed
+                    {
+                        UserId = id,
+                        PurchaseId = purchaseId,
+                        Amount = amount
+                    });
+            }
+        }
+
+        /// <summary>
+        /// Performs changes caused by event.
+        /// </summary>
+        /// <param name="event">Event.</param>
+        public void Accept(BalanceDecreased @event)
+        {
+            pendingPurchases.Remove(@event.PurchaseId);
+        }
+
+        /// <summary>
+        /// Performs changes caused by event.
+        /// </summary>
+        /// <param name="event">Event.</param>
+        public void Accept(BalanceDecreaseFailed @event)
+        {
+            balance += @event.Amount;
         }
     }
 }

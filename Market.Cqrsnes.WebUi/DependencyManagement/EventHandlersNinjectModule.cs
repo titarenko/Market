@@ -1,5 +1,6 @@
 using Cqrsnes.Infrastructure;
 using Market.Cqrsnes.Domain.Events;
+using Market.Cqrsnes.Domain.Handlers;
 using Market.Cqrsnes.Projection.Handlers;
 using Ninject.Modules;
 
@@ -25,6 +26,11 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
             Route<ArticleCreated, ArticleEventHandler>();
 
             Route<OfferCreated, OfferEventHandler>();
+
+            Route<MoneyReserved, PurchaseSaga>();
+            Route<ArticleReserved, PurchaseSaga>();
+            Route<BalanceDecreased, PurchaseSaga>();
+            Route<BalanceDecreaseFailed, PurchaseSaga>();
         }
 
         private void Route<TEvent, THandler>() 
