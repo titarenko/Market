@@ -10,7 +10,7 @@ namespace Cqrsnes.Test
     /// </summary>
     public class TestRepository : IRepository
     {
-        private readonly IDictionary<Guid, object> objects = new Dictionary<Guid, object>();
+        private readonly IDictionary<string, object> objects = new Dictionary<string, object>();
 
         /// <summary>
         /// Saves instance.
@@ -20,13 +20,14 @@ namespace Cqrsnes.Test
         public void Save<T>(T instance)
         {
             var id = (Guid) typeof(T).GetProperty("Id").GetValue(instance, null);
-            if (objects.ContainsKey(id))
+            var key = GetKey<T>(id);
+            if (objects.ContainsKey(key))
             {
-                objects[id] = instance;
+                objects[key] = instance;
             }
             else
             {
-                objects.Add(id, instance);
+                objects.Add(key, instance);
             }
         }
 
@@ -38,11 +39,17 @@ namespace Cqrsnes.Test
         /// <returns>Instance.</returns>
         public T GetById<T>(Guid id)
         {
-            if (objects.ContainsKey(id))
+            var key = GetKey<T>(id);
+            if (objects.ContainsKey(key))
             {
-                return (T) objects[id];
+                return (T) objects[key];
             }
-            return default(T);
+            return Activator.CreateInstance<T>();
+        }
+
+        private static string GetKey<T>(Guid id)
+        {
+            return typeof(T).FullName + id;
         }
 
         /// <summary>

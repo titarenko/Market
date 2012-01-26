@@ -12,5 +12,10 @@ namespace Market.Cqrsnes.Projection.Models
         public IList<Offer> Offers { get; set; }
 
         public Guid OwnerId { get; set; }
+
+        public StoreOffers()
+        {
+            Offers = new List<Offer>();
+        }
     }
 }

@@ -19,7 +19,7 @@
 //                       {
 //                           Name = "Create Article",
 //                           When = new CreateArticle(id, name),
-//                           Expect = new[] {new OfferCreated(id, name)}
+//                           Expect = new[] { new OfferCreated(id, name) }
 //                       }.Run();
 //        }
 
@@ -28,9 +28,9 @@
 //            return new DomainSpecification<SupplyArticle, ArticleCommandHandler>
 //                       {
 //                           Name = "Deliver Article",
-//                           Given = new[] {new OfferCreated(id, name)},
+//                           Given = new[] { new OfferCreated(id, name) },
 //                           When = new SupplyArticle(id, 1),
-//                           Expect = new[] {new ArticleDelivered(id, 1)}
+//                           Expect = new[] { new ArticleDelivered(id, 1) }
 //                       }.Run();
 //        }
 
@@ -45,7 +45,7 @@
 //                                           new ArticleDelivered(id, 100)
 //                                       },
 //                           When = new BuyArticle(id, 1),
-//                           Expect = new[] {new ArticleBought(id, 1)}
+//                           Expect = new[] { new ArticleBought(id, 1) }
 //                       }.Run();
 //        }
 

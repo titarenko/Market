@@ -42,6 +42,7 @@
     <Compile Include="ArticleNunitTests.cs" />
     <Compile Include="ArticleSpecifications.cs" />
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="OfferSpecifications.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

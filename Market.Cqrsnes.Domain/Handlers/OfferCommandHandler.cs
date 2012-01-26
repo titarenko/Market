@@ -8,7 +8,8 @@ namespace Market.Cqrsnes.Domain.Handlers
     /// Handles offer-related commands.
     /// </summary>
     public class OfferCommandHandler :
-        ICommandHandler<CreateOffer>
+        ICommandHandler<CreateOffer>,
+        ICommandHandler<ReserveArticle>
     {
         private readonly IAggregateRootRepository repository;
 
@@ -35,6 +36,17 @@ namespace Market.Cqrsnes.Domain.Handlers
                                 command.ArticleId,
                                 command.Price,
                                 command.Count));
+        }
+
+        public void Handle(ReserveArticle command)
+        {
+            var purchase = repository.GetById<Purchase>(command.PurchaseId);
+
+            repository.PerformAction<Offer>(
+                purchase.GetOfferId(),
+                x => x.Reserve(purchase.GetCount(), command.PurchaseId));
+
+            repository.Save(purchase);
         }
     }
 }

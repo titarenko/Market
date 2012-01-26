@@ -23,11 +23,19 @@ namespace Cqrsnes.Test
         /// </returns>
         public static bool ObjectsAreEqual(object lhs, object rhs)
         {
-            return rhs.GetType() == lhs.GetType() &&
+            return lhs == null && rhs == null ||
+                   lhs != null && rhs != null &&
+                   rhs.GetType() == lhs.GetType() &&
                    lhs.GetType()
                        .GetProperties()
-                       .All(property => property.GetValue(lhs, null).Equals(
-                           property.GetValue(rhs, null)));
+                       .All(property =>
+                                {
+                                    var lhsValue = property.GetValue(lhs, null);
+                                    var rhsValue = property.GetValue(rhs, null);
+                                    return lhsValue == null && rhsValue == null ||
+                                           lhsValue != null && rhsValue != null &&
+                                           lhsValue.Equals(rhsValue);
+                                });
         }
 
         /// <summary>
@@ -106,9 +114,11 @@ namespace Cqrsnes.Test
                 builder.AppendFormat(
                     "{0}: {1}",
                     Prettify(property.Name),
-                    value.GetType() == typeof (Guid)
-                        ? Prettify((Guid) value)
-                        : value.ToString());
+                    value == null
+                        ? "null"
+                        : (value.GetType() == typeof (Guid)
+                               ? Prettify((Guid) value)
+                               : value.ToString()));
             }
 
             builder.Append(")");

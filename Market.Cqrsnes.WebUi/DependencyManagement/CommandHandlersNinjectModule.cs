@@ -25,6 +25,7 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
             Route<CreateArticle, ArticleCommandHandler>();
 
             Route<CreateOffer, OfferCommandHandler>();
+            Route<ReserveArticle, OfferCommandHandler>();
 
             Route<BuyArticle, PurchaseSaga>();
         }

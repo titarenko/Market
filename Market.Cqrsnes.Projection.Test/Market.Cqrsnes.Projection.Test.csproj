@@ -42,6 +42,7 @@
     <Compile Include="ArticleViewModelManagerNunitTests.cs" />
     <Compile Include="ArticleViewModelManagerSpecifications.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="OfferProjectionSpecifications.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

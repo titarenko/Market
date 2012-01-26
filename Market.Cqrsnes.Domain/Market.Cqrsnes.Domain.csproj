@@ -44,6 +44,7 @@
     <Compile Include="Commands\GiveMoney.cs" />
     <Compile Include="Commands\LogIn.cs" />
     <Compile Include="Commands\LogOut.cs" />
+    <Compile Include="Commands\ReserveArticle.cs" />
     <Compile Include="Entities\Article.cs" />
     <Compile Include="Entities\Offer.cs" />
     <Compile Include="Entities\Purchase.cs" />

@@ -26,6 +26,7 @@ namespace Market.Cqrsnes.Domain.Handlers
         IEventHandler<BalanceDecreaseFailed>
     {
         private readonly IAggregateRootRepository repository;
+        private readonly IBus bus;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PurchaseSaga"/> class.
@@ -33,9 +34,11 @@ namespace Market.Cqrsnes.Domain.Handlers
         /// <param name="repository">
         /// The repository.
         /// </param>
-        public PurchaseSaga(IAggregateRootRepository repository)
+        /// <param name="bus">The bus.</param>
+        public PurchaseSaga(IAggregateRootRepository repository, IBus bus)
         {
             this.repository = repository;
+            this.bus = bus;
         }
 
         /// <summary>
@@ -69,13 +72,10 @@ namespace Market.Cqrsnes.Domain.Handlers
         /// <param name="event">Event instance.</param>
         public void Handle(MoneyReserved @event)
         {
-            var purchase = repository.GetById<Purchase>(@event.PurchaseId);
-
-            repository.PerformAction<Offer>(
-                purchase.GetOfferId(),
-                x => x.Reserve(purchase.GetCount(), @event.PurchaseId));
-
-            repository.Save(purchase);
+            bus.Send(new ReserveArticle
+                         {
+                             PurchaseId = @event.PurchaseId,
+                         });
         }
 
         /// <summary>

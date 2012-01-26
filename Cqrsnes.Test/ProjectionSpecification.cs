@@ -15,11 +15,11 @@ namespace Cqrsnes.Test
     /// <typeparam name="TProjector">Projector type.</typeparam>
     public class ProjectionSpecification<TProjector>
     {
-        private IEnumerable<Event> given;
+        private IEnumerable<Action<IRepository>> given;
 
         private Event when;
 
-        private readonly IList<Expression<Func<TProjector, bool>>> expect;
+        private readonly IList<Expression<Func<IRepository, bool>>> expect;
 
         private bool isExceptionExpected;
 
@@ -32,8 +32,8 @@ namespace Cqrsnes.Test
         {
             Name = "Projection logic of " + Utilities.Prettify(
                 typeof(TProjector).Name) + " (SUT)";
-            given = new Event[0];
-            expect = new List<Expression<Func<TProjector, bool>>>();
+            given = new Action<IRepository>[0];
+            expect = new List<Expression<Func<IRepository, bool>>>();
         }
 
         /// <summary>
@@ -42,13 +42,13 @@ namespace Cqrsnes.Test
         public string Name { get; set; }
 
         /// <summary>
-        /// Accepts sequence of preceding events.
+        /// Accepts sequence of actions for preparing of repository.
         /// </summary>
-        /// <param name="events">Sequence of preceding events.</param>
+        /// <param name="events">Preparations.</param>
         /// <returns>Reference to specification instance to enable chaining.</returns>
-        public ProjectionSpecification<TProjector> Given(IEnumerable<Event> events)
+        public ProjectionSpecification<TProjector> Given(IEnumerable<Action<IRepository>> preparations)
         {
-            given = events;
+            given = preparations;
             return this;
         }
 
@@ -68,7 +68,7 @@ namespace Cqrsnes.Test
         /// </summary>
         /// <param name="expression">Statement that expresses expectation (tests result of projection).</param>
         /// <returns>Reference to specification instance to enable chaining.</returns>
-        public ProjectionSpecification<TProjector> Expect(Expression<Func<TProjector, bool>> expression)
+        public ProjectionSpecification<TProjector> Expect(Expression<Func<IRepository, bool>> expression)
         {
             expect.Add(expression);
             return this;
@@ -102,21 +102,12 @@ namespace Cqrsnes.Test
             var eventHandlerType = typeof (IEventHandler<>);
             var projectorType = typeof (TProjector);
 
-            var projector = (TProjector) Activator.CreateInstance(projectorType, new TestRepository());
+            var repository = new TestRepository();
+            var projector = (TProjector) Activator.CreateInstance(projectorType, repository);
 
-            foreach (var @event in given)
+            foreach (var action in given)
             {
-                var eventType = @event.GetType();
-
-                var type = eventHandlerType.MakeGenericType(eventType);
-                if (!type.IsAssignableFrom(projectorType))
-                {
-                    throw new InvalidOperationException(
-                        "Projector can't handle at least one of the given events.");
-                }
-
-                projectorType.GetMethod("Handle", new[] {eventType})
-                    .Invoke(projector, new[] {@event});
+                action(repository);
             }
 
             var exceptionMessage = string.Empty;
@@ -133,7 +124,7 @@ namespace Cqrsnes.Test
             }
 
             PrintSpecification(
-                expect.Select(x => ProcessExpectation(projector, x)),
+                expect.Select(x => ProcessExpectation(repository, x)),
                 result, exceptionMessage);
 
             return result;
