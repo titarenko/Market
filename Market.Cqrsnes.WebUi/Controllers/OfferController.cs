@@ -80,5 +80,30 @@ namespace Market.Cqrsnes.WebUi.Controllers
 
             return RedirectToAction("List");
         }
+
+        /// <summary>
+        /// Initiates purchase and redirects to list of offers.
+        /// </summary>
+        /// <param name="offerId">
+        /// The offer id.
+        /// </param>
+        /// <param name="count">
+        /// The count.
+        /// </param>
+        /// <returns>
+        /// Redirect to list of offers.
+        /// </returns>
+        [HttpPost]
+        public ActionResult Buy(Guid offerId, int count)
+        {
+            bus.Send(new BuyArticle
+                {
+                    OfferId = offerId,
+                    Count = count,
+                    BuyerId = context.User.Id
+                });
+
+            return RedirectToAction("List");
+        }
     }
 }

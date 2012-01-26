@@ -14,6 +14,7 @@
                 <th>Store</th>
                 <th>Price</th>
                 <th>Count</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +25,18 @@
                     <td>@offer.StoreName</td>
                     <td>@offer.Price</td>
                     <td>@offer.Count</td>
+                    <td>
+                        <form action="@Url.Action("Buy")" method="POST">
+                            <input type="hidden" name="offerId" value="@offer.Id"/>
+                            <div class="clearfix">
+                                <label for="count">Count:</label>
+                                <div class="input">
+                                    <input type="text" name="count" id="count" />
+                                    <button class="btn">Buy</button>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>
