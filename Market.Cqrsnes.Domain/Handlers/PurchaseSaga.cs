@@ -58,6 +58,9 @@ namespace Market.Cqrsnes.Domain.Handlers
                                 command.BuyerId));
 
             buyer.ReserveMoney(amount, purchaseId);
+
+            repository.Save(buyer);
+            repository.Save(offer);
         }
 
         /// <summary>
@@ -71,6 +74,8 @@ namespace Market.Cqrsnes.Domain.Handlers
             repository.PerformAction<Offer>(
                 purchase.GetOfferId(),
                 x => x.Reserve(purchase.GetCount(), @event.PurchaseId));
+
+            repository.Save(purchase);
         }
 
         /// <summary>
@@ -84,6 +89,8 @@ namespace Market.Cqrsnes.Domain.Handlers
             repository.PerformAction<User>(
                 purchase.GetUserId(),
                 x => x.DecreaseBalance(purchase.GetAmount(), @event.PurchaseId));
+
+            repository.Save(purchase);
         }
 
         /// <summary>
@@ -97,6 +104,8 @@ namespace Market.Cqrsnes.Domain.Handlers
             repository.PerformAction<Offer>(
                 purchase.GetOfferId(), 
                 x => x.DecreaseCount(purchase.GetCount(), @event.PurchaseId));
+
+            repository.Save(purchase);
         }
 
         /// <summary>
@@ -110,6 +119,8 @@ namespace Market.Cqrsnes.Domain.Handlers
             repository.PerformAction<Offer>(
                 purchase.GetOfferId(),
                 x => x.CancelReservation(purchase.GetCount(), @event.PurchaseId));
+
+            repository.Save(purchase);
         }
     }
 }

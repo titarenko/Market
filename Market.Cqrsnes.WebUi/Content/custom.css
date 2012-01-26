@@ -142,7 +142,7 @@ form
 
 td:first-child
 {
-    width: 64%;
+    min-width: 40%;
 }
 
 table .input {
