@@ -52,7 +52,7 @@ namespace Cqrsnes.Test
         /// <returns>Collection of instances.</returns>
         public IEnumerable<T> GetAll<T>()
         {
-            return objects.Values.Cast<T>();
+            return objects.Values.OfType<T>();
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Cqrsnes.Test
         /// </returns>
         public T GetSingle<T>()
         {
-            return (T) objects.Values.First();
+            return objects.Values.OfType<T>().First();
         }
 
         /// <summary>
