@@ -5,10 +5,11 @@ using Market.Cqrsnes.Projection.Models;
 namespace Market.Cqrsnes.Projection.Handlers
 {
     /// <summary>
-    /// Handles offer-related events.
+    /// Handles events related to <see cref="Offer"/>.
     /// </summary>
     public class OfferEventHandler :
-        IEventHandler<OfferCreated>
+        IEventHandler<OfferCreated>,
+        IEventHandler<CountDecreased>
     {
         private readonly IRepository repository;
 
@@ -45,6 +46,16 @@ namespace Market.Cqrsnes.Projection.Handlers
             repository.Change<Store>(@event.StoreId, x => x.OffersCount++);
             repository.Change<StoreOffers>(@event.StoreId, x => x.Offers.Add(offer));
             repository.Change<Article>(@event.ArticleId, x => x.OffersCount++);
+        }
+
+        /// <summary>
+        /// Handles (reacts to) event.
+        /// </summary>
+        /// <param name="event">Event instance.</param>
+        public void Handle(CountDecreased @event)
+        {
+            var purchase = repository.GetById<Purchase>(@event.PurchaseId);
+            repository.Change<Offer>(@event.OfferId, x => x.Count -= purchase.Count);
         }
     }
 }

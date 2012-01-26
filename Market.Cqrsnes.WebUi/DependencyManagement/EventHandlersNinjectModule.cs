@@ -31,6 +31,8 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
             Route<ArticleReserved, PurchaseSaga>();
             Route<BalanceDecreased, PurchaseSaga>();
             Route<BalanceDecreaseFailed, PurchaseSaga>();
+
+            Route<PurchaseCreated, PurchaseEventHandler>();
         }
 
         private void Route<TEvent, THandler>() 

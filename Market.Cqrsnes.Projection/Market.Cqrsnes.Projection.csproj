@@ -38,11 +38,13 @@
   <ItemGroup>
     <Compile Include="Handlers\ArticleEventHandler.cs" />
     <Compile Include="Handlers\OfferEventHandler.cs" />
+    <Compile Include="Handlers\PurchaseEventHandler.cs" />
     <Compile Include="Handlers\StoreEventHandler.cs" />
     <Compile Include="Handlers\UserEventHandler.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\ISystemContext.cs" />
     <Compile Include="Models\Offer.cs" />
+    <Compile Include="Models\Purchase.cs" />
     <Compile Include="Models\Store.cs" />
     <Compile Include="Models\StoreOffers.cs" />
     <Compile Include="Models\User.cs" />

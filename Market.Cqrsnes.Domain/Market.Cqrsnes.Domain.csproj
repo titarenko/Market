@@ -56,6 +56,7 @@
     <Compile Include="Events\BalanceDecreased.cs" />
     <Compile Include="Events\BalanceDecreaseFailed.cs" />
     <Compile Include="Events\BalanceIncreased.cs" />
+    <Compile Include="Events\CountDecreased.cs" />
     <Compile Include="Events\MoneyReservationFailed.cs" />
     <Compile Include="Events\MoneyReserved.cs" />
     <Compile Include="Events\OfferCreated.cs" />
