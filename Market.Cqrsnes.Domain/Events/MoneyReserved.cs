@@ -10,9 +10,5 @@ namespace Market.Cqrsnes.Domain.Events
         public double Amount { get; set; }
 
         public Guid PurchaseId { get; set; }
-
-        public int Count { get; set; }
-
-        public Guid OperationId { get; set; }
     }
 }

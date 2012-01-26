@@ -35,7 +35,7 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
 
             Bind<IAggregateRootRepository>()
                 .To<CommonAggregateRootRepository>()
-                .InSingletonScope();
+                .InRequestScope();
 
             Bind<IEventStore>()
                 .To<RavenEventStore>()

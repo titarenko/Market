@@ -35,7 +35,7 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
         {
             Bind<ICommandHandler<TCommand>>()
                 .To<THandler>()
-                .InThreadScope();
+                .InRequestScope();
         }
     }
 }

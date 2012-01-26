@@ -33,6 +33,9 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
             Route<BalanceDecreaseFailed, PurchaseSaga>();
 
             Route<PurchaseCreated, PurchaseEventHandler>();
+
+            Route<BalanceDecreased, UserEventHandler>();
+            Route<CountDecreased, OfferEventHandler>();
         }
 
         private void Route<TEvent, THandler>() 
@@ -41,7 +44,7 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
         {
             Bind<IEventHandler<TEvent>>()
                 .To<THandler>()
-                .InThreadScope();
+                .InRequestScope();
         }
     }
 }

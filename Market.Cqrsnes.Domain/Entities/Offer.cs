@@ -78,19 +78,15 @@ namespace Market.Cqrsnes.Domain.Entities
             {
                 ApplyChange(new ArticleReservationFailed
                     {
-                        OfferId = id,
-                        CustomerId = customerId,
-                        Count = count
+                        PurchaseId = customerId
                     });
             }
             else
             {
                 ApplyChange(new ArticleReserved
                     {
-                        OfferId = id,
-                        CustomerId = customerId,
-                        Count = count,
-                        Price = price
+                        PurchaseId = customerId,
+                        Count = count
                     });
             }
         }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -66,6 +68,8 @@ namespace Market.Cqrsnes.WebUi
             RegisterRoutes(RouteTable.Routes);
 
             XmlConfigurator.Configure();
+
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
         }
 
         /// <summary>
