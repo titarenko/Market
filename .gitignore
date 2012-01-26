@@ -1,0 +1,10 @@
+.gitignore
+packages
+*bin*
+*obj*
+*ReSharper*
+*.suo
+*.user
+*StyleCop*
+*.log
+.idea
