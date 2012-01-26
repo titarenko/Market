@@ -4,10 +4,9 @@ using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Market.Cqrsnes.Projection.Models;
 using log4net;
 using log4net.Config;
-using Market.Cqrsnes.Projection;
+using Market.Cqrsnes.Projection.Models;
 using Market.Cqrsnes.WebUi.DependencyManagement;
 using Ninject;
 using Ninject.Web.Mvc;
@@ -31,9 +30,17 @@ namespace Market.Cqrsnes.WebUi
         /// </summary>
         public WebApplication()
         {
-            // force initialization of system context at begin of request
-            BeginRequest += (sender, args) => Kernel.Get<ISystemContext>();
+            BeginRequest += OnBeginRequest;
             Error += OnError;
+        }
+
+        private void OnBeginRequest(object sender, EventArgs args)
+        {
+            // force initialization of system context at begin of request
+            Kernel.Get<ISystemContext>();
+
+            // overcome issues with decimal point
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
         }
 
         /// <summary>
@@ -68,8 +75,6 @@ namespace Market.Cqrsnes.WebUi
             RegisterRoutes(RouteTable.Routes);
 
             XmlConfigurator.Configure();
-
-            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
         }
 
         /// <summary>
