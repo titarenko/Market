@@ -113,6 +113,105 @@ namespace Cqrsnes.Test.Test
                 yield return new TestCaseData(null, new object[0], false);
                 yield return new TestCaseData(new object[0], null, false);
                 yield return new TestCaseData(new object[0], new object[0], true);
+
+                yield return new TestCaseData(new object[] {null, null}, new object[] {null, null}, true);
+                yield return new TestCaseData(new object[] {null}, new object[] {null, null}, false);
+
+                yield return new TestCaseData(
+                    new object[]
+                        {
+                            new TypeA
+                                {
+                                    Number = 1
+                                },
+                            new TypeB
+                                {
+                                    Number = 2
+                                }
+                        },
+                    new object[]
+                        {
+                            new TypeB
+                                {
+                                    Number = 2
+                                },
+                            new TypeA
+                                {
+                                    Number = 1
+                                }
+                        },
+                    false)
+                    .SetName("Same types, different order, simple properties - not equal.");
+
+                yield return new TestCaseData(
+                    new object[]
+                        {
+                            new TypeA
+                                {
+                                    Number = 1,
+                                    String = "Abc"
+                                },
+                            new TypeA
+                                {
+                                    Number = 3,
+                                    String = "Bcd"
+                                },
+                            new TypeB
+                                {
+                                    Number = 2,
+                                    String = "Def"
+                                }
+                        },
+                    new object[]
+                        {
+                            new TypeA
+                                {
+                                    Number = 3,
+                                    String = "Bcd"
+                                },
+                            new TypeB
+                                {
+                                    Number = 2,
+                                    String = "Def"
+                                },
+                            new TypeA
+                                {
+                                    Number = 1,
+                                    String = "Abc"
+                                }
+                        },
+                    false)
+                    .SetName("Same objects, different order - not equal.");
+
+                yield return new TestCaseData(
+                    new object[]
+                        {
+                            new TypeA
+                                {
+                                    Number = 1,
+                                    String = "Abc"
+                                },
+                            new TypeA
+                                {
+                                    Number = 3,
+                                    String = "Bcd"
+                                }
+                        },
+                    new object[]
+                        {
+                            new TypeA
+                                {
+                                    Number = 3,
+                                    String = "Bcd"
+                                },
+                            new TypeA
+                                {
+                                    Number = 1,
+                                    String = null
+                                }
+                        },
+                    false)
+                    .SetName("Same types, different values - not equal.");
             }
         }
     }
