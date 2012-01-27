@@ -47,7 +47,6 @@ namespace Cqrsnes.Infrastructure
         public Guid Id
         {
             get { return id; }
-            set { id = value; }
         }
 
         /// <summary>

@@ -38,6 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExecutionResult.cs" />
+    <Compile Include="ISpecification.cs" />
+    <Compile Include="SagaSpecification.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="ISpecificationHolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
