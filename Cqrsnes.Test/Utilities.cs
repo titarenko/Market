@@ -47,8 +47,8 @@ namespace Cqrsnes.Test
         /// <returns>True if sequences are equal, false otherwise.</returns>
         public static bool SequenceEqual(IEnumerable lhs, IEnumerable rhs)
         {
-            return lhs.Cast<object>().SequenceEqual(
-                rhs.Cast<object>(), new EqualityComparer());
+            return lhs == null && rhs == null || lhs != null && rhs != null &&
+                lhs.Cast<object>().SequenceEqual(rhs.Cast<object>(), new EqualityComparer());
         }
 
         /// <summary>
