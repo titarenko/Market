@@ -24,6 +24,46 @@ namespace Cqrsnes.Test.Test
             Assert.AreEqual(prettyGuid, Utilities.Prettify(Guid.Parse(guid)));
         }
 
+        [Test, TestCaseSource("ObjectsToDescribe")]
+        public void CanDescribe(object instance, string expectedDescription)
+        {
+            Assert.AreEqual(expectedDescription, Utilities.Describe(instance));
+        }
+
+        public static IEnumerable<TestCaseData> ObjectsToDescribe
+        {
+            get
+            {
+                yield return new TestCaseData(null, "null");
+
+                yield return new TestCaseData(1, "1");
+                yield return new TestCaseData(1.23, "1.23");
+                yield return new TestCaseData("Some string.", "Some string.");
+
+                yield return new TestCaseData(
+                    new TypeA
+                        {
+                            NumberProperty = 1,
+                            StringProperty = "String value."
+                        },
+                    "type a (number property: \"1\", string property: \"String value.\")");
+
+                yield return new TestCaseData(
+                    new TypeC
+                    {
+                        AValue = new TypeA
+                            {
+                                NumberProperty = 5
+                            },
+                        BValue = new TypeB
+                            {
+                                StringProperty = "String value."
+                            }
+                    },
+                    "type c (a value: \"type a (number property: \"5\", string property: \"null\")\", b value: \"type b (number property: \"0\", string property: \"String value.\")\")");
+            }
+        }
+            
         [Test, TestCaseSource("ObjectsToCompareForEquality")]
         public void CanCompareObjectsForEquality(object lhs, object rhs, bool expected)
         {
@@ -46,39 +86,39 @@ namespace Cqrsnes.Test.Test
                 yield return new TestCaseData(
                     new TypeA
                         {
-                            Number = 1,
-                            String = "Test"
+                            NumberProperty = 1,
+                            StringProperty = "Test"
                         },
                     new TypeB
                         {
-                            Number = 1,
-                            String = "Test"
+                            NumberProperty = 1,
+                            StringProperty = "Test"
                         },
                     false);
 
                 yield return new TestCaseData(
                     new TypeA
                     {
-                        Number = 1,
-                        String = "Test"
+                        NumberProperty = 1,
+                        StringProperty = "Test"
                     },
                     new TypeA
                     {
-                        Number = 1,
-                        String = "Test"
+                        NumberProperty = 1,
+                        StringProperty = "Test"
                     },
                     true);
 
                 yield return new TestCaseData(
                     new TypeA
                     {
-                        Number = 1,
-                        String = "Test"
+                        NumberProperty = 1,
+                        StringProperty = "Test"
                     },
                     new TypeA
                     {
-                        Number = 1,
-                        String = null
+                        NumberProperty = 1,
+                        StringProperty = null
                     },
                     false);
             }
@@ -86,16 +126,23 @@ namespace Cqrsnes.Test.Test
 
         class TypeA
         {
-            public int Number { get; set; }
+            public int NumberProperty { get; set; }
 
-            public string String { get; set; }
+            public string StringProperty { get; set; }
         }
 
         class TypeB
         {
-            public int Number { get; set; }
+            public int NumberProperty { get; set; }
 
-            public string String { get; set; }
+            public string StringProperty { get; set; }
+        }
+
+        class TypeC
+        {
+            public TypeA AValue { get; set; }
+
+            public TypeB BValue { get; set; }
         }
 
         [Test, TestCaseSource("SequencesToCompareForEquality")]
@@ -122,22 +169,22 @@ namespace Cqrsnes.Test.Test
                         {
                             new TypeA
                                 {
-                                    Number = 1
+                                    NumberProperty = 1
                                 },
                             new TypeB
                                 {
-                                    Number = 2
+                                    NumberProperty = 2
                                 }
                         },
                     new object[]
                         {
                             new TypeB
                                 {
-                                    Number = 2
+                                    NumberProperty = 2
                                 },
                             new TypeA
                                 {
-                                    Number = 1
+                                    NumberProperty = 1
                                 }
                         },
                     false)
@@ -148,36 +195,36 @@ namespace Cqrsnes.Test.Test
                         {
                             new TypeA
                                 {
-                                    Number = 1,
-                                    String = "Abc"
+                                    NumberProperty = 1,
+                                    StringProperty = "Abc"
                                 },
                             new TypeA
                                 {
-                                    Number = 3,
-                                    String = "Bcd"
+                                    NumberProperty = 3,
+                                    StringProperty = "Bcd"
                                 },
                             new TypeB
                                 {
-                                    Number = 2,
-                                    String = "Def"
+                                    NumberProperty = 2,
+                                    StringProperty = "Def"
                                 }
                         },
                     new object[]
                         {
                             new TypeA
                                 {
-                                    Number = 3,
-                                    String = "Bcd"
+                                    NumberProperty = 3,
+                                    StringProperty = "Bcd"
                                 },
                             new TypeB
                                 {
-                                    Number = 2,
-                                    String = "Def"
+                                    NumberProperty = 2,
+                                    StringProperty = "Def"
                                 },
                             new TypeA
                                 {
-                                    Number = 1,
-                                    String = "Abc"
+                                    NumberProperty = 1,
+                                    StringProperty = "Abc"
                                 }
                         },
                     false)
@@ -188,26 +235,26 @@ namespace Cqrsnes.Test.Test
                         {
                             new TypeA
                                 {
-                                    Number = 1,
-                                    String = "Abc"
+                                    NumberProperty = 1,
+                                    StringProperty = "Abc"
                                 },
                             new TypeA
                                 {
-                                    Number = 3,
-                                    String = "Bcd"
+                                    NumberProperty = 3,
+                                    StringProperty = "Bcd"
                                 }
                         },
                     new object[]
                         {
                             new TypeA
                                 {
-                                    Number = 3,
-                                    String = "Bcd"
+                                    NumberProperty = 3,
+                                    StringProperty = "Bcd"
                                 },
                             new TypeA
                                 {
-                                    Number = 1,
-                                    String = null
+                                    NumberProperty = 1,
+                                    StringProperty = null
                                 }
                         },
                     false)

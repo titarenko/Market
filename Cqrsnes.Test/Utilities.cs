@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -90,7 +91,20 @@ namespace Cqrsnes.Test
         /// <returns>Description (as human readable text).</returns>
         public static string Describe(object instance)
         {
+            if (instance == null)
+            {
+                return "null";
+            }
+
             var type = instance.GetType();
+            if (type.Namespace.StartsWith("System"))
+            {
+                var formattable = instance as IFormattable;
+                return formattable != null
+                           ? formattable.ToString(null, CultureInfo.InvariantCulture)
+                           : instance.ToString();
+            }
+
             var name = Prettify(type.Name);
             var properties = type.GetProperties();
 
@@ -112,13 +126,13 @@ namespace Cqrsnes.Test
                 }
 
                 builder.AppendFormat(
-                    "{0}: {1}",
+                    "{0}: \"{1}\"",
                     Prettify(property.Name),
                     value == null
                         ? "null"
                         : (value.GetType() == typeof (Guid)
                                ? Prettify((Guid) value)
-                               : value.ToString()));
+                               : Describe(value)));
             }
 
             builder.Append(")");
