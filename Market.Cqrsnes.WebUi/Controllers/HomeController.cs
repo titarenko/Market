@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using Cqrsnes.Test;
 
 namespace Market.Cqrsnes.WebUi.Controllers
 {
@@ -52,13 +53,19 @@ namespace Market.Cqrsnes.WebUi.Controllers
         /// <summary>
         /// Lists all available system tests.
         /// </summary>
+        /// <param name="id">
+        /// Test identifier (assembly qualified name of its type).
+        /// </param>
         /// <returns>
         /// List of system tests.
         /// </returns>
-        public ActionResult Test()
+        public ActionResult Test(string id)
         {
-            // TODO
-            return View();
+            var results = id == null
+                ? null 
+                : (Activator.CreateInstance(Type.GetType(id)) as ISpecificationHolder).ExecuteAll();
+
+            return View(results);
         }
     }
 }

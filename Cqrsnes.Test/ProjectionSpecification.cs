@@ -15,7 +15,7 @@ namespace Cqrsnes.Test
     /// <typeparam name="TProjector">Projector type.</typeparam>
     public class ProjectionSpecification<TProjector>
     {
-        private IEnumerable<Action<IRepository>> given;
+        private IList<Expression<Action<IRepository>>> given;
 
         private Event when;
 
@@ -32,7 +32,7 @@ namespace Cqrsnes.Test
         {
             Name = "Projection logic of " + Utilities.Prettify(
                 typeof(TProjector).Name) + " (SUT)";
-            given = new Action<IRepository>[0];
+            given = new List<Expression<Action<IRepository>>>();
             expect = new List<Expression<Func<IRepository, bool>>>();
         }
 
@@ -46,9 +46,9 @@ namespace Cqrsnes.Test
         /// </summary>
         /// <param name="events">Preparations.</param>
         /// <returns>Reference to specification instance to enable chaining.</returns>
-        public ProjectionSpecification<TProjector> Given(IEnumerable<Action<IRepository>> preparations)
+        public ProjectionSpecification<TProjector> Given(Expression<Action<IRepository>> action)
         {
-            given = preparations;
+            given.Add(action);
             return this;
         }
 
@@ -107,7 +107,7 @@ namespace Cqrsnes.Test
 
             foreach (var action in given)
             {
-                action(repository);
+                action.Compile()(repository);
             }
 
             var exceptionMessage = string.Empty;
@@ -145,9 +145,9 @@ namespace Cqrsnes.Test
             {
                 s.AppendLine("Given:");
             }
-            foreach (var @event in given)
+            foreach (var action in given)
             {
-                s.AppendFormat("\t{0}\n", Utilities.Describe(@event));
+                s.AppendFormat("\t{0}\n", Utilities.DescribeAction(action));
             }
             if (hasGiven)
             {

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -138,6 +139,52 @@ namespace Cqrsnes.Test
             builder.Append(")");
 
             return builder.ToString();
+        }
+
+        public static string DescribeAction<T>(Expression<Action<T>> expression)
+        {
+            var body = expression.Body as MethodCallExpression;
+
+            if (body == null)
+            {
+                throw new ApplicationException("Only method calls are supported as actions.");
+            }
+
+            Func<MemberBinding, string> memberSelector = x =>
+            {
+                var memberAssignment = x as MemberAssignment;
+                if (memberAssignment == null)
+                {
+                    throw new ApplicationException("Only member assignments are supported.");
+                }
+
+                var value = Expression.Lambda(memberAssignment.Expression).Compile().DynamicInvoke();
+
+                return string.Format(
+                    "{0}: \"{1}\"", 
+                    Utilities.Prettify(x.Member.Name), 
+                    value);
+            };
+
+            Func<Expression, string> argumentSelector = y =>
+            {
+                var memberInitExpression = y as MemberInitExpression;
+                if (memberInitExpression == null)
+                {
+                    throw new ApplicationException(
+                        "Only member initialization expressions are supported as arguments for method call.");
+                }
+
+                return string.Format(
+                    "{0} ({1})", 
+                    Utilities.Prettify(memberInitExpression.Type.Name), 
+                    string.Join(", ", memberInitExpression.Bindings.Select(memberSelector)));
+            };
+
+            return string.Format(
+                "{0} with {1}", 
+                Utilities.Prettify(body.Method.Name), 
+                string.Join(" and ", body.Arguments.Select(argumentSelector)));
         }
 
         private class EqualityComparer : IEqualityComparer<object>

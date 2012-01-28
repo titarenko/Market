@@ -18,31 +18,28 @@ namespace Market.Cqrsnes.Projection.Test
         public ExecutionResult Create()
         {
             return new ProjectionSpecification<OfferEventHandler>
-                       {
-                           Name = "Creation Of Offer"
-                       }
-                .Given(new Action<IRepository>[]
-                           {
-                               x => x.Save(new Store
-                                               {
-                                                   Id = storeId,
-                                                   Name = "Ivushka",
-                                                   OwnerId = Guid.NewGuid()
-                                               }),
-                               x => x.Save(new Article
-                                               {
-                                                   Id = articleId,
-                                                   Name = "Milk"
-                                               })
-                           })
+                {
+                    Name = "Creation Of Offer"
+                }
+                .Given(x => x.Save(new Store
+                    {
+                        Id = storeId,
+                        Name = "Ivushka",
+                        OwnerId = Guid.NewGuid()
+                    }))
+                .Given(x => x.Save(new Article
+                    {
+                        Id = articleId,
+                        Name = "Milk"
+                    }))
                 .When(new OfferCreated
-                          {
-                              Id = offerId,
-                              ArticleId = articleId,
-                              StoreId = storeId,
-                              Price = 10.15,
-                              Count = 3
-                          })
+                    {
+                        Id = offerId,
+                        ArticleId = articleId,
+                        StoreId = storeId,
+                        Price = 10.15,
+                        Count = 3
+                    })
                 .Expect(x => x.GetSingle<Offer>().Id == offerId)
                 .Expect(x => x.GetSingle<Offer>().ArticleId == articleId)
                 .Expect(x => x.GetSingle<Offer>().ArticleName == "Milk")

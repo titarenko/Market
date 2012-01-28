@@ -1,8 +1,28 @@
-﻿@model dynamic
+﻿@using Market.Cqrsnes.Domain.Test
+@using Market.Cqrsnes.Projection.Test
+@model IEnumerable<Cqrsnes.Test.ExecutionResult>
            
 @{
     ViewBag.Title = "Test";
-    ViewBag.Tagline = "available system tests";
+    ViewBag.Tagline = Model == null ? "available system tests" : "execution result";
 }
 
-<p>There are no system tests yet.</p>
+@if (Model == null)
+{
+    <ul>
+        <li>@Html.ActionLink("Offer Specification", "Test", 
+            new { id = typeof(OfferSpecifications).AssemblyQualifiedName })</li>
+        <li>@Html.ActionLink("Offer Projection Specification", "Test", 
+            new { id = typeof(OfferProjectionSpecifications).AssemblyQualifiedName })</li>
+    </ul>
+}
+else
+{
+    foreach (var item in Model)
+    {
+        <p><span class="label @(item.IsPassed ? "success" : "important")">
+               @(item.IsPassed ? "Success" : "Failure")
+           </span></p>
+        <pre>@item.Details</pre>
+    }
+}
