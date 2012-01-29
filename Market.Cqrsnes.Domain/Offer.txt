@@ -1,3 +1,0 @@
-﻿CreateOffer: Id, Name, Count, double Price
-OfferCreated! Id
-OfferCreationFailed! Id, Reason

@@ -1,0 +1,30 @@
+<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="$(SolutionDir)Cqrsnes.CodeGeneration\bin\Debug\Cqrsnes.CodeGeneration.dll" #>
+<#@ import namespace="Cqrsnes.CodeGeneration" #>
+<#@ import namespace="System.IO" #>
+<#@ output extension=".Designer.cs" #>
+using System;
+using Cqrsnes.Infrastructure;
+
+namespace Market.Cqrsnes.Domain.Messages
+{
+<#
+	WriteLine(
+		new CodeGenerator() 
+		{ 
+			Indent = "\t" 
+		}
+		.Generate(
+			new DslParser()
+				.Parse(
+					File.ReadAllLines(
+						Path.Combine(
+							Path.GetDirectoryName(Host.TemplateFile), 
+							"Messages.txt"
+						)
+					)
+				)
+		)
+	);
+#>
+}

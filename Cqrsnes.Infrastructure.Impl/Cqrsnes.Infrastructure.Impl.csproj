@@ -52,8 +52,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeGeneration\DslParser.cs" />
     <Compile Include="CommonAggregateRootRepository.cs" />
+    <Compile Include="DomainTemplate.cs" />
     <Compile Include="SimpleBus.cs" />
     <Compile Include="RavenEventStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,6 +64,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Cqrsnes.CodeGeneration\Cqrsnes.CodeGeneration.csproj">
+      <Project>{DFEA7A37-C044-4E11-B616-9A696ADD9AE4}</Project>
+      <Name>Cqrsnes.CodeGeneration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Cqrsnes.Infrastructure\Cqrsnes.Infrastructure.csproj">
       <Project>{3FD142CF-F7FA-44EB-802B-C5D79828FE42}</Project>
       <Name>Cqrsnes.Infrastructure</Name>

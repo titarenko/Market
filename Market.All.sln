@@ -30,6 +30,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cqrsnes.Test.Test", "Cqrsne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cqrsnes.Infrastructure.Impl.Test", "Cqrsnes.Infrastructure.Impl.Test\Cqrsnes.Infrastructure.Impl.Test.csproj", "{B5E072AC-7866-41F4-9E22-4CE53265006B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cqrsnes.CodeGeneration", "Cqrsnes.CodeGeneration\Cqrsnes.CodeGeneration.csproj", "{DFEA7A37-C044-4E11-B616-9A696ADD9AE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cqrsnes.CodeGeneration.Test", "Cqrsnes.CodeGeneration.Test\Cqrsnes.CodeGeneration.Test.csproj", "{4814FC7A-BC2B-499A-A017-85BF6E920C67}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -80,6 +84,14 @@ Global
 		{B5E072AC-7866-41F4-9E22-4CE53265006B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5E072AC-7866-41F4-9E22-4CE53265006B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5E072AC-7866-41F4-9E22-4CE53265006B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFEA7A37-C044-4E11-B616-9A696ADD9AE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFEA7A37-C044-4E11-B616-9A696ADD9AE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFEA7A37-C044-4E11-B616-9A696ADD9AE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFEA7A37-C044-4E11-B616-9A696ADD9AE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4814FC7A-BC2B-499A-A017-85BF6E920C67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4814FC7A-BC2B-499A-A017-85BF6E920C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4814FC7A-BC2B-499A-A017-85BF6E920C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4814FC7A-BC2B-499A-A017-85BF6E920C67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,5 +107,7 @@ Global
 		{3FD142CF-F7FA-44EB-802B-C5D79828FE42} = {F68E8991-3CB0-4C5B-B93B-517196E0A053}
 		{0E4CA1DB-6353-499F-8D5A-B36B7040BF72} = {F68E8991-3CB0-4C5B-B93B-517196E0A053}
 		{B5E072AC-7866-41F4-9E22-4CE53265006B} = {F68E8991-3CB0-4C5B-B93B-517196E0A053}
+		{DFEA7A37-C044-4E11-B616-9A696ADD9AE4} = {F68E8991-3CB0-4C5B-B93B-517196E0A053}
+		{4814FC7A-BC2B-499A-A017-85BF6E920C67} = {F68E8991-3CB0-4C5B-B93B-517196E0A053}
 	EndGlobalSection
 EndGlobal

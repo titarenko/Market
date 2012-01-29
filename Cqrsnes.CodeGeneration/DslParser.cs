@@ -1,10 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cqrsnes.Infrastructure.CodeGeneration;
-using Attribute = Cqrsnes.Infrastructure.CodeGeneration.Attribute;
 
-namespace Cqrsnes.Infrastructure.Impl.CodeGeneration
+namespace Cqrsnes.CodeGeneration
 {
     /// <summary>
     /// Default DSL (domain-specific language) parser.
@@ -31,6 +29,14 @@ namespace Cqrsnes.Infrastructure.Impl.CodeGeneration
                     Type = line.IndexOf(':') > 0 ? EntityType.Command : EntityType.Event,
                     Attributes = ParseAttributes(nameAndAttributes[1])
                 };
+        }
+
+        public IEnumerable<Entity> Parse(IEnumerable<string> lines)
+        {
+            return lines
+                .Where(x => !string.IsNullOrWhiteSpace(x) &&
+                            !x.TrimStart().StartsWith("--"))
+                .Select(Parse);
         }
 
         private IEnumerable<Attribute> ParseAttributes(string attributes)

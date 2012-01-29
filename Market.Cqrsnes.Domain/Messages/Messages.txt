@@ -1,0 +1,57 @@
+-- user
+
+CreateUser: Id, Name, Password
+UserCreated! Id, Name, PasswordHash, PasswordSalt
+
+LogIn: Id, Password
+LoggedIn! Id
+LogInFailed! Id
+
+LogOut: Id
+LoggedOut! Id
+LogOutFailed! Id
+
+-- store
+
+CreateStore: Id, Name, OwnerId
+StoreCreated! Id, Name, OwnerId
+StoreCreationFailed! Id
+StoreDuplicateFound! Name, OwnerId
+
+-- article
+
+CreateArticle: Id, Name
+ArticleCreated! Id, Name
+ArticleCreationFailed! Id
+ArticleDuplicateFound! Name
+
+-- offer
+
+CreateOffer: Id, StoreId, ArticleId, Count, double Price
+OfferCreated! Id, StoreId, ArticleId, Count, double Price
+
+CreatePurchase: Id, OfferId, BuyerId, Count
+PurchaseCreated! Id, OfferId, BuyerId, Count
+
+ReserveMoney: PurchaseId
+MoneyReserved! PurchaseId
+MoneyReservationFailed! PurchaseId
+
+ReserveArticle: PurchaseId
+ArticleReserved! PurchaseId
+ArticleReservationFailed! PurchaseId
+
+DecreaseBalance: PurchaseId
+BalanceDecreased! PurchaseId
+
+CancelMoneyReservation: PurchaseId
+MoneyReservationCanceled! PurchaseId
+
+DecreaseArticleCount: PurchaseId
+ArticleCountDecreased! PurchaseId
+
+CancelArticleReservation: PurchaseId
+ArticleReservationCanceled! PurchaseId
+
+PurchaseSucceeded! Id
+PurchaseFailed! Id

@@ -1,4 +1,4 @@
-namespace Cqrsnes.Infrastructure.CodeGeneration
+namespace Cqrsnes.CodeGeneration
 {
     public enum EntityType
     {

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace Cqrsnes.Infrastructure.CodeGeneration
+namespace Cqrsnes.CodeGeneration
 {
     public class Entity
     {

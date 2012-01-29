@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
-using Cqrsnes.Infrastructure.CodeGeneration;
-using Cqrsnes.Infrastructure.Impl.CodeGeneration;
 using NUnit.Framework;
 
-namespace Cqrsnes.Infrastructure.Impl.Test
+namespace Cqrsnes.CodeGeneration.Test
 {
     [TestFixture]
     public class DslParserTests
