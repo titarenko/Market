@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Market.Cqrsnes.WebUi", "Mar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cqrsnes.Test.Test", "Cqrsnes.Test.Test\Cqrsnes.Test.Test.csproj", "{0E4CA1DB-6353-499F-8D5A-B36B7040BF72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cqrsnes.Infrastructure.Impl.Test", "Cqrsnes.Infrastructure.Impl.Test\Cqrsnes.Infrastructure.Impl.Test.csproj", "{B5E072AC-7866-41F4-9E22-4CE53265006B}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -74,6 +76,10 @@ Global
 		{0E4CA1DB-6353-499F-8D5A-B36B7040BF72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E4CA1DB-6353-499F-8D5A-B36B7040BF72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E4CA1DB-6353-499F-8D5A-B36B7040BF72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5E072AC-7866-41F4-9E22-4CE53265006B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5E072AC-7866-41F4-9E22-4CE53265006B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5E072AC-7866-41F4-9E22-4CE53265006B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5E072AC-7866-41F4-9E22-4CE53265006B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,5 +94,6 @@ Global
 		{AF6ABA8C-DEF4-4F3A-8534-CFF62B899C34} = {F68E8991-3CB0-4C5B-B93B-517196E0A053}
 		{3FD142CF-F7FA-44EB-802B-C5D79828FE42} = {F68E8991-3CB0-4C5B-B93B-517196E0A053}
 		{0E4CA1DB-6353-499F-8D5A-B36B7040BF72} = {F68E8991-3CB0-4C5B-B93B-517196E0A053}
+		{B5E072AC-7866-41F4-9E22-4CE53265006B} = {F68E8991-3CB0-4C5B-B93B-517196E0A053}
 	EndGlobalSection
 EndGlobal

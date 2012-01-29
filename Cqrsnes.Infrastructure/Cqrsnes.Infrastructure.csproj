@@ -37,6 +37,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AggregateRoot.cs" />
+    <Compile Include="CodeGeneration\Attribute.cs" />
+    <Compile Include="CodeGeneration\AttributeType.cs" />
+    <Compile Include="CodeGeneration\IDslParser.cs" />
+    <Compile Include="CodeGeneration\Entity.cs" />
+    <Compile Include="CodeGeneration\EntityType.cs" />
     <Compile Include="IBus.cs" />
     <Compile Include="IChangeAcceptor.cs" />
     <Compile Include="Command.cs" />

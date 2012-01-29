@@ -88,7 +88,7 @@ namespace Cqrsnes.Test
                 handler.Handle(when);
 
                 var produced = store.GetProducedEvents();
-                var correct = Utilities.SequenceEqual(expect, produced);
+                var correct = Infrastructure.Impl.Utilities.SequenceEqual(expect, produced);
                 result.IsPassed = result.IsPassed && correct;
                 s.AppendLine(!correct
                                  ? "Failure: produced events didn't match expected."
