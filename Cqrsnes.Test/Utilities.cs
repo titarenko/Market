@@ -59,6 +59,12 @@ namespace Cqrsnes.Test
             }
 
             var type = instance.GetType();
+
+            if (type == typeof(Guid))
+            {
+                return Prettify((Guid) instance);
+            }
+
             if (type.Namespace.StartsWith("System"))
             {
                 var formattable = instance as IFormattable;
@@ -124,7 +130,7 @@ namespace Cqrsnes.Test
                 return string.Format(
                     "{0}: \"{1}\"", 
                     Utilities.Prettify(x.Member.Name), 
-                    value);
+                    Describe(value));
             };
 
             Func<Expression, string> argumentSelector = y =>

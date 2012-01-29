@@ -8,6 +8,11 @@ namespace Cqrsnes.Test
     public interface ISpecificationHolder
     {
         /// <summary>
+        /// Gets the name.
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
         /// Executes all specifications.
         /// </summary>
         /// <returns>Results of execution.</returns>

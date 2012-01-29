@@ -1,28 +1,22 @@
-﻿@using Market.Cqrsnes.Domain.Test
-@using Market.Cqrsnes.Projection.Test
-@model IEnumerable<Cqrsnes.Test.ExecutionResult>
+﻿@model IEnumerable<Cqrsnes.Test.ISpecificationHolder>
            
 @{
     ViewBag.Title = "Test";
-    ViewBag.Tagline = Model == null ? "available system tests" : "execution result";
+    ViewBag.Tagline = "available system tests";
+    
+    var index = 0;
 }
 
-@if (Model == null)
+@if (Model.Any())
 {
     <ul>
-        <li>@Html.ActionLink("Offer Specification", "Test", 
-            new { id = typeof(OfferSpecifications).AssemblyQualifiedName })</li>
-        <li>@Html.ActionLink("Offer Projection Specification", "Test", 
-            new { id = typeof(OfferProjectionSpecifications).AssemblyQualifiedName })</li>
+        @foreach (var item in Model)
+        {
+            <li>@Html.ActionLink(item.Name, "TestResults", new {id = index++})</li>
+        }
     </ul>
 }
 else
 {
-    foreach (var item in Model)
-    {
-        <p><span class="label @(item.IsPassed ? "success" : "important")">
-               @(item.IsPassed ? "Success" : "Failure")
-           </span></p>
-        <pre>@item.Details</pre>
-    }
+    <p>There are no tests yet.</p>
 }

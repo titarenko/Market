@@ -14,6 +14,8 @@ namespace Market.Cqrsnes.Projection.Test
         private readonly Guid offerId = Guid.NewGuid();
         private readonly Guid articleId = Guid.NewGuid();
         private readonly Guid storeId = Guid.NewGuid();
+
+        public string Name { get { return "Offer Projection Specifications"; } }
             
         public ExecutionResult Create()
         {

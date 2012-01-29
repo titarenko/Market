@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using Cqrsnes.Test;
+using System.Linq;
 
 namespace Market.Cqrsnes.WebUi.Controllers
 {
@@ -9,6 +11,13 @@ namespace Market.Cqrsnes.WebUi.Controllers
     /// </summary>
     public class HomeController : Controller
     {
+        private readonly IEnumerable<ISpecificationHolder> specifications;
+
+        public HomeController(IEnumerable<ISpecificationHolder> specifications)
+        {
+            this.specifications = specifications;
+        }
+
         /// <summary>
         /// Renders index page.
         /// </summary>
@@ -59,13 +68,14 @@ namespace Market.Cqrsnes.WebUi.Controllers
         /// <returns>
         /// List of system tests.
         /// </returns>
-        public ActionResult Test(string id)
+        public ActionResult Test()
         {
-            var results = id == null
-                ? null 
-                : (Activator.CreateInstance(Type.GetType(id)) as ISpecificationHolder).ExecuteAll();
+            return View(specifications);
+        }
 
-            return View(results);
+        public ActionResult TestResults(int id)
+        {
+            return View(specifications.Skip(id).First());
         }
     }
 }

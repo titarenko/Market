@@ -41,6 +41,9 @@
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.2.2.1.4\lib\net40-Full\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject.Extensions.Conventions">
+      <HintPath>..\packages\Ninject.Extensions.Conventions.2.2.0.5\lib\net40-Full\Ninject.Extensions.Conventions.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject.Web.Mvc">
       <HintPath>..\packages\Ninject.Web.Mvc2.2.2.2.0\lib\net40-Full\Ninject.Web.Mvc.dll</HintPath>
     </Reference>
@@ -61,6 +64,7 @@
     <Compile Include="Controllers\OfferController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DependencyManagement\BindToImplementedInterfacesBindingGenerator.cs" />
     <Compile Include="DependencyManagement\CommandHandlersNinjectModule.cs" />
     <Compile Include="DependencyManagement\EventHandlersNinjectModule.cs" />
     <Compile Include="DependencyManagement\InfrastructureNinjectModule.cs" />
@@ -229,7 +233,9 @@
   <ItemGroup>
     <Content Include="Views\Home\Test.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Views\Home\TestResults.cshtml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

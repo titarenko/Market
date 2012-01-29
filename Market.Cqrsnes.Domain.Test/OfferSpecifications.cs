@@ -17,6 +17,8 @@ namespace Market.Cqrsnes.Domain.Test
         private readonly Guid userId = Guid.NewGuid();
         private readonly Guid purchaseId = Guid.NewGuid();
 
+        public string Name { get { return "Offer Specifications"; } }
+
         public ExecutionResult Create()
         {
             return new DomainSpecification<CreateOffer, OfferCommandHandler>

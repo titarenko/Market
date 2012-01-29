@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Cqrsnes.Infrastructure;
 using Cqrsnes.Infrastructure.Impl;
+using Cqrsnes.Test;
 using Market.Cqrsnes.Domain.Utility;
 using Market.Cqrsnes.Projection.Models;
 using Market.Cqrsnes.WebUi.Infrastructure;
@@ -8,6 +10,7 @@ using Ninject.Modules;
 using Raven.Client;
 using Raven.Client.Document;
 using ServiceStack.Redis;
+using Ninject.Extensions.Conventions;
 
 namespace Market.Cqrsnes.WebUi.DependencyManagement
 {
@@ -70,6 +73,17 @@ namespace Market.Cqrsnes.WebUi.DependencyManagement
             Bind<ISystemContext>()
                 .To<WebSystemContext>()
                 .InRequestScope();
+
+            Kernel.Scan(x =>
+                            {
+                                x.FromAssembliesMatching("*");
+                                x.WhereTypeInheritsFrom<ISpecificationHolder>();
+                                x.BindWith<BindToImplementedInterfacesBindingGenerator>();
+                            });
+
+            Bind<IEnumerable<ISpecificationHolder>>()
+                .ToMethod(x => x.Kernel.GetAll<ISpecificationHolder>())
+                .InSingletonScope();
         }
     }
 }

@@ -1,0 +1,16 @@
+﻿@model Cqrsnes.Test.ISpecificationHolder
+
+@{
+    ViewBag.Title = Model.Name;
+    ViewBag.Tagline = "test results";
+}
+
+@foreach (var item in Model.ExecuteAll())
+{
+    <p>
+        <span class="label @(item.IsPassed ? "success" : "important")">
+            @(item.IsPassed ? "Success" : "Failure")
+        </span>
+    </p>
+    <pre>@item.Details</pre>
+}

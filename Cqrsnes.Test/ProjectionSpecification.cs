@@ -147,7 +147,7 @@ namespace Cqrsnes.Test
             }
             foreach (var action in given)
             {
-                s.AppendFormat("\t{0}\n", Utilities.DescribeAction(action));
+                s.AppendFormat("\t{0}\n", Utilities.DescribeAction(action).Substring(10));
             }
             if (hasGiven)
             {
