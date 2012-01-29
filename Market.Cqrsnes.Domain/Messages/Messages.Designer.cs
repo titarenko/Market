@@ -170,12 +170,12 @@ namespace Market.Cqrsnes.Domain.Messages
 		public Guid PurchaseId { get; set; }
 	}
 
-	public class CancelMoneyReservaion : Command
+	public class CancelMoneyReservation : Command
 	{
 		public Guid PurchaseId { get; set; }
 	}
 
-	public class MoneyReservaionCanceled : Event
+	public class MoneyReservationCanceled : Event
 	{
 		public Guid PurchaseId { get; set; }
 	}

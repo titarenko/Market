@@ -40,7 +40,7 @@ namespace Cqrsnes.CodeGeneration.Test
             get
             {
                 yield return new TestCaseData(
-                    "CreateUser:",
+                    "CreateUser!",
                     new Entity
                         {
                             Name = "CreateUser",
@@ -49,7 +49,7 @@ namespace Cqrsnes.CodeGeneration.Test
                         });
 
                 yield return new TestCaseData(
-                    "UserCreated! Id, Name, int Rank, double Balance, CarsCount, FootSize, NoseLength, double HairLength",
+                    "UserCreated: Id, Name, int Rank, double Balance, CarsCount, FootSize, NoseLength, double HairLength",
                     new Entity
                         {
                             Name = "UserCreated",

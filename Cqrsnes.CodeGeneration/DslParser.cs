@@ -11,11 +11,11 @@ namespace Cqrsnes.CodeGeneration
     {
         public Entity Parse(string line)
         {
-            var nameAndAttributes = line.Split(':', '!').Select(x => x.Trim()).ToArray();
+            var nameAndAttributes = line.Split('!', ':').Select(x => x.Trim()).ToArray();
             if (nameAndAttributes.Length != 2)
             {
                 throw new ApplicationException(
-                    "Can't find \"<name>{:|!}<attributes>\" in the given line.");
+                    "Can't find \"<name>{!|:}<attributes>\" in the given line.");
             }
 
             if (nameAndAttributes[0].Length == 0)
@@ -26,7 +26,7 @@ namespace Cqrsnes.CodeGeneration
             return new Entity
                 {
                     Name = nameAndAttributes[0],
-                    Type = line.IndexOf(':') > 0 ? EntityType.Command : EntityType.Event,
+                    Type = line.IndexOf('!') > 0 ? EntityType.Command : EntityType.Event,
                     Attributes = ParseAttributes(nameAndAttributes[1])
                 };
         }
