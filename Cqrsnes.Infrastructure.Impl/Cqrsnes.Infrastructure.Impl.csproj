@@ -58,7 +58,7 @@
     <Compile Include="RavenEventStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RedisRepository.cs" />
-    <Compile Include="Utilities.cs" />
+    <Compile Include="Utilities\SemanticEqualityExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

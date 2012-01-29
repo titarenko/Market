@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Cqrsnes.Infrastructure;
 using Cqrsnes.Infrastructure.Impl;
+using Cqrsnes.Infrastructure.Impl.Utilities;
 
 namespace Cqrsnes.Test
 {
@@ -88,7 +89,7 @@ namespace Cqrsnes.Test
                 }
 
                 var produced = store.GetProducedEvents();
-                var correct = Infrastructure.Impl.Utilities.SequenceEqual(Expect, produced);
+                var correct = Expect.SemanticallyEquals(produced);
                 result.IsPassed = result.IsPassed && correct;
                 s.AppendLine(!correct
                                  ? "Failure: produced events didn't match expected."
