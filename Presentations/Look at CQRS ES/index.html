@@ -1,11 +1,11 @@
 ﻿<!doctype html>
 
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Взгляд на CQRS и Event Sourcing</title>
+    <title>A Look At CQRS And Event Sourcing</title>
     
-    <meta name="author" content="Константин Титаренко" />
+    <meta name="author" content="Constantin Titarenko" />
 
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
 
@@ -21,208 +21,211 @@
     </div>
 
     <div id="title" class="step" data-x="0">
-        <h1>Взгляд на CQRS и Event Sourcing</h1>
-        <h2>Константин Титаренко</h2>
+        <h1>A Look At CQRS And Event Sourcing</h1>
+        <h2>Constantin Titarenko</h2>
         <h3>Donetsk .NET User Group</h3>
-        <h3>Январь 26, 2012</h3>
+        <h3>January 26, 2012</h3>
+		<p id="version"><a href="index-ru.html">Русская версия здесь</a></p>
     </div>
 
     <div id="agenda" class="step" data-x="1000">
-        <h1>О чем поговорим?</h1>
+        <h1>Agenda</h1>
         <ul>
-            <li>когда использовать Command/Query Responsibility Segregation, Event Sourcing (CQRS/ES)</li>
-            <li>сравнение CQRS/ES с многослойной (N-Tier) архитектурой</li>
-            <li>независимость от инфраструктуры</li>
-            <li>тестируемость и надежность</li>
-            <li>практика (код-код-код, с комментариями и демонстрацией)</li>
+            <li>when to use Command/Query Responsibility Segregation, Event Sourcing (CQRS/ES)</li>
+            <li>comparison of CQRS/ES with multi layered (N-Tier) architecture</li>
+            <li>independence from infrastructure</li>
+            <li>testability and reliability</li>
+            <li>practice (code-code-code, with comments and demonstration)</li>
         </ul>
     </div>
 
     <div class="step" data-x="2000">
-        <h1>Отвлечемся</h1>
-        <h2>и рассмотрим проблемы, с которыми сталкивался каждый разработчик</h2>
+        <h1>Let us distract</h1>
+        <h2>and examine problems which every developer faced before</h2>
         <img src="content/problem.png" alt="problem">
     </div>
 
     <div class="step" data-x="2000" data-y="1000" data-rotate="90">
-        <h1>Сложность</h1>
-        <h2>и высокая связанность элементов модели</h2>
+        <h1>Complexity</h1>
+        <h2>and high coupling of model elements</h2>
         <img src="content/complexity.jpg" alt="complexity">
     </div>
 
     <div class="step" data-x="2000" data-y="2000" data-rotate="90">
-        <h1>Зависимость</h1>
-        <h2>системы от инфраструктуры</h2>
+        <h1>Dependence</h1>
+        <h2>of system on infrastructure</h2>
         <img src="content/tied.jpg" alt="tied">
     </div>
 
     <div class="step" data-x="2000" data-y="3000" data-rotate="90">
-        <h1>Низкая</h1>
-        <h2>производительность системы</h2>
+        <h1>Low</h1>
+        <h2>performance of system</h2>
         <img src="content/slow.jpg" alt="slow">
     </div>
 
     <div class="step" data-x="2000" data-y="4000" data-rotate="90">
-        <h1>Нежелание</h1>
-        <h2>и сложность написания тестов</h2>
+        <h1>Unwillingness</h1>
+        <h2>and complexity of writing of tests</h2>
         <img src="content/frustrated.jpg" alt="frustrated">
     </div>
 
     <div class="step" data-x="2000" data-y="5000" data-rotate="90">
-        <h1>Дефекты</h1>
-        <h2>в виде багов и проблем с релизами</h2>
+        <h1>Defects</h1>
+        <h2>as bugs and problems with release</h2>
         <img src="content/bug.png" alt="bug">
     </div>
 
     <div class="step" data-x="-1000" data-y="4000" data-rotate="180" data-scale="4">
-        <h1>Решение?</h1>
+        <h1>Solution?</h1>
         <img src="content/curious.jpg" alt="curious">
     </div>
 
     <div class="step" data-x="-1000" data-y="2000" data-rotate="180">
-        <h1>Поиск</h1>
+        <h1>Search</h1>
         <h2>
-            <span class="cancel">серебряной пули</span>
-            <span class="cancel">корня зла</span>
-            причин
+			for
+            <span class="cancel">silver bullet</span>
+            <span class="cancel">root of evil</span>
+            causes
         </h2>
         <img src="content/silver.jpg" alt="silver">
     </div>
 
     <div class="step" data-x="-1000" data-y="1000" data-rotate="270" data-rotate-x="90">
-        <h1>Фокус на хранении</h1>
-        <h2>домена, а не поведении при проектировании</h2>
+        <h1>Focus on persistence</h1>
+        <h2>of domain and not on its behavior during design</h2>
         <img src="content/dbschema.jpg" alt="dbschema">
     </div>
 
     <div class="step" data-x="-1000" data-y="4000" data-rotate="270" data-rotate-x="90">
-        <h1>Фокус на фреймворках,</h1>
-        <h2>а не ядре системы при имплементации</h2>
+        <h1>Focus on frameworks</h1>
+        <h2>and not on core during implementation</h2>
         <img src="content/tools.jpg" alt="tools">
     </div>
 
     <div class="step" data-x="-1000" data-y="7000" data-rotate="270" data-rotate-x="90">
-        <h1>Нарушение</h1>
-        <h2>признанных лучшими правил дизайна</h2>
+        <h1>Breaking</h1>
+        <h2>of best practices and rules</h2>
         <img src="content/breaker.jpeg" alt="breaker">
     </div>
 
     <div class="step" data-x="0" data-y="7000" data-rotate="270">
-        <h1>Как выглядят</h1>
-        <h2>большинство наших систем</h2>
+        <h1>How does look</h1>
+        <h2>majority of our systems</h2>
         <img src="content/ntier.gif" alt="ntier">
     </div>
 
     <div class="step" data-x="1000" data-y="7000" data-rotate="270">
-        <h1>Как выглядит</h1>
-        <h2>взаимодействие с доменом</h2>
+        <h1>How does look</h1>
+        <h2>interaction with domain</h2>
         <img src="content/crud.png" alt="crud">
     </div>
 
     <div class="step" data-x="2000" data-y="7000" data-rotate="270" data-rotate-y="90">
-        <h1>Стоп!</h1>
-        <h2>...готовы, набрали воздуха?</h2>
+        <h1>Stop!</h1>
+        <h2>...are you ready?</h2>
         <img src="content/zadornov.jpeg" alt="zadornov">
     </div>
 
     <div class="step" data-x="3000" data-y="7000" data-rotate="270">
-        <h1>Как может выглядеть</h1>
-        <h2>взаимодействие с доменом</h2>
+        <h1>How can look</h1>
+        <h2>interaction with domain</h2>
         <img src="content/stream.png" alt="stream">
     </div>
 
     <div class="step" data-x="4000" data-y="7000" data-rotate="270">
-        <h1>Как могут выглядеть</h1>
-        <h2>наши системы</h2>
+        <h1>How can look</h1>
+        <h2>our systems</h2>
         <img src="content/cqrs.png" alt="cqrs">
     </div>
 
     <div class="step" data-x="5000" data-y="7000" data-rotate="270">
-        <h1>Фокус на домене</h1>
-        <h2>а не на борьбе с инфраструктурой</h2>
+        <h1>Focus on domain</h1>
+        <h2>and not on fights with infrastructure</h2>
         <img src="content/puzzle.jpg" alt="puzzle">
     </div>
 
     <div class="step" data-x="6000" data-y="7000" data-rotate="270">
-        <h1>Тесты больше не проблема</h1>
-        <h2>они просты в реализации и понятны заказчику</h2>
+        <h1>Testing is not a problem anymore</h1>
+        <h2>simple in implementation, understandable by business</h2>
         <img src="content/customer.jpg" alt="customer">
     </div>
 
     <div class="step" data-x="7000" data-y="7000" data-rotate="270">
-        <h1>Масштабируемость</h1>
-        <h2>"из коробки" - основа производительности и эффективности</h2>
+        <h1>Scalability</h1>
+        <h2>"out of the box" - base for performance and effectiveness</h2>
         <img src="content/scalability.png" alt="scalability">
     </div>
 
     <div class="step" data-x="8000" data-y="7000" data-rotate="270">
-        <h1>Аудит</h1>
-        <h2>и анализ данных "из коробки"</h2>
+        <h1>Audit</h1>
+        <h2>and data mining "out of the box"</h2>
         <img src="content/audit.jpg" alt="audit">
     </div>
 
     <div class="step" data-x="9000" data-y="7000" data-rotate="270">
-        <h1>Простота воспроизведения</h1>
-        <h2>исключительных ситуаций и последующей отладки</h2>
+        <h1>Simplicity of reproducing</h1>
+        <h2>of exceptional situations and subsequent debugging</h2>
         <img src="content/player.png" alt="player">
     </div>
 
     <div class="step" data-x="10000" data-y="7000" data-rotate="270">
-        <h1>Простое распределение</h1>
-        <h2>задач для разработчиков разных уровней</h2>
+        <h1>Simple distribution</h1>
+        <h2>of tasks among developers with different skills</h2>
         <img src="content/team.jpg" alt="team">
     </div>
 
     <div class="step" data-x="11000" data-y="7000" data-rotate="270" data-rotate-y="90">
-        <h1>Вы еще без CQRS/ES?</h1>
-        <h2>...тогда мы идем к вам!</h2>
+        <h1>Are you still without CQRS/ES?</h1>
+        <h2>...then we go to you!</h2>
         <img src="content/tide.png" alt="tide">
     </div>
 
     <div class="step" data-x="12000" data-y="7000" data-rotate="270" data-rotate-x="90">
-        <h1>Демонстрация</h1>
-        <h2>примера - веб-приложения, моделирующего в первом приближении рынок (пользователи, магазины, товары, предложения, покупки, статистика)</h2>
+        <h1>Demonstration</h1>
+        <h2>of example - web application which models market at a very simplistic level (users, owners, buyers, stores, articles, offers, purchases, statistics)</h2>
         <img src="content/demo.jpg" alt="demo">
     </div>
 
     <div class="step" data-x="13000" data-y="7000" data-rotate="270">
-        <h1>Как это сделал</h1>
-        <h2>бы разработчик, используя "стандартный" подход?</h2>
+        <h1>How would developer do this</h1>
+        <h2>using "ordinary" approach?</h2>
         <img src="content/developer.jpg" alt="developer">
     </div>
 
     <div class="step" data-x="14000" data-y="7000" data-rotate="270" data-rotate-x="90">
-        <h1>Посмотрим</h1>
-        <h2>как это сделано с применением CQRS/ES - исходный код доступен на <a href="https://github.com/titarenko/Market">Github</a></h2>
+        <h1>Let us look</h1>
+        <h2>how it's done using CQRS/ES architecture - source code is available on <a href="https://github.com/titarenko/Market">Github</a></h2>
         <img src="content/live.jpg" alt="live">
     </div>
 
     <div class="step" data-x="15000" data-y="6000" data-rotate="270" data-rotate-y="90">
-        <h1>Это только начало</h1>
-        <h2>несколько ссылок</h2>
+        <h1>This is only beginning</h1>
+        <h2>few links</h2>
         <ul>
-            <li><a href="http://www.youtube.com/watch?v=3Lbu-45xkMY">выступление</a> Грега Янга на NETWork 2011</li>
-            <li>Грег Янг <a href="http://skillsmatter.com/podcast/design-architecture/talk-from-greg-young">о тестировании</a></li>
-            <li><a href="http://abdullin.com">сайт</a> Рината Абдуллина</li>
-            <li>материалы по <a href="http://cqrs.wordpress.com">CQRS/ES</a></li>
-            <li>банально, <a href="http://google.com">Google</a></li>
+            <li><a href="http://www.youtube.com/watch?v=3Lbu-45xkMY">presentation of</a> Greg Young at NETWork 2011</li>
+            <li>Greg Young <a href="http://skillsmatter.com/podcast/design-architecture/talk-from-greg-young">on testing</a></li>
+            <li><a href="http://abdullin.com">site</a> of Rinat Abdullin</li>
+            <li>materials on <a href="http://cqrs.wordpress.com">CQRS/ES</a></li>
+            <li>obviously, <a href="http://google.com">Google</a></li>
         </ul>
     </div>
 
     <div id="conclusion" class="step" data-x="15000" data-y="6000" data-z="-1000" data-rotate="270" data-scale="0.5">
-        <h1>Надеюсь</h1>
-        <h2>было интересно, благодарю за внимание и жду вопросов!</h2>
-        <h2>обратная связь: <a href="http://about.me/constantin.titarenko">моя веб-страничка</a></h2>
+        <h1>I hope</h1>
+        <h2>it was interesting and useful, thanks for attention and ready for your questions!</h2>
+        <h2>feedback: <a href="http://about.me/constantin.titarenko">my web page</a></h2>
         <p class="disclaimer">
-            большинство используемых картинок найдены с помощью <a href="http://google.com">Google</a> и
-            используются здесь в некоммерческих целях, права на них принадлежат их владельцам (соответствующим правообладателям)
+			majority of used images was found using <a href="http://google.com">Google</a> and is used
+			here exceptionally for non commercial purposes, copyrights on them belong 
+			to their respective owners
         </p>
     </div>
 
 </div>
 
 <div class="hint">
-    <p>Костя! Жми пробел или стрелки для перемещения!</p>
+    <p>Please, press space or arrows to move</p>
 </div>
 
 <script src="content/impress.js"></script>

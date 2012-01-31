@@ -1,0 +1,232 @@
+﻿<!doctype html>
+
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <title>Взгляд на CQRS и Event Sourcing</title>
+    
+    <meta name="author" content="Константин Титаренко" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+
+    <link href="content/default.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="impress" class="impress-not-supported">
+
+    <div class="fallback-message">
+        <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+        <p>For the best experience please use the latest <b>Chrome</b> or <b>Safari</b> browser. Firefox 10 (to be released soon) will also handle it.</p>
+    </div>
+
+    <div id="title" class="step" data-x="0">
+        <h1>Взгляд на CQRS и Event Sourcing</h1>
+        <h2>Константин Титаренко</h2>
+        <h3>Donetsk .NET User Group</h3>
+        <h3>Январь 26, 2012</h3>
+		<p id="version"><a href="index.html">English version is here</a></p>
+    </div>
+
+    <div id="agenda" class="step" data-x="1000">
+        <h1>О чем поговорим?</h1>
+        <ul>
+            <li>когда использовать Command/Query Responsibility Segregation, Event Sourcing (CQRS/ES)</li>
+            <li>сравнение CQRS/ES с многослойной (N-Tier) архитектурой</li>
+            <li>независимость от инфраструктуры</li>
+            <li>тестируемость и надежность</li>
+            <li>практика (код-код-код, с комментариями и демонстрацией)</li>
+        </ul>
+    </div>
+
+    <div class="step" data-x="2000">
+        <h1>Отвлечемся</h1>
+        <h2>и рассмотрим проблемы, с которыми сталкивался каждый разработчик</h2>
+        <img src="content/problem.png" alt="problem">
+    </div>
+
+    <div class="step" data-x="2000" data-y="1000" data-rotate="90">
+        <h1>Сложность</h1>
+        <h2>и высокая связанность элементов модели</h2>
+        <img src="content/complexity.jpg" alt="complexity">
+    </div>
+
+    <div class="step" data-x="2000" data-y="2000" data-rotate="90">
+        <h1>Зависимость</h1>
+        <h2>системы от инфраструктуры</h2>
+        <img src="content/tied.jpg" alt="tied">
+    </div>
+
+    <div class="step" data-x="2000" data-y="3000" data-rotate="90">
+        <h1>Низкая</h1>
+        <h2>производительность системы</h2>
+        <img src="content/slow.jpg" alt="slow">
+    </div>
+
+    <div class="step" data-x="2000" data-y="4000" data-rotate="90">
+        <h1>Нежелание</h1>
+        <h2>и сложность написания тестов</h2>
+        <img src="content/frustrated.jpg" alt="frustrated">
+    </div>
+
+    <div class="step" data-x="2000" data-y="5000" data-rotate="90">
+        <h1>Дефекты</h1>
+        <h2>в виде багов и проблем с релизами</h2>
+        <img src="content/bug.png" alt="bug">
+    </div>
+
+    <div class="step" data-x="-1000" data-y="4000" data-rotate="180" data-scale="4">
+        <h1>Решение?</h1>
+        <img src="content/curious.jpg" alt="curious">
+    </div>
+
+    <div class="step" data-x="-1000" data-y="2000" data-rotate="180">
+        <h1>Поиск</h1>
+        <h2>
+            <span class="cancel">серебряной пули</span>
+            <span class="cancel">корня зла</span>
+            причин
+        </h2>
+        <img src="content/silver.jpg" alt="silver">
+    </div>
+
+    <div class="step" data-x="-1000" data-y="1000" data-rotate="270" data-rotate-x="90">
+        <h1>Фокус на хранении</h1>
+        <h2>домена, а не поведении при проектировании</h2>
+        <img src="content/dbschema.jpg" alt="dbschema">
+    </div>
+
+    <div class="step" data-x="-1000" data-y="4000" data-rotate="270" data-rotate-x="90">
+        <h1>Фокус на фреймворках,</h1>
+        <h2>а не ядре системы при имплементации</h2>
+        <img src="content/tools.jpg" alt="tools">
+    </div>
+
+    <div class="step" data-x="-1000" data-y="7000" data-rotate="270" data-rotate-x="90">
+        <h1>Нарушение</h1>
+        <h2>признанных лучшими правил дизайна</h2>
+        <img src="content/breaker.jpeg" alt="breaker">
+    </div>
+
+    <div class="step" data-x="0" data-y="7000" data-rotate="270">
+        <h1>Как выглядят</h1>
+        <h2>большинство наших систем</h2>
+        <img src="content/ntier.gif" alt="ntier">
+    </div>
+
+    <div class="step" data-x="1000" data-y="7000" data-rotate="270">
+        <h1>Как выглядит</h1>
+        <h2>взаимодействие с доменом</h2>
+        <img src="content/crud.png" alt="crud">
+    </div>
+
+    <div class="step" data-x="2000" data-y="7000" data-rotate="270" data-rotate-y="90">
+        <h1>Стоп!</h1>
+        <h2>...готовы, набрали воздуха?</h2>
+        <img src="content/zadornov.jpeg" alt="zadornov">
+    </div>
+
+    <div class="step" data-x="3000" data-y="7000" data-rotate="270">
+        <h1>Как может выглядеть</h1>
+        <h2>взаимодействие с доменом</h2>
+        <img src="content/stream.png" alt="stream">
+    </div>
+
+    <div class="step" data-x="4000" data-y="7000" data-rotate="270">
+        <h1>Как могут выглядеть</h1>
+        <h2>наши системы</h2>
+        <img src="content/cqrs.png" alt="cqrs">
+    </div>
+
+    <div class="step" data-x="5000" data-y="7000" data-rotate="270">
+        <h1>Фокус на домене</h1>
+        <h2>а не на борьбе с инфраструктурой</h2>
+        <img src="content/puzzle.jpg" alt="puzzle">
+    </div>
+
+    <div class="step" data-x="6000" data-y="7000" data-rotate="270">
+        <h1>Тесты больше не проблема</h1>
+        <h2>они просты в реализации и понятны заказчику</h2>
+        <img src="content/customer.jpg" alt="customer">
+    </div>
+
+    <div class="step" data-x="7000" data-y="7000" data-rotate="270">
+        <h1>Масштабируемость</h1>
+        <h2>"из коробки" - основа производительности и эффективности</h2>
+        <img src="content/scalability.png" alt="scalability">
+    </div>
+
+    <div class="step" data-x="8000" data-y="7000" data-rotate="270">
+        <h1>Аудит</h1>
+        <h2>и анализ данных "из коробки"</h2>
+        <img src="content/audit.jpg" alt="audit">
+    </div>
+
+    <div class="step" data-x="9000" data-y="7000" data-rotate="270">
+        <h1>Простота воспроизведения</h1>
+        <h2>исключительных ситуаций и последующей отладки</h2>
+        <img src="content/player.png" alt="player">
+    </div>
+
+    <div class="step" data-x="10000" data-y="7000" data-rotate="270">
+        <h1>Простое распределение</h1>
+        <h2>задач для разработчиков разных уровней</h2>
+        <img src="content/team.jpg" alt="team">
+    </div>
+
+    <div class="step" data-x="11000" data-y="7000" data-rotate="270" data-rotate-y="90">
+        <h1>Вы еще без CQRS/ES?</h1>
+        <h2>...тогда мы идем к вам!</h2>
+        <img src="content/tide.png" alt="tide">
+    </div>
+
+    <div class="step" data-x="12000" data-y="7000" data-rotate="270" data-rotate-x="90">
+        <h1>Демонстрация</h1>
+        <h2>примера - веб-приложения, моделирующего в первом приближении рынок (пользователи, магазины, товары, предложения, покупки, статистика)</h2>
+        <img src="content/demo.jpg" alt="demo">
+    </div>
+
+    <div class="step" data-x="13000" data-y="7000" data-rotate="270">
+        <h1>Как это сделал</h1>
+        <h2>бы разработчик, используя "стандартный" подход?</h2>
+        <img src="content/developer.jpg" alt="developer">
+    </div>
+
+    <div class="step" data-x="14000" data-y="7000" data-rotate="270" data-rotate-x="90">
+        <h1>Посмотрим</h1>
+        <h2>как это сделано с применением CQRS/ES - исходный код доступен на <a href="https://github.com/titarenko/Market">Github</a></h2>
+        <img src="content/live.jpg" alt="live">
+    </div>
+
+    <div class="step" data-x="15000" data-y="6000" data-rotate="270" data-rotate-y="90">
+        <h1>Это только начало</h1>
+        <h2>несколько ссылок</h2>
+        <ul>
+            <li><a href="http://www.youtube.com/watch?v=3Lbu-45xkMY">выступление</a> Грега Янга на NETWork 2011</li>
+            <li>Грег Янг <a href="http://skillsmatter.com/podcast/design-architecture/talk-from-greg-young">о тестировании</a></li>
+            <li><a href="http://abdullin.com">сайт</a> Рината Абдуллина</li>
+            <li>материалы по <a href="http://cqrs.wordpress.com">CQRS/ES</a></li>
+            <li>банально, <a href="http://google.com">Google</a></li>
+        </ul>
+    </div>
+
+    <div id="conclusion" class="step" data-x="15000" data-y="6000" data-z="-1000" data-rotate="270" data-scale="0.5">
+        <h1>Надеюсь</h1>
+        <h2>было интересно, благодарю за внимание и жду вопросов!</h2>
+        <h2>обратная связь: <a href="http://about.me/constantin.titarenko">моя веб-страничка</a></h2>
+        <p class="disclaimer">
+            большинство используемых картинок найдены с помощью <a href="http://google.com">Google</a> и
+            используются здесь в некоммерческих целях, права на них принадлежат их владельцам (соответствующим правообладателям)
+        </p>
+    </div>
+
+</div>
+
+<div class="hint">
+    <p>Костя! Жми пробел или стрелки для перемещения!</p>
+</div>
+
+<script src="content/impress.js"></script>
+
+</body>
+</html>

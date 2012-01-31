@@ -224,6 +224,10 @@ ul li {
     font-size: 75%;
 }
 
+#version {
+	margin-top: 40px;
+}
+
 #agenda, #conclusion {
 	background: url(binary-studio3.png) no-repeat right bottom;
 }
