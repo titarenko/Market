@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>A Look At CQRS And Event Sourcing</title>
+    <title>A Look at CQRS and Event Sourcing</title>
     
     <meta name="author" content="Constantin Titarenko" />
 
@@ -21,18 +21,18 @@
     </div>
 
     <div id="title" class="step" data-x="0">
-        <h1>A Look At CQRS And Event Sourcing</h1>
+        <h1>A Look at CQRS and Event Sourcing</h1>
         <h2>Constantin Titarenko</h2>
         <h3>Donetsk .NET User Group</h3>
         <h3>January 26, 2012</h3>
-		<p id="version"><a href="index-ru.html">Русская версия здесь</a></p>
+		<p id="version"><a href="index-ru.html">Russian version is here</a></p>
     </div>
 
     <div id="agenda" class="step" data-x="1000">
         <h1>Agenda</h1>
         <ul>
             <li>when to use Command/Query Responsibility Segregation, Event Sourcing (CQRS/ES)</li>
-            <li>comparison of CQRS/ES with multi layered (N-Tier) architecture</li>
+            <li>comparison of CQRS/ES with multilayered (N-Tier) architecture</li>
             <li>independence from infrastructure</li>
             <li>testability and reliability</li>
             <li>practice (code-code-code, with comments and demonstration)</li>
@@ -47,31 +47,31 @@
 
     <div class="step" data-x="2000" data-y="1000" data-rotate="90">
         <h1>Complexity</h1>
-        <h2>and high coupling of model elements</h2>
+		<h2>and high coupling</h2>
         <img src="content/complexity.jpg" alt="complexity">
     </div>
 
     <div class="step" data-x="2000" data-y="2000" data-rotate="90">
         <h1>Dependence</h1>
-        <h2>of system on infrastructure</h2>
+        <h2>on infrastructure</h2>
         <img src="content/tied.jpg" alt="tied">
     </div>
 
     <div class="step" data-x="2000" data-y="3000" data-rotate="90">
-        <h1>Low</h1>
-        <h2>performance of system</h2>
+        <h1>Low performance</h1>
+        <h2>that can't be easily increased</h2>
         <img src="content/slow.jpg" alt="slow">
     </div>
 
     <div class="step" data-x="2000" data-y="4000" data-rotate="90">
         <h1>Unwillingness</h1>
-        <h2>and complexity of writing of tests</h2>
+        <h2>of writing tests because of complexity</h2>
         <img src="content/frustrated.jpg" alt="frustrated">
     </div>
 
     <div class="step" data-x="2000" data-y="5000" data-rotate="90">
-        <h1>Defects</h1>
-        <h2>as bugs and problems with release</h2>
+        <h1>Bugs and problems</h1>
+        <h2>with meeting deadlines</h2>
         <img src="content/bug.png" alt="bug">
     </div>
 
@@ -81,7 +81,7 @@
     </div>
 
     <div class="step" data-x="-1000" data-y="2000" data-rotate="180">
-        <h1>Search</h1>
+        <h1>Let us search</h1>
         <h2>
 			for
             <span class="cancel">silver bullet</span>
@@ -99,25 +99,25 @@
 
     <div class="step" data-x="-1000" data-y="4000" data-rotate="270" data-rotate-x="90">
         <h1>Focus on frameworks</h1>
-        <h2>and not on core during implementation</h2>
+        <h2>and not on model during implementation</h2>
         <img src="content/tools.jpg" alt="tools">
     </div>
 
     <div class="step" data-x="-1000" data-y="7000" data-rotate="270" data-rotate-x="90">
-        <h1>Breaking</h1>
-        <h2>of best practices and rules</h2>
+        <h1>Breaking rules</h1>
+        <h2>and best practices</h2>
         <img src="content/breaker.jpeg" alt="breaker">
     </div>
 
     <div class="step" data-x="0" data-y="7000" data-rotate="270">
-        <h1>How does look</h1>
-        <h2>majority of our systems</h2>
+        <h1>How does majority</h1>
+        <h2>of our systems look?</h2>
         <img src="content/ntier.gif" alt="ntier">
     </div>
 
     <div class="step" data-x="1000" data-y="7000" data-rotate="270">
         <h1>How does look</h1>
-        <h2>interaction with domain</h2>
+        <h2>interaction with domain?</h2>
         <img src="content/crud.png" alt="crud">
     </div>
 
@@ -129,13 +129,13 @@
 
     <div class="step" data-x="3000" data-y="7000" data-rotate="270">
         <h1>How can look</h1>
-        <h2>interaction with domain</h2>
+        <h2>interaction with domain?</h2>
         <img src="content/stream.png" alt="stream">
     </div>
 
     <div class="step" data-x="4000" data-y="7000" data-rotate="270">
-        <h1>How can look</h1>
-        <h2>our systems</h2>
+        <h1>How our systems</h1>
+		<h2>can look?</h2>
         <img src="content/cqrs.png" alt="cqrs">
     </div>
 
@@ -164,8 +164,8 @@
     </div>
 
     <div class="step" data-x="9000" data-y="7000" data-rotate="270">
-        <h1>Simplicity of reproducing</h1>
-        <h2>of exceptional situations and subsequent debugging</h2>
+        <h1>Simplicity</h1>
+        <h2>of reproducing exceptional situations - easy debugging</h2>
         <img src="content/player.png" alt="player">
     </div>
 
@@ -177,13 +177,13 @@
 
     <div class="step" data-x="11000" data-y="7000" data-rotate="270" data-rotate-y="90">
         <h1>Are you still without CQRS/ES?</h1>
-        <h2>...then we go to you!</h2>
+        <h2>...then we go for you!</h2>
         <img src="content/tide.png" alt="tide">
     </div>
 
     <div class="step" data-x="12000" data-y="7000" data-rotate="270" data-rotate-x="90">
-        <h1>Demonstration</h1>
-        <h2>of example - web application which models market at a very simplistic level (users, owners, buyers, stores, articles, offers, purchases, statistics)</h2>
+        <h1>Demo</h1>
+        <h2>web application which models market at a very simplistic level (users, owners, buyers, stores, articles, offers, purchases, statistics)</h2>
         <img src="content/demo.jpg" alt="demo">
     </div>
 
@@ -203,9 +203,9 @@
         <h1>This is only beginning</h1>
         <h2>few links</h2>
         <ul>
-            <li><a href="http://www.youtube.com/watch?v=3Lbu-45xkMY">presentation of</a> Greg Young at NETWork 2011</li>
+            <li><a href="http://www.youtube.com/watch?v=3Lbu-45xkMY">Greg Young's presentation</a> at NETWork 2011</li>
             <li>Greg Young <a href="http://skillsmatter.com/podcast/design-architecture/talk-from-greg-young">on testing</a></li>
-            <li><a href="http://abdullin.com">site</a> of Rinat Abdullin</li>
+            <li><a href="http://abdullin.com">Rinat Abdullin's</a> site</li>
             <li>materials on <a href="http://cqrs.wordpress.com">CQRS/ES</a></li>
             <li>obviously, <a href="http://google.com">Google</a></li>
         </ul>
@@ -213,12 +213,11 @@
 
     <div id="conclusion" class="step" data-x="15000" data-y="6000" data-z="-1000" data-rotate="270" data-scale="0.5">
         <h1>I hope</h1>
-        <h2>it was interesting and useful, thanks for attention and ready for your questions!</h2>
-        <h2>feedback: <a href="http://about.me/constantin.titarenko">my web page</a></h2>
+        <h2>it was interesting and useful, thanks for attention!</h2>
+        <h2>Questions, feedback: <a href="http://about.me/constantin.titarenko">my web page</a></h2>
         <p class="disclaimer">
-			majority of used images was found using <a href="http://google.com">Google</a> and is used
-			here exceptionally for non commercial purposes, copyrights on them belong 
-			to their respective owners
+			majority of images was found using <a href="http://google.com">Google</a> and is used
+			here exceptionally for non commercial purposes, copyrights belong to their respective owners
         </p>
     </div>
 
